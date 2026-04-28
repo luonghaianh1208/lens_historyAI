@@ -1,0 +1,83 @@
+{
+    "id": "nguyen-hue",
+    "name": "Quang Trung - Nguyễn Huệ",
+    "type": "person",
+    "description": "Vị hoàng đế bách chiến bách thắng của triều đại Tây Sơn, nhà quân sự thiên tài với nghệ thuật tác chiến thần tốc, đánh tan quân Thanh năm 1789.",
+    "shortDescription": "Hoàng đế triều Tây Sơn, danh tướng bách chiến bách thắng.",
+    "avatar": "Quang Trung",
+    "dates": "1753 - 1792",
+    "dynasty": "Nhà Tây Sơn",
+    "perspectives": {
+        "self": {
+            "persona": "Quang Trung",
+            "instruction": "Bạn là Hoàng đế Quang Trung (Nguyễn Huệ). Trả lời với giọng điệu oai phong, hào sảng, vô cùng tự tin, uy vũ nhưng hết mực thương dân. Thể hiện niềm tự hào vì đã đánh tan giặc ngoại xâm."
+        },
+        "contemporary": {
+            "persona": "Ngô Thì Nhậm",
+            "instruction": "Bạn là Ngô Thì Nhậm, mưu thần đắc lực của triều Tây Sơn. Trả lời với giọng điệu khâm phục sức mạnh, tầm nhìn chiến lược và khả năng hành quân thần tốc của Hoàng đế Quang Trung."
+        },
+        "historian": {
+            "persona": "Sử gia hiện đại",
+            "instruction": "Bạn là một sử gia hiện đại. Trình bày khách quan về tài năng quân sự xuất chúng, những cải cách tiến bộ và sự dang dở mang tính bi kịch khi ông qua đời đột ngột ở đỉnh cao quyền lực."
+        }
+    },
+    "timeline": [
+        {
+            "year": "1753",
+            "event": "Ra đời",
+            "description": "Nguyễn Huệ, tên thật là Hồ Thơm, sinh ra tại ấp Kiên Mỹ, huyện Tây Sơn (nay thuộc Bình Định)."
+        },
+        {
+            "year": "1771",
+            "event": "Khởi nghĩa Tây Sơn",
+            "description": "Cùng hai anh em Nguyễn Nhạc và Nguyễn Lữ phất cờ khởi nghĩa, lấy khẩu hiệu 'lấy của nhà giàu chia cho người nghèo'."
+        },
+        {
+            "year": "1785",
+            "event": "Chiến thắng Rạch Gầm - Xoài Mút",
+            "description": "Nguyễn Huệ chỉ huy đánh tan 5 vạn quân Xiêm La trong trận thủy chiến Rạch Gầm - Xoài Mút."
+        },
+        {
+            "year": "1786",
+            "event": "Tiến quân ra Bắc",
+            "description": "Chỉ huy quân Tây Sơn lật đổ chúa Trịnh với khẩu hiệu 'Phù Lê diệt Trịnh', thống nhất đất nước về cơ bản sau hàng thế kỷ chia cắt."
+        },
+        {
+            "year": "1788",
+            "event": "Lên ngôi Hoàng đế",
+            "description": "Trước họa xâm lăng của 29 vạn quân Thanh, Nguyễn Huệ lên ngôi Hoàng đế tại núi Bân (Phú Xuân), lấy niên hiệu là Quang Trung, và lập tức tiến quân ra Bắc."
+        },
+        {
+            "year": "1789",
+            "event": "Đại phá quân Thanh",
+            "description": "Sáng mùng 5 Tết Kỷ Dậu, quân Tây Sơn đại phá 29 vạn quân Thanh do Tôn Sĩ Nghị chỉ huy tại trận Ngọc Hồi - Đống Đa."
+        },
+        {
+            "year": "1792",
+            "event": "Băng hà",
+            "description": "Hoàng đế Quang Trung qua đời đột ngột khi mới 39 tuổi, để lại sự nghiệp cải cách đất nước còn dang dở."
+        }
+    ],
+    "chunks": [
+        {
+            "content": "Nguyễn Huệ (1753 – 1792), hay Hoàng đế Quang Trung, là vị hoàng đế thứ hai của nhà Tây Sơn. Ông là một nhà chính trị, nhà quân sự kiệt xuất trong lịch sử Việt Nam với thành tích cầm quân bách chiến bách thắng.",
+            "metadata": "Tổng quan về Nguyễn Huệ"
+        },
+        {
+            "content": "Năm 1785, Nguyễn Huệ làm nên chiến công hiển hách tại Rạch Gầm - Xoài Mút, áp dụng chiến thuật nhử địch vào trận địa mai phục, đánh tan 5 vạn quân Xiêm La do Nguyễn Ánh cầu viện.",
+            "metadata": "Chiến công trận Rạch Gầm - Xoài Mút"
+        },
+        {
+            "content": "Mùa xuân năm Kỷ Dậu (1789), đối mặt với 29 vạn quân Thanh, Quang Trung đã chỉ huy một cuộc hành quân thần tốc từ Phú Xuân ra Bắc Hà. Bằng yếu tố bất ngờ và chiến thuật bộ binh tinh nhuệ, quân Tây Sơn quét sạch quân Thanh khỏi Thăng Long chỉ trong 5 ngày tết.",
+            "metadata": "Trận Ngọc Hồi Đống Đa - Đấu quân Thanh"
+        },
+        {
+            "content": "Về đối nội, Quang Trung thi hành nhiều chính sách tiến bộ: Ban 'Chiếu khuyến nông' để phục hồi kinh tế, 'Chiếu lập học' mở mang giáo dục, và đặc biệt là đưa chữ Nôm trở thành văn tự chính thức của quốc gia.",
+            "metadata": "Cải cách trong thời bình"
+        },
+        {
+            "content": "Cái chết đột ngột của ông năm 1792 không chỉ khiến những kế hoạch về giáo dục vĩ mô, khôi phục lãnh thổ Lưỡng Quảng dừng bước mà còn đẩy vương triều Tây Sơn vào con đường suy sụp nhanh chóng.",
+            "metadata": "Cái chết dang dở và bi kịch"
+        }
+    ]
+}

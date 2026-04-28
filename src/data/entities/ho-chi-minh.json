@@ -1,0 +1,83 @@
+{
+    "id": "ho-chi-minh",
+    "name": "Chủ tịch Hồ Chí Minh",
+    "type": "person",
+    "description": "Anh hùng giải phóng dân tộc, Danh nhân văn hóa thế giới, người sáng lập Đảng Cộng sản Việt Nam và khai sinh ra nước Việt Nam Dân chủ Cộng hòa.",
+    "shortDescription": "Vị cha già của dân tộc Việt Nam, Lãnh tụ vĩ đại.",
+    "avatar": "Hồ Chí Minh",
+    "dates": "1890 - 1969",
+    "dynasty": "Việt Nam Dân chủ Cộng hòa",
+    "perspectives": {
+        "self": {
+            "persona": "Hồ Chí Minh",
+            "instruction": "Bạn là Chủ tịch Hồ Chí Minh. Trả lời với giọng điệu ân cần, giản dị, nhưng kiên định và chứa chan lòng yêu nước, thương dân. Thường gọi nhân dân là 'đồng bào', 'các cháu'."
+        },
+        "contemporary": {
+            "persona": "Người dân Việt Nam đổi mới",
+            "instruction": "Bạn là một người dân Việt Nam đang sống trong thời bình. Nhìn lại và trả lời với sự kính trọng, lòng biết ơn vô hạn đối với vị 'Cha già dân tộc' đã hy sinh cả cuộc đời vì nền độc lập."
+        },
+        "historian": {
+            "persona": "Sử gia Quốc tế",
+            "instruction": "Bạn là một nhà sử học/ nghiên cứu quốc tế. Trình bày khách quan về tầm vóc lịch sử của Hồ Chí Minh, sự ảnh hưởng vĩ đại của Người đến phong trào giải phóng dân tộc trên toàn cầu ở thế kỷ 20."
+        }
+    },
+    "timeline": [
+        {
+            "year": "1890",
+            "event": "Ra đời",
+            "description": "Sinh ngày 19/5/1890 tại làng Sen, xã Kim Liên, huyện Nam Đàn, tỉnh Nghệ An. Tên khai sinh là Nguyễn Sinh Cung."
+        },
+        {
+            "year": "1911",
+            "event": "Ra đi tìm đường cứu nước",
+            "description": "Ngày 5/6/1911, người thanh niên Nguyễn Tất Thành lên con tàu rời bến cảng Nhà Rồng (Sài Gòn) sang phương Tây tìm con đường giải phóng cho dân tộc."
+        },
+        {
+            "year": "1930",
+            "event": "Thành lập Đảng Cộng sản Việt Nam",
+            "description": "Ngày 3/2/1930 tại Cửu Long (Hồng Kông), Nguyễn Ái Quốc chủ trì hội nghị hợp nhất các tổ chức cộng sản, khai sinh ra Đảng Cộng sản Việt Nam."
+        },
+        {
+            "year": "1941",
+            "event": "Trở về nước trực tiếp lãnh đạo",
+            "description": "Sau 30 năm bôn ba hải ngoại, Người trở về nước tại Cao Bằng, thành lập Mặt trận Việt Minh để chuẩn bị lực lượng vũ trang."
+        },
+        {
+            "year": "1945",
+            "event": "Khai sinh nước VNDCCH",
+            "description": "Ngày 2/9/1945, tại Quảng trường Ba Đình, Chủ tịch Hồ Chí Minh đọc bản Tuyên ngôn Độc lập, tuyên bố sự ra đời của nước Việt Nam Dân chủ Cộng hòa."
+        },
+        {
+            "year": "1954",
+            "event": "Chiến thắng Điện Biên Phủ",
+            "description": "Dưới sự lãnh đạo của Đảng và Chủ tịch Hồ Chí Minh, nhân dân ta giành thắng lợi lịch sử Điện Biên Phủ, chấm dứt hoàn toàn ách thống trị thực dân Pháp."
+        },
+        {
+            "year": "1969",
+            "event": "Qua đời",
+            "description": "Chủ tịch Hồ Chí Minh qua đời ngày 2/9/1969 lúc 9h47, để lại bản Di chúc thiêng liêng dặn dò toàn Đảng, toàn dân tiếp tục con đường cách mạng."
+        }
+    ],
+    "chunks": [
+        {
+            "content": "Hồ Chí Minh, tên thật là Nguyễn Sinh Cung, là người đã vượt qua nhiều đại dương và lục địa để tìm kiếm câu trả lời cho sự nghiệp giải phóng dân tộc. Hành trình xuất dương năm 1911 đã hoàn toàn thay đổi quỹ đạo phát triển lịch sử của quốc gia.",
+            "metadata": "Tuổi trẻ và hành trình ra đi tìm đường cứu nước"
+        },
+        {
+            "content": "Năm 1930, Nguyễn Ái Quốc đã khéo léo gom các dòng chảy yêu nước lại thành một và lập ra Đảng Cộng sản Việt Nam, là bước ngoặt quyết định của cách mạng Việt Nam, mở ra kỷ nguyên độc lập.",
+            "metadata": "Vai trò sáng lập Đảng"
+        },
+        {
+            "content": "Từ Bản Tuyên ngôn Độc lập ngày 2 tháng 9 năm 1945, Người đã nâng quyền dân tộc lên thành quyền sống, quyền tự do và mưu cầu hạnh phúc cho tất cả mọi người, một lần nữa khẳng định bình đẳng giữa các dân tộc trên thế giới.",
+            "metadata": "Tuyên ngôn Độc lập 1945"
+        },
+        {
+            "content": "Trong cuộc đời hoạt động, Chủ tịch Hồ Chí Minh hiện lên không chỉ là một nhà chiến lược tài ba mà còn là một tấm gương mẫu mực về đạo đức cần kiệm liêm chính. Cuộc sống của Người luôn gắn chặt và gần gũi với nhân dân.",
+            "metadata": "Phong cách sống và đạo đức"
+        },
+        {
+            "content": "Sự ra đi của Hồ Chí Minh vào năm 1969 là mất mát vô cùng to lớn đối với dân tộc Việt Nam. Di nguyện của Người dặn lại việc xây dựng một nước Việt Nam độc lập, dân chủ, phồn vinh và sẵn sàng đóng góp vào công cuộc hòa bình thế giới.",
+            "metadata": "Giai đoạn cuối đời và Di chúc"
+        }
+    ]
+}

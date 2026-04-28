@@ -1,0 +1,82 @@
+{
+    "id": "tran-dong-da",
+    "name": "Trận Ngọc Hồi - Đống Đa",
+    "type": "event",
+    "description": "Là trận đánh mang tính quyết định bẻ gãy ý chí xâm lược Mãn Thanh, một trong những chiến công vĩ đại nhất lịch sử Việt Nam.",
+    "shortDescription": "Chiến công hiển hách đánh tan 29 vạn quân Mãn Thanh năm 1789.",
+    "avatar": "Trận Đống Đa",
+    "dates": "Tháng 01 năm 1789",
+    "dynasty": "Nhà Tây Sơn / Quân Thanh",
+    "perspectives": {
+        "nguyen-hue": {
+            "persona": "Quang Trung - Nguyễn Huệ",
+            "instruction": "Bạn là Hoàng đế Quang Trung. Trả lời với giọng oai hùng, khí thế bừng bừng bách chiến bách thắng, mô tả chiến dịch thần tốc phá vây Thăng Long."
+        },
+        "tong-doc-hu-binh": {
+            "persona": "Tôn Sĩ Nghị",
+            "instruction": "Bạn là Tôn Sĩ Nghị, Tổng đốc Lưỡng Quảng chỉ huy quân Mãn Thanh. Kể lại sự kinh hãi trước một đạo quân từ trên trời rơi xuống bất ngờ quét sạch đồn lũy."
+        },
+        "historian": {
+            "persona": "Sử gia hiện đại",
+            "instruction": "Bạn là nhà sử học nghiên cứu nghệ thuật quân sự. Tập trung vào cách bố trí trận địa, tốc độ hành quân và yếu tố quyết định của vua Quang Trung."
+        }
+    },
+    "timeline": [
+        {
+            "year": "11/1788",
+            "event": "Quân Thanh sang xâm lược",
+            "description": "Tôn Sĩ Nghị đem 29 vạn quân Mãn Thanh mượn cớ giúp nhà Lê để tiến thẳng vào Thăng Long."
+        },
+        {
+            "year": "25/11/1788",
+            "event": "Lên ngôi Hoàng đế",
+            "description": "Nguyễn Huệ vội vã lên ngôi tại Phú Xuân lấy niên hiệu Quang Trung ngay khi nghe tin cấp báo."
+        },
+        {
+            "year": "Tháng 12/1788",
+            "event": "Hành quân thần tốc",
+            "description": "Quân Tây Sơn vừa đi vừa tuyển thêm binh ở Nghệ An, làm lễ duyệt binh lớn để kích thích hào khí và tiếp tục tốc hành ra Bắc."
+        },
+        {
+            "year": "Giao thừa Kỷ Dậu (1789)",
+            "event": "Xuất kích",
+            "description": "Quân Mãn Thanh đang trễ nải ăn tết, Quang Trung lệnh toàn quân mở cuộc tấn công chớp nhoáng theo 5 đạo quân."
+        },
+        {
+            "year": "Mùng 3 Tết",
+            "event": "Diệt đồn Hà Hồi",
+            "description": "Bằng nghi binh, quân Tây Sơn vây kín bức hàng đồn Hà Hồi không tốn một viên đạn."
+        },
+        {
+            "year": "Mùng 5 Tết",
+            "event": "Trận Ngọc Hồi - Đống Đa",
+            "description": "Đại quan quân phối hợp cùng voi chiến đạp thành Ngọc Hồi, một cánh khác phục kích đồn Đống Đa làm tướng Thanh tự ải, đại thắng hiển hách."
+        }
+    ],
+    "chunks": [
+        {
+            "content": "Cuối năm 1788, được Lê Chiêu Thống cầu viện, Tôn Sĩ Nghị đem 29 vạn quân Mãn Thanh vượt ải Nam Quan. Ngày 20 tháng 11, Thăng Long thất thủ, nhà Lê bù nhìn chính thức trở thành công cụ của quân ngoại quốc.",
+            "metadata": "Hoàn cảnh Thăng Long thất thủ"
+        },
+        {
+            "content": "Nhận được tin cấp báo, Nguyễn Huệ cho rằng 'nhà Lê bệ rạc, lấy danh nghĩa gì mà dấy binh', liền lập tức lên ngôi Hoàng Đế lấy niên hiệu là Quang Trung, chỉ huy toàn quân Tây Sơn tiến ra Bắc.",
+            "metadata": "Quang Trung lên ngôi"
+        },
+        {
+            "content": "Đây là một cuộc hành quân nhanh nhất lịch sử Việt Nam. Sức bền của người lính Tây Sơn và sự tổ chức hậu cần tinh tế (cõng võng nhau đi, thay phiên nhau ngủ) tạo nên một kỉ lục với thời gian di chuyển chưa từng có.",
+            "metadata": "Cuộc hành quân thần tốc"
+        },
+        {
+            "content": "Bài thơ cổ động quân sĩ ở Tam Điệp: 'Đánh cho để dài tóc, Đánh cho để đen răng, Đánh cho nó chích luân bất phản, Đánh cho nó phiến giáp bất hoàn...'.",
+            "metadata": "Lời hịch xuất quân"
+        },
+        {
+            "content": "Mờ sáng mùng 5 Tết, đồn Ngọc Hồi — điểm phòng thủ mạnh nhất của quân Thanh vỡ trận khi vua Quang Trung cưỡi voi tiên phong phá luỹ. Cùng lúc đó tại Đống Đa, Sầm Nghi Đống bị bao vây buộc phải thắt cổ tự tử.",
+            "metadata": "Chiến địa vỡ lở, đại phá đồn lũy"
+        },
+        {
+            "content": "Thắng lợi Đống Đa là minh chứng cho nghệ thuật dụng binh thần tài của vua Quang Trung, đem lại sự toàn vẹn lãnh thổ, hoàn tất việc thống nhất sơn hà, đập tan mọi dã tâm xâm lược phương Bắc.",
+            "metadata": "Ý nghĩa lịch sử chiến thắng Đống Đa"
+        }
+    ]
+}

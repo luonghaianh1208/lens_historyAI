@@ -43,3 +43,18 @@ Trạng thái: open | in-progress | fixed | wont-fix
 - **Trạng thái**: fixed
 - **Fix**: Render từng option với nền xanh (đúng) / đỏ (sai) + icon ✓/✗
 - **File**: `src/pages/Quiz.jsx`
+
+---
+
+## [BUG-009] Lỗi âm thanh đè nhau (Overlapping Audio) trong Auto-play TTS
+- **Mô tả**: Khi người dùng bật tự động đọc âm thanh, voice bị loop lặp liên hồi và đọc đè lên nhau.
+- **Nguyên nhân**: `useEffect` phụ thuộc vào nhiều state thay đổi liên tục, và fetch không bị huỷ kịp => sinh ra array audio chồng chéo.
+- **Trạng thái**: fixed
+- **Fix**: Áp dụng tracking `Ref` cho tin nhắn cuối cùng phát ra, kết hợp với AbortController API để huỷ fetch TTS.
+- **File**: `src/pages/Chat.jsx`, `src/hooks/useTTS.js`
+
+## [BUG-010] Giọng Google Cloud TTS bị sai giới tính và thô
+- **Mô tả**: Đọc âm thanh Nguyễn Trãi bị lỗi giới tính Nữ, giọng Google Cloud TTS không tự nhiên.
+- **Trạng thái**: fixed
+- **Fix**: Chuyển API hoàn toàn sang Gemini 2.5 Flash Audio Modality. Tùy chỉnh file PCM base64 sang `.WAV` và thay map voice thành Charon/Fenrir/Puck.
+- **File**: `netlify/functions/tts.js`, `src/services/ttsService.js`

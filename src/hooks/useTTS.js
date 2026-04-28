@@ -5,8 +5,15 @@ export function useTTS() {
   const [playing, setPlaying] = useState(false)
   const [loading, setLoading] = useState(false)
   const currentAudioRef = useRef(null)
+  const abortControllerRef = useRef(null)
 
   const speak = useCallback(async (text, entityId) => {
+    // Abort previous fetch
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+    abortControllerRef.current = new AbortController()
+
     // Stop any currently playing audio
     if (currentAudioRef.current) {
       currentAudioRef.current.pause()
@@ -22,7 +29,8 @@ export function useTTS() {
       const response = await fetch('/.netlify/functions/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
+        signal: abortControllerRef.current.signal
       })
 
       if (!response.ok) {

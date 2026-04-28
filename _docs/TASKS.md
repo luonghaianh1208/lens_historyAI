@@ -4,15 +4,15 @@
 (để trống)
 
 ## 🟡 Cần làm tiếp
-- [ ] Thêm nhân vật: Nguyễn Huệ/Quang Trung — độ ưu tiên: cao
-- [ ] Thêm nhân vật: Hồ Chí Minh — độ ưu tiên: cao
-- [ ] Thêm sự kiện: Trận Đống Đa 1789 — độ ưu tiên: cao
-- [ ] Thêm sự kiện: Chiến thắng Điện Biên Phủ — độ ưu tiên: cao
 - [ ] Tính năng: Share conversation — độ ưu tiên: thấp
 - [ ] Tính năng: Export quiz results — độ ưu tiên: thấp
 - [ ] Tính năng: Flashcard mode từ chunks của entity — độ ưu tiên: tb
 
 ## ✅ Đã hoàn thành
+- [x] Thêm nhân vật: Nguyễn Huệ/Quang Trung — 2026-04-28
+- [x] Thêm nhân vật: Hồ Chí Minh — 2026-04-28
+- [x] Thêm sự kiện: Trận Đống Đa 1789 — 2026-04-28
+- [x] Thêm sự kiện: Chiến thắng Điện Biên Phủ — 2026-04-28
 - [x] Khung React app (Vite + Tailwind) — 2026-04-28
 - [x] Chatbot SSE (Gemini + Netlify Functions) — 2026-04-28
 - [x] Repo + deploy init — 2026-04-28

@@ -1,0 +1,78 @@
+{
+    "id": "dien-bien-phu",
+    "name": "Chiến thắng Điện Biên Phủ 1954",
+    "type": "event",
+    "description": "Chiến dịch lịch sử lừng lẫy năm châu, chấn động địa cầu, đập tan hoàn toàn nỗ lực thực dân của Pháp tại Đông Dương.",
+    "shortDescription": "Quyết chiến chiến lược chấn động địa cầu đánh bại thực dân Pháp.",
+    "avatar": "Điện Biên Phủ",
+    "dates": "13/03/1954 - 07/05/1954",
+    "dynasty": "Việt Nam / Pháp",
+    "perspectives": {
+        "viet-minh": {
+            "persona": "Đại tướng Võ Nguyên Giáp",
+            "instruction": "Bạn là Đại tướng Võ Nguyên Giáp, Tổng tư lệnh Chiến dịch. Kể về quyết định thay đổi phương châm từ 'đánh nhanh thắng nhanh' sang 'đánh chắc tiến chắc' và sức mạnh của chiến tranh nhân dân."
+        },
+        "french": {
+            "persona": "Tướng De Castries",
+            "instruction": "Bạn là Tướng De Castries người Pháp. Trả lời với sự tuyệt vọng khi chứng kiến hệ thống boong ke vững chắc nhất Đông Dương sụp đổ trước những đường hầm bí mật và pháo binh vô hình của Việt Minh."
+        },
+        "historian": {
+            "persona": "Nhà nghiên cứu lịch sử Thế giới",
+            "instruction": "Phân tích tác động của sự kiện này tới phong trào đấu tranh giành độc lập trên toàn thế giới, biểu tượng của sự sụp đổ chủ nghĩa thực dân cũ."
+        }
+    },
+    "timeline": [
+        {
+            "year": "Cuối 1953",
+            "event": "Kế hoạch Navarre",
+            "description": "Pháp xây dựng Điện Biên Phủ thành một tập đoàn cứ điểm mạnh nhất Đông Dương với hi vọng nghiền nát chủ lực Việt Minh."
+        },
+        {
+            "year": "26/01/1954",
+            "event": "Quyết định lịch sử",
+            "description": "Tổng tư lệnh Võ Nguyên Giáp ra quyết định rút pháo, thay đổi phương châm từ 'đánh nhanh giải quyết nhanh' sang 'đánh chắc tiến chắc'."
+        },
+        {
+            "year": "13/03/1954",
+            "event": "Đợt 1 mở màn",
+            "description": "Việt Minh nã pháo như sấm sét phá hủy trung tâm Him Lam, hỏa lực mạnh mẽ gây sốc cho quân Pháp."
+        },
+        {
+            "year": "Kéo dài T3 - T4",
+            "event": "Đợt 2: Xóa sổ các điểm cao",
+            "description": "Giao tranh ác liệt trên các đồi A1, C1. Quân ta dùng chiến thuật đào hảo, lấn dũi bóp nghẹt hệ thống tiếp tế của Pháp."
+        },
+        {
+            "year": "06/05/1954",
+            "event": "Đợt 3: Đòn quyết định",
+            "description": "Khối bộc phá 960kg nổ trên đồi A1 làm hiệu lệnh tổng công kích."
+        },
+        {
+            "year": "07/05/1954",
+            "event": "Toàn thắng",
+            "description": "Lúc 17h30, lá cờ 'Quyết chiến, quyết thắng' bay trên nóc hầm De Castries, báo hiệu kết thúc chiến dịch Điện Biên Phủ."
+        }
+    ],
+    "chunks": [
+        {
+            "content": "Kế hoạch Navarre của Pháp nhắm đến việc xây dựng một căn cứ không thể phá vỡ, một 'con nhím' khổng lồ tại thung lũng Điện Biên Phủ để thu hút chủ lực ta vào và tiêu diệt.",
+            "metadata": "Bối cảnh và Kế hoạch Navarre"
+        },
+        {
+            "content": "Đại tướng Võ Nguyên Giáp, một người xuất thân là thầy giáo dạy sử, đã đưa ra góc nhìn xuất sắc khi nhận quyền Tư lệnh. Câu nói 'đánh thắng thì đánh, chưa chắc thắng thì chưa đánh' thể hiện sự chuyển đổi linh hoạt khi ông thấy sự rủi ro cực lớn trong cách đánh cũ.",
+            "metadata": "Thay đổi phương châm tác chiến"
+        },
+        {
+            "content": "Một trong những bất ngờ lớn của Pháp là làm thế nào Việt Minh có thể vận chuyển hàng trăm cỗ pháo hạng nặng qua núi cao đèo sâu mà không có cơ giới. Câu trả lời chính là sức mạnh của chiến tranh nhân dân, với hàng nghìn chiếc xe đạp thồ.",
+            "metadata": "Nghệ thuật Hậu cần xe đạp thồ"
+        },
+        {
+            "content": "Khối bộc phá 960kg tại Đồi A1 là thành quả của sự khổ công từ lực lượng công binh. Cú nổ hất văng mọi hệ thống hỏa lực hầm ngầm của phòng tuyến Pháp, đánh sập hoàn toàn ý chí quân đội trú phòng.",
+            "metadata": "Vụ nổ Đồi A1"
+        },
+        {
+            "content": "Trận Điện Biên Phủ không chỉ mang lại chiến thắng quân sự, mà còn buộc Pháp phải kí Hiệp định Geneva về Đông Dương. Sự tan rã này đã châm ngòi cho sự sụp đổ của chủ nghĩa thực dân trên toàn bộ châu Phi.",
+            "metadata": "Dư chấn toàn cầu"
+        }
+    ]
+}

@@ -1,18 +1,18 @@
 # Ngữ cảnh Session Hiện Tại
 
 ## Đang làm tính năng
-Session 2 — Fix bugs + phát triển thêm tính năng và dữ liệu
+Session 3 — Mở rộng tập dữ liệu với 4 entities/events ưu tiên cao
 
 ## Đã làm đến bước
-Hoàn tất toàn bộ 13 tasks. Build thành công, push code.
+Hoàn tất cập nhật bộ 4 file Dữ liệu JSON `(nguyen-hue, ho-chi-minh, tran-dong-da, dien-bien-phu)`. Đã chèn thành công index và gán giọng đọc. Đã build test thành công. Sẵn sàng review.
 
 ## Quyết định kỹ thuật đã chốt
 - maxTokens theo lengthLevel: short=800, medium=2000, long=3500
 - AI response dùng markdown formatting, frontend render qua ReactMarkdown
 - System prompt inject `entity.chunks[]` làm tài liệu tham khảo ưu tiên
 - Quick suggestions sinh động từ entity data + perspective
-- Tính năng Google Text-to-Speech tự động đọc nội dung AI Generate
-- App công khai, không auth, chỉ cần GEMINI_API_KEY và GOOGLE_CLOUD_TTS_KEY
+- Tính năng Text-to-Speech tự động đọc nội dung AI Generate đã được tích hợp dựa trên audio modality của **Gemini 2.5 Flash**. Định dạng raw PCM sẽ được build sang WAV header tại serverless config của Netlify.
+- App công khai, không auth, sử dụng chung biến môi trường API duy nhất `GEMINI_API_KEY`.
 
 ## File KHÔNG được thay đổi
 - `netlify.toml`

@@ -1,78 +1,79 @@
-// Google Cloud TTS voice configurations per historical character
+// Gemini TTS voice configurations per historical character
+// Gemini 2.5 flash accepts strings: "Puck", "Charon", "Kore", "Fenrir", "Aoede"
 
 export const VOICE_CONFIGS = {
   // PERSONS
   'nguyen-trai': {
     name: 'Nguyễn Trãi',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-C', // Softer, educated male - scholar tone
-    speakingRate: 0.9,
-    pitch: -1.5,
-    description: 'Giọng trầm ấm, điềm tĩnh, văn chương'
+    voiceName: 'Puck', // Softer, educated male
+    description: 'Giọng điềm tĩnh, văn chương'
   },
   'le-loi': {
     name: 'Lê Lợi',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-D', // Strong, confident male - leader tone
-    speakingRate: 0.95,
-    pitch: 0,
+    voiceName: 'Charon', // Strong, leader
     description: 'Giọng trầm mạnh mẽ, quyết đoán'
   },
   'tran-hung-dao': {
     name: 'Trần Hưng Đạo',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-B', // Authoritative military leader
-    speakingRate: 0.9,
-    pitch: -1,
+    voiceName: 'Fenrir', // Authoritative
     description: 'Giọng oai vệ, uy nghiêm'
   },
   'ly-thuong-kiet': {
     name: 'Lý Thường Kiệt',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-A', // Balanced, educated but strong
-    speakingRate: 0.95,
-    pitch: 0.5,
+    voiceName: 'Charon', // Balanced, educated but strong
     description: 'Giọng rắn rỏi, tự tin'
+  },
+  'nguyen-hue': {
+    name: 'Nguyễn Huệ',
+    gender: 'MALE',
+    voiceName: 'Puck',
+    description: 'Giọng hào sảng, bách chiến bách thắng'
+  },
+  'ho-chi-minh': {
+    name: 'Hồ Chí Minh',
+    gender: 'MALE',
+    voiceName: 'Charon',
+    description: 'Giọng điềm đạm, ấm áp, kiên định'
   },
   // EVENTS - default voices
   'khoi-nghia-lam-son': {
     name: 'Khởi nghĩa Lam Sơn',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-D',
-    speakingRate: 0.9,
-    pitch: 0,
+    voiceName: 'Fenrir',
     description: 'Giọng kể uy nghiêm'
   },
   'chien-thang-bach-dang': {
     name: 'Chiến thắng Bạch Đằng',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-D',
-    speakingRate: 0.95,
-    pitch: 0,
+    voiceName: 'Charon',
     description: 'Giọng hào hùng'
   },
   'chien-tranh-ly-tong': {
     name: 'Chiến tranh Lý–Tống',
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-B',
-    speakingRate: 0.9,
-    pitch: 0,
-    description: 'Giọng kể chiến trận'
+    voiceName: 'Puck',
+    description: 'Giọng kể chuyện'
+  },
+  'tran-dong-da': {
+    name: 'Trận Ngọc Hồi - Đống Đa',
+    gender: 'MALE',
+    voiceName: 'Fenrir',
+    description: 'Giọng tốc hành, uy dũng'
+  },
+  'dien-bien-phu': {
+    name: 'Chiến thắng Điện Biên Phủ',
+    gender: 'MALE',
+    voiceName: 'Charon',
+    description: 'Giọng oai hùng, vững chắc'
   },
   // Default fallback
   default: {
     gender: 'MALE',
-    locale: 'vi-VN',
-    voiceName: 'vi-VN-Standard-A',
-    speakingRate: 1.0,
-    pitch: 0
+    voiceName: 'Puck'
   }
 }
 
@@ -84,14 +85,11 @@ export function buildTTSPayload(text, entityId) {
   const voice = getVoiceConfig(entityId)
   return {
     text,
-    voiceName: voice.voiceName,
-    locale: voice.locale,
-    speakingRate: voice.speakingRate,
-    pitch: voice.pitch
+    voiceName: voice.voiceName
   }
 }
 
 export function audioBufferToUrl(buffer) {
-  const blob = new Blob([buffer], { type: 'audio/mp3' })
+  const blob = new Blob([buffer], { type: 'audio/wav' }) // Gemini WAV conversion
   return URL.createObjectURL(blob)
 }

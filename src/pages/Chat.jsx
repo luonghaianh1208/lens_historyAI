@@ -57,12 +57,14 @@ export default function Chat() {
   const { speak, stop, playing } = useTTS()
 
   const suggestions = getQuickSuggestions(entity, perspective)
+  const lastSpokenIndexRef = useRef(-1)
 
   // Auto-play TTS when assistant message arrives
   useEffect(() => {
     if (autoPlayTTS && !loading) {
-      const lastMsg = messages[messages.length - 1]
-      if (lastMsg?.role === 'assistant' && lastMsg?.content && !lastMsg?.audioPlayed) {
+      const lastMsgIndex = messages.length - 1
+      const lastMsg = messages[lastMsgIndex]
+      if (lastMsg?.role === 'assistant' && lastMsg?.content && lastSpokenIndexRef.current !== lastMsgIndex) {
         // Clean markdown for TTS (remove markdown symbols)
         const cleanText = lastMsg.content
           .replace(/[#*_`~\[\]]/g, '')
@@ -70,10 +72,8 @@ export default function Chat() {
           .trim()
 
         if (cleanText.length > 0) {
-          speak(cleanText, entityId).then(() => {
-            // Mark as played to avoid re-triggering
-            lastMsg.audioPlayed = true
-          }).catch(() => {
+          lastSpokenIndexRef.current = lastMsgIndex
+          speak(cleanText, entityId).catch(() => {
             // TTS failed silently, that's ok
           })
         }
@@ -153,11 +153,10 @@ export default function Chat() {
           {/* TTS Toggle */}
           <button
             onClick={() => setAutoPlayTTS(!autoPlayTTS)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 ${
-              autoPlayTTS
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 ${autoPlayTTS
                 ? 'bg-green-100 text-green-700 border border-green-300'
                 : 'bg-gray-100 text-gray-500 border border-gray-200'
-            }`}
+              }`}
             title={autoPlayTTS ? 'Tắt giọng nói' : 'Bật giọng nói'}
           >
             {playing ? (
