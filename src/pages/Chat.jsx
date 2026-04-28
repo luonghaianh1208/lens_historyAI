@@ -150,24 +150,27 @@ export default function Chat() {
             <p className="text-sm text-gray-500">{getPerspectiveLabel(perspective, entity)}</p>
           </div>
 
-          {/* TTS Toggle */}
+          {/* Global Stop TTS Button */}
+          {playing && (
+            <button
+              onClick={() => stop()}
+              className="px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 bg-red-100 text-red-700 border border-red-300 hover:bg-red-200"
+              title="Dừng âm thanh đang phát"
+            >
+              <span className="animate-pulse">⏹</span> Dừng đọc
+            </button>
+          )}
+
+          {/* TTS Auto-play Toggle */}
           <button
             onClick={() => setAutoPlayTTS(!autoPlayTTS)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 ${autoPlayTTS
-                ? 'bg-green-100 text-green-700 border border-green-300'
-                : 'bg-gray-100 text-gray-500 border border-gray-200'
+              ? 'bg-green-100 text-green-700 border border-green-300'
+              : 'bg-gray-100 text-gray-500 border border-gray-200'
               }`}
-            title={autoPlayTTS ? 'Tắt giọng nói' : 'Bật giọng nói'}
+            title={autoPlayTTS ? 'Tắt tự động đọc' : 'Bật tự động đọc'}
           >
-            {playing ? (
-              <>
-                <span className="animate-pulse">🔊</span> Đang nói...
-              </>
-            ) : (
-              <>
-                <span>🔇</span> {autoPlayTTS ? 'Giọng Bật' : 'Giọng Tắt'}
-              </>
-            )}
+            <span>{autoPlayTTS ? '🔊' : '🔇'}</span> {autoPlayTTS ? 'Tự đọc: Bật' : 'Tự đọc: Tắt'}
           </button>
 
           <button
