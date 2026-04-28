@@ -11,7 +11,7 @@ Hoàn tất cập nhật bộ 4 file Dữ liệu JSON `(nguyen-hue, ho-chi-minh,
 - AI response dùng markdown formatting, frontend render qua ReactMarkdown
 - System prompt inject `entity.chunks[]` làm tài liệu tham khảo ưu tiên
 - Quick suggestions sinh động từ entity data + perspective
-- Tính năng Text-to-Speech tự động đọc nội dung AI Generate đã được tích hợp dựa trên audio modality của **Gemini 2.5 Flash**. Định dạng raw PCM sẽ được build sang WAV header tại serverless config của Netlify.
+- Tính năng Text-to-Speech tự động đọc nội dung AI Generate đã được tích hợp dựa trên audio modality của **gemini-3.1-flash-tts-preview**. Định dạng raw audio/l16 sẽ được build sang WAV header tại serverless config của Netlify.
 - App công khai, không auth, sử dụng chung biến môi trường API duy nhất `GEMINI_API_KEY`.
 
 ## File KHÔNG được thay đổi

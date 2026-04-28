@@ -56,5 +56,5 @@ Trạng thái: open | in-progress | fixed | wont-fix
 ## [BUG-010] Giọng Google Cloud TTS bị sai giới tính và thô
 - **Mô tả**: Đọc âm thanh Nguyễn Trãi bị lỗi giới tính Nữ, giọng Google Cloud TTS không tự nhiên.
 - **Trạng thái**: fixed
-- **Fix**: Chuyển API hoàn toàn sang Gemini 2.5 Flash Audio Modality. Tùy chỉnh file PCM base64 sang `.WAV` và thay map voice thành Charon/Fenrir/Puck.
-- **File**: `netlify/functions/tts.js`, `src/services/ttsService.js`
+- **Fix**: Chuyển API hoàn toàn sang `gemini-3.1-flash-tts-preview` Audio Modality. Xử lý mimeType `audio/l16` thay vì `audio/pcm` và parse PCM base64 sang `.WAV`. Thay map voice thành Charon/Fenrir/Puck.
+- **File**: `netlify/functions/tts.js`, `src/services/ttsService.js`, `src/hooks/useTTS.js`

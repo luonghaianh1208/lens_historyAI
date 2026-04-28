@@ -31,7 +31,7 @@
 - Entity: **Lý Thường Kiệt** (`ly-thuong-kiet.json`) — 3 perspectives, 7 timeline, 5 chunks
 - Event: **Chiến tranh Lý–Tống** (`chien-tranh-ly-tong.json`) — 3 perspectives, 6 timeline, 4 chunks
 - Thêm 2 entity mới vào Home suggestions
-- Tích hợp tính năng Text-to-Speech bằng API của Gemini (`gemini-2.0-flash`). Hỗ trợ đọc tự động nội dung AI. Đồng nhất sử dụng một biến môi trường `GEMINI_API_KEY`.
+- Tích hợp tính năng Text-to-Speech bằng API của Gemini (`gemini-3.1-flash-tts-preview`). Hỗ trợ đọc tự động nội dung AI. Đồng nhất sử dụng một biến môi trường `GEMINI_API_KEY`. Sửa lỗi mimeType format `audio/l16`.
 ### File bị ảnh hưởng
 - `src/hooks/useChat.js`, `src/pages/Quiz.jsx`, `src/pages/Chat.jsx`
 - `src/services/geminiApi.js`, `src/services/retrieval.js`

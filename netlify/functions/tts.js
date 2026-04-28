@@ -25,11 +25,23 @@ export default async (req) => {
       })
     }
 
+    // Truncate text to prevent timeout (max ~500 chars → ~15s Gemini processing)
+    const MAX_TTS_CHARS = 500
+    let ttsText = text
+    if (ttsText.length > MAX_TTS_CHARS) {
+      // Try to cut at a sentence boundary
+      const truncated = ttsText.substring(0, MAX_TTS_CHARS)
+      const lastSentence = truncated.lastIndexOf('.')
+      ttsText = lastSentence > MAX_TTS_CHARS * 0.5
+        ? truncated.substring(0, lastSentence + 1)
+        : truncated + '...'
+    }
+
     const payload = {
       contents: [
         {
           parts: [
-            { text: text }
+            { text: ttsText }
           ]
         }
       ],

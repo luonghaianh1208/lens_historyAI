@@ -24,7 +24,14 @@ export function useTTS() {
     setPlaying(false)
 
     try {
-      const payload = buildTTSPayload(text, entityId)
+      // Truncate long text to prevent timeout (server also truncates as safety net)
+      let ttsText = text
+      if (ttsText.length > 500) {
+        const cut = ttsText.substring(0, 500)
+        const lastDot = cut.lastIndexOf('.')
+        ttsText = lastDot > 250 ? cut.substring(0, lastDot + 1) : cut + '...'
+      }
+      const payload = buildTTSPayload(ttsText, entityId)
 
       const response = await fetch('/.netlify/functions/tts', {
         method: 'POST',
