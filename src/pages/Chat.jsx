@@ -121,8 +121,8 @@ export default function Chat() {
                 key={key}
                 onClick={() => handleChangePerspective(key)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${perspective === key
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
               >
                 {config.persona || key}
@@ -138,8 +138,8 @@ export default function Chat() {
                 key={key}
                 onClick={() => setLengthLevel(key)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${lengthLevel === key
-                    ? 'bg-gray-800 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
               >
                 {label}
@@ -186,8 +186,8 @@ export default function Chat() {
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-3 ${msg.role === 'user'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white shadow-sm'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white shadow-sm'
                   }`}
               >
                 <div className="text-sm mb-1 opacity-60">
@@ -196,7 +196,9 @@ export default function Chat() {
                 {msg.role === 'assistant' ? (
                   <div className="leading-relaxed prose prose-sm max-w-none">
                     {msg.content ? (
-                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                      <ReactMarkdown>
+                        {msg.content + (loading && i === messages.length - 1 ? ' ▋' : '')}
+                      </ReactMarkdown>
                     ) : loading && i === messages.length - 1 ? (
                       <div className="flex gap-1 items-center py-1">
                         <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />

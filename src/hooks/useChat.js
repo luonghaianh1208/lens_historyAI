@@ -44,7 +44,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
         body: JSON.stringify({
           systemPrompt,
           messages: messagesRef.current,
-          maxTokens: { short: 800, medium: 2000, long: 3500 }[lengthLevel] || 2000,
+          maxTokens: { short: 5000, medium: 10000, long: 20000 }[lengthLevel] || 10000,
           stream: true
         })
       })
