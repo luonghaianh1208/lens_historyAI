@@ -25,8 +25,8 @@ export default async (req) => {
       })
     }
 
-    // Truncate text to prevent timeout (max ~500 chars → ~15s Gemini processing)
-    const MAX_TTS_CHARS = 500
+    // Truncate text to prevent timeout (Netlify free tier = 10s, ~200 chars → ~7s Gemini processing)
+    const MAX_TTS_CHARS = 200
     let ttsText = text
     if (ttsText.length > MAX_TTS_CHARS) {
       // Try to cut at a sentence boundary

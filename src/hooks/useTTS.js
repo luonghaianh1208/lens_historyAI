@@ -26,10 +26,10 @@ export function useTTS() {
     try {
       // Truncate long text to prevent timeout (server also truncates as safety net)
       let ttsText = text
-      if (ttsText.length > 500) {
-        const cut = ttsText.substring(0, 500)
+      if (ttsText.length > 200) {
+        const cut = ttsText.substring(0, 200)
         const lastDot = cut.lastIndexOf('.')
-        ttsText = lastDot > 250 ? cut.substring(0, lastDot + 1) : cut + '...'
+        ttsText = lastDot > 100 ? cut.substring(0, lastDot + 1) : cut + '...'
       }
       const payload = buildTTSPayload(ttsText, entityId)
 
