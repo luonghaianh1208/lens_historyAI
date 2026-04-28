@@ -32,6 +32,7 @@
 - [x] TASK-07: Thêm Lý Thường Kiệt — 2026-04-28
 - [x] TASK-08: Thêm Chiến tranh Lý–Tống — 2026-04-28
 - [x] TASK-09: Đăng ký 2 entity mới vào retrieval.js — 2026-04-28
+- [x] TASK-10: Cấu hình và tích hợp Google Cloud Text-to-Speech API cho phép đọc nhân vật lịch sử — 2026-04-28
 
 ## ❌ Đã bỏ
 - Claude/Anthropic API → đã chuyển sang Gemini

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
+import { useTTS } from '../hooks/useTTS'
 import ReactMarkdown from 'react-markdown'
 
 const lengthLabels = {
@@ -48,12 +49,42 @@ export default function Chat() {
   const [lengthLevel, setLengthLevel] = useState('medium')
   const [input, setInput] = useState('')
   const [showScrollBtn, setShowScrollBtn] = useState(false)
+  const [autoPlayTTS, setAutoPlayTTS] = useState(true)
   const messagesEndRef = useRef(null)
   const mainRef = useRef(null)
 
   const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
+  const { speak, stop, playing } = useTTS()
 
   const suggestions = getQuickSuggestions(entity, perspective)
+
+  // Auto-play TTS when assistant message arrives
+  useEffect(() => {
+    if (autoPlayTTS && !loading) {
+      const lastMsg = messages[messages.length - 1]
+      if (lastMsg?.role === 'assistant' && lastMsg?.content && !lastMsg?.audioPlayed) {
+        // Clean markdown for TTS (remove markdown symbols)
+        const cleanText = lastMsg.content
+          .replace(/[#*_`~\[\]]/g, '')
+          .replace(/\n+/g, '. ')
+          .trim()
+
+        if (cleanText.length > 0) {
+          speak(cleanText, entityId).then(() => {
+            // Mark as played to avoid re-triggering
+            lastMsg.audioPlayed = true
+          }).catch(() => {
+            // TTS failed silently, that's ok
+          })
+        }
+      }
+    }
+  }, [messages, loading, autoPlayTTS])
+
+  // Stop TTS when changing perspective
+  useEffect(() => {
+    stop()
+  }, [perspective])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -66,6 +97,7 @@ export default function Chat() {
   const handleSend = async (e) => {
     e.preventDefault()
     if (!input.trim() || loading) return
+    stop() // Stop any playing TTS
     const text = input
     setInput('')
     await sendMessage(text)
@@ -73,7 +105,22 @@ export default function Chat() {
 
   const handleChangePerspective = (newPerspective) => {
     if (newPerspective !== perspective) {
+      stop()
       setPerspective(newPerspective)
+    }
+  }
+
+  const handlePlayAudio = (content) => {
+    if (playing) {
+      stop()
+    } else {
+      const cleanText = content
+        .replace(/[#*_`~\[\]]/g, '')
+        .replace(/\n+/g, '. ')
+        .trim()
+      if (cleanText) {
+        speak(cleanText, entityId)
+      }
     }
   }
 
@@ -102,6 +149,28 @@ export default function Chat() {
             <h1 className="text-lg font-bold text-gray-900">{entity.name}</h1>
             <p className="text-sm text-gray-500">{getPerspectiveLabel(perspective, entity)}</p>
           </div>
+
+          {/* TTS Toggle */}
+          <button
+            onClick={() => setAutoPlayTTS(!autoPlayTTS)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 ${
+              autoPlayTTS
+                ? 'bg-green-100 text-green-700 border border-green-300'
+                : 'bg-gray-100 text-gray-500 border border-gray-200'
+            }`}
+            title={autoPlayTTS ? 'Tắt giọng nói' : 'Bật giọng nói'}
+          >
+            {playing ? (
+              <>
+                <span className="animate-pulse">🔊</span> Đang nói...
+              </>
+            ) : (
+              <>
+                <span>🔇</span> {autoPlayTTS ? 'Giọng Bật' : 'Giọng Tắt'}
+              </>
+            )}
+          </button>
+
           <button
             onClick={() => navigate(`/quiz/${entityId}`)}
             className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-200"
@@ -190,8 +259,19 @@ export default function Chat() {
                   : 'bg-white shadow-sm'
                   }`}
               >
-                <div className="text-sm mb-1 opacity-60">
-                  {msg.role === 'user' ? 'Bạn' : entity.name}
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm opacity-60">
+                    {msg.role === 'user' ? 'Bạn' : entity.name}
+                  </span>
+                  {msg.role === 'assistant' && msg.content && (
+                    <button
+                      onClick={() => handlePlayAudio(msg.content)}
+                      className="text-xs opacity-60 hover:opacity-100 transition p-1"
+                      title={playing ? 'Dừng' : 'Nghe'}
+                    >
+                      {playing ? '⏹' : '🔊'}
+                    </button>
+                  )}
                 </div>
                 {msg.role === 'assistant' ? (
                   <div className="leading-relaxed prose prose-sm max-w-none">

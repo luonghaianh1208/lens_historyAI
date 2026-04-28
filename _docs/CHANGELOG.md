@@ -15,6 +15,7 @@
 - Entity: **Lý Thường Kiệt** (`ly-thuong-kiet.json`) — 3 perspectives, 7 timeline, 5 chunks
 - Event: **Chiến tranh Lý–Tống** (`chien-tranh-ly-tong.json`) — 3 perspectives, 6 timeline, 4 chunks
 - Thêm 2 entity mới vào Home suggestions
+- Tích hợp và cấu hình Google Text-to-Speech (Sử dụng API GOOGLE_CLOUD_TTS_KEY). Hỗ trợ đọc tự động nội dung AI.
 ### File bị ảnh hưởng
 - `src/hooks/useChat.js`, `src/pages/Quiz.jsx`, `src/pages/Chat.jsx`
 - `src/services/geminiApi.js`, `src/services/retrieval.js`
