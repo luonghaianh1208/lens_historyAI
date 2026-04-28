@@ -33,11 +33,16 @@ export function useTTS() {
         signal: abortControllerRef.current.signal
       })
 
-      if (!response.ok) {
-        throw new Error('TTS API error')
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        // If not JSON, it's a raw 500
       }
 
-      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data && data.error ? data.error : `TTS API error (${response.status})`);
+      }
 
       if (!data.audioContent) {
         throw new Error('No audio content returned')
@@ -74,7 +79,9 @@ export function useTTS() {
 
       await audio.play()
     } catch (err) {
-      console.error('TTS error:', err)
+      if (err.name !== 'AbortError') {
+        console.error('TTS error:', err)
+      }
       setLoading(false)
       setPlaying(false)
     }
