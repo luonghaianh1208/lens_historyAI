@@ -37,7 +37,13 @@ export default function Entity() {
           </button>
           <div>
             <h1 className="text-xl font-bold text-gray-900">{entity.name}</h1>
-            <p className="text-sm text-gray-500">{entity.period || `${entity.period_start}–${entity.period_end}`}</p>
+            <p className="text-sm text-gray-500">
+              {entity.period
+                ? entity.period
+                : entity.period_start
+                  ? `${entity.period_start}${entity.period_end ? '–' + entity.period_end : ''}`
+                  : entity.type === 'event' ? 'Sự kiện' : ''
+            }</p>
           </div>
         </div>
       </header>
