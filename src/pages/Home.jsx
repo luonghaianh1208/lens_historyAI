@@ -36,17 +36,9 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🔍</span>
-            <h1 className="text-xl font-bold text-gray-800">HistoryLens AI</h1>
-          </div>
-          <Link
-            to="/teacher"
-            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-200 transition"
-          >
-            👨‍🏫 Giáo viên
-          </Link>
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-2">
+          <span className="text-2xl">🔍</span>
+          <h1 className="text-xl font-bold text-gray-800">HistoryLens AI</h1>
         </div>
       </header>
 

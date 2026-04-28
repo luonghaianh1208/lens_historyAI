@@ -1,25 +1,24 @@
 # Ngữ cảnh Session Hiện Tại
 
 ## Đang làm tính năng
-Fix bugs toàn bộ codebase, đồng bộ hóa naming convention giữa frontend & backend
+Bỏ chức năng Giáo viên, bỏ Auth/Firebase, công khai app cho tất cả mọi người
 
 ## Đã làm đến bước
-Hoàn tất fix 4 bugs, build thành công, đã push lên GitHub
+Hoàn tất — đã xóa Teacher, Auth, Firebase. Build thành công, push code.
 
 ## Vấn đề đang gặp
 (không có)
 
 ## Quyết định kỹ thuật đã chốt
-- Hệ thống áp dụng Firebase Authentication (Dùng Google Auth Sign-In) cho toàn bộ user.
-- Chat streaming xử lý thông qua Server-Sent Events (SSE) Netlify Functions.
-- Ngôn ngữ mô hình LLM chính của hệ thống là Gemini 2.5 Flash, qua cổng Google APIs. Không dùng direct prompt client-side để bảo vệ API key.
-- File service API đổi tên từ `claudeApi.js` → `geminiApi.js` cho nhất quán.
-- SSE stream cần buffer (`sseBuffer`) để xử lý TCP chunks không trọn vẹn.
+- App công khai, không yêu cầu đăng nhập. Ai cũng dùng được.
+- AI sử dụng Gemini 2.5 Flash API, gọi qua Netlify Functions (bảo vệ API key phía server).
+- Không dùng Firebase (không auth, không database).
+- SSE stream cần buffer để xử lý TCP chunks không trọn vẹn.
 
 ## File KHÔNG được thay đổi trong session này
 - Thư mục `src/data/` (Nếu không có task liên quan đến entity)
-- `netlify.toml` (Nếu không có sửa đổi routes)
+- `netlify.toml`
 
 ## Ghi chú thêm
-- Đã gỡ bỏ dependency `@anthropic-ai/sdk` khỏi project.
-- Chú ý format payload SSE của Gemini trong serverless Netlify func, nó khác structure native của Claude hoặc OpenAI.
+- Đã gỡ bỏ toàn bộ Firebase SDK và Auth hooks.
+- Chỉ cần set biến `GEMINI_API_KEY` trên Netlify để app hoạt động.

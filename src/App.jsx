@@ -3,7 +3,6 @@ import Home from './pages/Home'
 import Entity from './pages/Entity'
 import Chat from './pages/Chat'
 import Quiz from './pages/Quiz'
-import Teacher from './pages/Teacher'
 
 function App() {
   return (
@@ -13,7 +12,6 @@ function App() {
         <Route path="/entity/:id" element={<Entity />} />
         <Route path="/chat/:entityId" element={<Chat />} />
         <Route path="/quiz/:entityId" element={<Quiz />} />
-        <Route path="/teacher" element={<Teacher />} />
       </Routes>
     </div>
   )
