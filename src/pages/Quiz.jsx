@@ -2,38 +2,57 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getEntity } from '../services/retrieval'
 
-const sampleQuestions = [
+const fallbackQuestions = [
   {
     question: "Nguyễn Trãi sinh năm bao nhiêu?",
     options: ["1380", "1428", "1442", "1407"],
     correct: 0,
-    explanation: "Nguyễn Trãi sinh năm 1380 tại làng Nhị Khê, Thường Tín. [1]"
+    explanation: "Nguyễn Trãi sinh năm 1380 tại làng Nhị Khê, Thường Tín."
   },
   {
     question: "Ai là tác giả của Bình Ngô Đại Cáo?",
     options: ["Lê Lợi", "Trần Hưng Đạo", "Nguyễn Trãi", "Lê Thái Tổ"],
     correct: 2,
-    explanation: "Bình Ngô Đại Cáo được Nguyễn Trãi soạn năm 1428 theo lệnh Lê Lợi. [3]"
+    explanation: "Bình Ngô Đại Cáo được Nguyễn Trãi soạn năm 1428 theo lệnh Lê Lợi."
   },
   {
     question: "Khởi nghĩa Lam Sơn diễn ra trong giai đoạn nào?",
     options: ["1225-1300", "1288", "1418-1427", "1407-1427"],
     correct: 2,
-    explanation: "Khởi nghĩa Lam Sơn diễn ra từ 1418 đến 1427, do Lê Lợi lãnh đạo. [ls-001]"
+    explanation: "Khởi nghĩa Lam Sơn diễn ra từ 1418 đến 1427, do Lê Lợi lãnh đạo."
   },
   {
     question: "Trận Bạch Đằng diễn ra năm nào?",
     options: ["1285", "1288", "1426", "1427"],
     correct: 1,
-    explanation: "Trận Bạch Đằng diễn ra năm 1288, Trần Hưng Đạo tiêu diệt hạm đội Nguyên. [bd-001]"
+    explanation: "Trận Bạch Đằng diễn ra năm 1288, Trần Hưng Đạo tiêu diệt hạm đội Nguyên."
   },
   {
     question: "Nguyễn Trãi qua đời năm nào?",
     options: ["1380", "1428", "1442", "1433"],
     correct: 2,
-    explanation: "Nguyễn Trãi bị hãm oan vụ Lệ Chi Viên năm 1442 và bị tru di tam tộc. [nt-004]"
+    explanation: "Nguyễn Trãi bị hãm oan vụ Lệ Chi Viên năm 1442 và bị tru di tam tộc."
   }
 ]
+
+function buildQuizPrompt(entity) {
+  const info = entity.chunks?.map(c => c.content).join('\n') || entity.short_desc || ''
+
+  return `Dựa trên thông tin lịch sử về ${entity.name}, hãy tạo 5 câu hỏi trắc nghiệm bằng tiếng Việt.
+
+THÔNG TIN:
+Tên: ${entity.name}
+Thời kỳ: ${entity.period || ''}
+Mô tả: ${entity.short_desc || ''}
+${info}
+
+YÊU CẦU:
+- Mỗi câu hỏi có 4 đáp án
+- Chỉ có 1 đáp án đúng (index 0-3)
+- Câu hỏi kiểm tra sự hiểu biết về sự kiện/chi tiết lịch sử
+- Trả lời CHỈ JSON array, không có text khác:
+[{"question":"...","options":["A","B","C","D"],"correct":0,"explanation":"..."}]`
+}
 
 export default function Quiz() {
   const { entityId } = useParams()
@@ -47,14 +66,53 @@ export default function Quiz() {
   const [score, setScore] = useState(0)
   const [answers, setAnswers] = useState([])
   const [loading, setLoading] = useState(true)
+  const [genError, setGenError] = useState(null)
 
   useEffect(() => {
-    // Simulate loading questions
-    setTimeout(() => {
-      setQuestions(sampleQuestions)
-      setLoading(false)
-    }, 1000)
+    generateQuestions()
   }, [entityId])
+
+  async function generateQuestions() {
+    setLoading(true)
+    setGenError(null)
+
+    try {
+      const prompt = buildQuizPrompt(entity)
+
+      const response = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemPrompt: 'Bạn là chuyên gia lịch sử Việt Nam. Tạo câu hỏi trắc nghiệm chính xác. Trả lời CHỈ JSON array, không markdown, không text thừa.',
+          messages: [{ role: 'user', content: prompt }],
+          maxTokens: 2000
+        })
+      })
+
+      if (!response.ok) throw new Error('API error')
+
+      const data = await response.json()
+      const text = data.text || ''
+
+      // Extract JSON from response — handle markdown code blocks
+      const jsonMatch = text.match(/\[[\s\S]*\]/)
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[0])
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setQuestions(parsed)
+          setLoading(false)
+          return
+        }
+      }
+      throw new Error('Invalid response format')
+    } catch (err) {
+      console.error('Quiz generation error:', err)
+      setGenError('Không thể tạo quiz từ AI. Dùng câu hỏi mẫu.')
+      setQuestions(fallbackQuestions)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSelect = (index) => {
     if (showResult) return
@@ -83,6 +141,7 @@ export default function Quiz() {
     setShowResult(false)
     setScore(0)
     setAnswers([])
+    generateQuestions()
   }
 
   if (!entity) {
@@ -111,6 +170,8 @@ export default function Quiz() {
             <p className="text-sm text-gray-500">
               {showResult
                 ? `Kết quả: ${score}/${questions.length}`
+                : loading
+                ? 'Đang tạo câu hỏi...'
                 : `Câu ${currentQuestion + 1}/${questions.length}`
               }
             </p>
@@ -120,9 +181,17 @@ export default function Quiz() {
 
       {/* Content */}
       <main className="max-w-3xl mx-auto px-4 py-8">
+        {genError && (
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-700 text-sm">
+            {genError}
+          </div>
+        )}
+
         {loading ? (
           <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
             <div className="animate-pulse">
+              <div className="text-4xl mb-4">🤖</div>
+              <p className="text-gray-500 mb-4">AI đang tạo câu hỏi về {entity.name}...</p>
               <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
               <div className="space-y-3">
                 <div className="h-12 bg-gray-200 rounded"></div>
@@ -163,7 +232,7 @@ export default function Quiz() {
                   <div key={i} className="p-4 bg-gray-50 rounded-xl">
                     <div className="font-medium text-gray-900 mb-2">Câu {i + 1}: {questions[i].question}</div>
                     <div className={`text-sm ${answer === questions[i].correct ? 'text-green-600' : 'text-red-600'}`}>
-                      ✓ Đáp án đúng: {questions[i].options[questions[i].correct]}
+                      Đáp án đúng: {questions[i].options[questions[i].correct]}
                       {answer !== questions[i].correct && ` (Bạn chọn: ${questions[i].options[answer]})`}
                     </div>
                     <div className="text-sm text-gray-600 mt-2 italic">{questions[i].explanation}</div>

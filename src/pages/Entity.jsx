@@ -96,13 +96,13 @@ export default function Entity() {
               <h3 className="font-semibold mb-2">Bắt đầu trò chuyện</h3>
               <p className="text-blue-100 text-sm mb-4">Chọn góc nhìn để trò chuyện với {entity.name}</p>
               <div className="flex flex-wrap gap-2">
-                {['self', 'contemporary', 'historian'].map((p) => (
+                {Object.entries(entity.perspectives || {}).map(([key, config]) => (
                   <button
-                    key={p}
-                    onClick={() => navigate(`/chat/${entity.id}?perspective=${p}`)}
+                    key={key}
+                    onClick={() => navigate(`/chat/${entity.id}?perspective=${key}`)}
                     className="px-4 py-2 bg-white text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition"
                   >
-                    {p === 'self' ? 'Nhập vai' : p === 'contemporary' ? 'Người cùng thời' : 'Sử gia'}
+                    {config.persona || key}
                   </button>
                 ))}
               </div>

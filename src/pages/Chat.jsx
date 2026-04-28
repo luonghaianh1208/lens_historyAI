@@ -3,16 +3,19 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
 
-const perspectiveLabels = {
-  self: 'Nhập vai',
-  contemporary: 'Người cùng thời',
-  historian: 'Sử gia'
-}
-
 const lengthLabels = {
   short: 'Ngắn',
   medium: 'Vừa',
   long: 'Dài'
+}
+
+function getPerspectiveEntries(entity) {
+  if (!entity?.perspectives) return []
+  return Object.entries(entity.perspectives)
+}
+
+function getPerspectiveLabel(key, entity) {
+  return entity?.perspectives?.[key]?.persona || key
 }
 
 export default function Chat() {
@@ -20,12 +23,15 @@ export default function Chat() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
 
-  const [perspective, setPerspective] = useState(searchParams.get('perspective') || 'self')
+  const entity = getEntity(entityId)
+  const perspectiveEntries = getPerspectiveEntries(entity)
+  const defaultPerspective = searchParams.get('perspective') || perspectiveEntries[0]?.[0] || 'self'
+
+  const [perspective, setPerspective] = useState(defaultPerspective)
   const [lengthLevel, setLengthLevel] = useState('medium')
   const [input, setInput] = useState('')
   const messagesEndRef = useRef(null)
 
-  const entity = getEntity(entityId)
   const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
 
   useEffect(() => {
@@ -48,10 +54,6 @@ export default function Chat() {
     if (newPerspective !== perspective) {
       setPerspective(newPerspective)
     }
-  }
-
-  const renderMessage = (content) => {
-    return content
   }
 
   if (!entity) {
@@ -77,7 +79,7 @@ export default function Chat() {
           </button>
           <div className="flex-1">
             <h1 className="text-lg font-bold text-gray-900">{entity.name}</h1>
-            <p className="text-sm text-gray-500">{perspectiveLabels[perspective]}</p>
+            <p className="text-sm text-gray-500">{getPerspectiveLabel(perspective, entity)}</p>
           </div>
           <button
             onClick={() => navigate(`/quiz/${entityId}`)}
@@ -91,9 +93,9 @@ export default function Chat() {
       {/* Controls */}
       <div className="bg-white border-b">
         <div className="max-w-3xl mx-auto px-4 py-3 flex flex-wrap gap-4 items-center justify-between">
-          {/* Perspective Selector */}
-          <div className="flex gap-2">
-            {Object.entries(perspectiveLabels).map(([key, label]) => (
+          {/* Perspective Selector — dynamic from entity data */}
+          <div className="flex gap-2 flex-wrap">
+            {perspectiveEntries.map(([key, config]) => (
               <button
                 key={key}
                 onClick={() => handleChangePerspective(key)}
@@ -103,7 +105,7 @@ export default function Chat() {
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                {label}
+                {config.persona || key}
               </button>
             ))}
           </div>
@@ -176,9 +178,7 @@ export default function Chat() {
                   {msg.role === 'user' ? 'Bạn' : entity.name}
                 </div>
                 <div className={`leading-relaxed ${msg.role === 'user' ? '' : 'prose prose-sm max-w-none'}`}>
-                  {msg.role === 'assistant'
-                    ? renderMessage(msg.content || '...')
-                    : msg.content}
+                  {msg.content || ''}
                 </div>
                 {loading && msg.role === 'assistant' && !msg.content && (
                   <span className="inline-block animate-pulse">Đang trả lời...</span>

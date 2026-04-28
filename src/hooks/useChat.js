@@ -30,7 +30,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
         await new Promise(resolve => setTimeout(resolve, 1000))
         const mockResponse = {
           role: 'assistant',
-          content: `Đây là phản hồi demo cho: "${userMessage}". Để chat thật, hãy deploy lên Netlify và set GEMINI_API_KEY.`
+          content: `Đây là phản hồi demo cho: "${userMessage}". Để chat thật, hãy deploy lên Netlify và set GEMINI_API_KEY trong Netlify Environment Variables.`
         }
         messagesRef.current = [...messagesRef.current, mockResponse]
         setMessages(prev => [...prev, mockResponse])
