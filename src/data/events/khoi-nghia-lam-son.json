@@ -1,0 +1,63 @@
+{
+  "id": "khoi-nghia-lam-son",
+  "type": "event",
+  "name": "Khởi nghĩa Lam Sơn",
+  "period_start": 1418,
+  "period_end": 1427,
+  "period": "1418-1427",
+  "tags": ["kháng chiến", "Hậu Lê sơ", "giải phóng"],
+  "short_desc": "Cuộc khởi nghĩa giải phóng dân tộc do Lê Lợi lãnh đạo, chấm dứt 20 năm đô hộ của nhà Minh.",
+  "related_people": ["le-loi", "nguyen-trai"],
+  "related_events": ["binh-ngo-dai-cao"],
+  "timeline": [
+    { "year": 1418, "event": "Lê Lợi phất cờ khởi nghĩa tại Lam Sơn, Thanh Hóa" },
+    { "year": 1423, "event": "Tạm hòa với quân Minh, củng cố lực lượng" },
+    { "year": 1424, "event": "Tiến vào Nghệ An, mở rộng căn cứ địa" },
+    { "year": 1426, "event": "Đại thắng tại Tốt Động - Chúc Động" },
+    { "year": 1427, "event": "Vây hãm Đông Quan, quân Minh đầu hàng" }
+  ],
+  "perspectives": {
+    "le-loi": {
+      "persona": "Lê Lợi — người lãnh đạo",
+      "system_prompt": "Mày là Lê Lợi, người sáng lập nhà Lê, lãnh đạo khởi nghĩa Lam Sơn. Kể về cuộc khởi nghĩa từ góc nhìn người chỉ huy tối cao — quyết sách chiến lược, khó khăn, ý chí."
+    },
+    "nguyen-trai": {
+      "persona": "Nguyễn Trãi — quân sư",
+      "system_prompt": "Mày là Nguyễn Trãi, quân sư của Lê Lợi. Kể về khởi nghĩa từ vai trò người soạn thảo chiến lược ngoại giao và 'tâm công' — dụ hàng hơn đánh."
+    },
+    "historian": {
+      "persona": "Sử gia hiện đại",
+      "system_prompt": "Phân tích khởi nghĩa Lam Sơn từ góc độ sử học hiện đại: nguyên nhân, diễn biến, bài học lịch sử. Trích nguồn rõ ràng."
+    }
+  },
+  "chunks": [
+    {
+      "id": "ls-001",
+      "content": "Năm 1418, Lê Lợi — một hào trưởng ở Lam Sơn, Thanh Hóa — phất cờ khởi nghĩa chống quân Minh đang đô hộ nước ta từ năm 1407. Ban đầu nghĩa quân chỉ vài trăm người, gặp nhiều thất bại.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 95,
+      "tags": ["khởi đầu", "Lê Lợi"]
+    },
+    {
+      "id": "ls-002",
+      "content": "Chiến lược 'tâm công' của Nguyễn Trãi — dùng thư từ dụ hàng quân Minh thay vì đánh trực diện — được coi là yếu tố then chốt giúp nghĩa quân tiết kiệm lực lượng và phân hóa địch.",
+      "source": "Lam Sơn thực lục; Nguyễn Trãi toàn tập",
+      "reliability": 88,
+      "tags": ["chiến lược", "Nguyễn Trãi", "tâm công"]
+    },
+    {
+      "id": "ls-003",
+      "content": "Trận Tốt Động - Chúc Động năm 1426 là bước ngoặt. 10 vạn quân Minh bị đánh bại bởi một lực lượng thiện chiến của nghĩa quân Lam Sơn, bắt sống nhiều tướng lĩnh và thu được nhiều vũ khí.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 94,
+      "tags": ["Tốt Động - Chúc Động", "chiến thắng"]
+    },
+    {
+      "id": "ls-004",
+      "content": "Đến năm 1427, quân Minh vây hãm trong Đông Quan (Hà Nội) phải đầu hàng. Lê Lợi tiến vào Thăng Long, chấm dứt 20 năm đô hộ, mở ra thời kỳ Hậu Lê sơ thịnh trị.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 96,
+      "tags": ["kết thúc", "giải phóng"]
+    }
+  ]
+}

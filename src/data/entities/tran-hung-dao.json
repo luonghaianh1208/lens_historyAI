@@ -1,0 +1,67 @@
+{
+  "id": "tran-hung-dao",
+  "type": "person",
+  "name": "Trần Hưng Đạo",
+  "aliases": ["Trần Quốc Tuấn", "Hưng Đạo đại vương"],
+  "born": 1225,
+  "died": 1300,
+  "period": "Nhà Trần",
+  "roles": ["Tướng quân", "Phó chỉ huy tối cao"],
+  "tags": ["tướng quân", "Nhà Trần", "kháng chiến Nguyên"],
+  "short_desc": "Tổng chỉ huy quân đội nhà Trần, góp công lớn trong 3 lần kháng chiến chống quân Nguyên Mông thế kỷ 13.",
+  "related_events": ["chien-thang-bach-dang"],
+  "related_people": ["tran-thai-tong"],
+  "timeline": [
+    { "year": 1225, "event": "Sinh trong gia đình hoàng tộc nhà Trần" },
+    { "year": 1285, "event": "Chỉ huy chiến dịch chống quân Nguyên lần 2" },
+    { "year": 1288, "event": "Tổng chỉ huy trận Bạch Đằng, đại thắng quân Nguyên" },
+    { "year": 1300, "event": "Băng hà, được truy tôn là Hưng Đạo đại vương" }
+  ],
+  "perspectives": {
+    "self": {
+      "persona": "Trần Hưng Đạo tự thuật",
+      "voice": "Xưng 'ta', giọng trầm tĩnh, đĩnh đạc",
+      "system_prompt": "Mày là Trần Hưng Đạo (1225–1300), tổng chỉ huy quân đội nhà Trần. Hãy trả lời theo góc nhìn của chính mày — xưng 'ta', giọng trầm tĩnh, đĩnh đạc. Bám sát sự thật lịch sử từ nguồn được cung cấp. Nói về chiến lược quân sự, về lòng yêu nước và tinh thần dân tộc."
+    },
+    "contemporary": {
+      "persona": "Văn thần đương thời",
+      "voice": "Ngưỡng mộ, tôn kính",
+      "system_prompt": "Mày là một văn thần nhà Trần, chứng kiến và ngưỡng mộ Trần Hưng Đạo. Mô tả ông từ góc nhìn người đương thời — tôn kính, ngưỡng mộ tài năng quân sự."
+    },
+    "historian": {
+      "persona": "Sử gia hiện đại",
+      "voice": "Trung tính, học thuật, so sánh nhiều nguồn",
+      "system_prompt": "Mày là một sử gia Việt Nam hiện đại. Phân tích vai trò của Trần Hưng Đạo dựa trên sử liệu, trích dẫn nguồn rõ ràng. Đánh giá ông là một trong những danh tướng vĩ đại nhất lịch sử Việt Nam."
+    }
+  },
+  "chunks": [
+    {
+      "id": "thd-001",
+      "content": "Trần Hưng Đạo (1225–1300) là cháu nội vua Trần Thái Tông, mang tước vị Hưng Đạo đại vương. Ông được xem là hiệp sĩ-xứng đáng với danh hiệu 'Đệ nhất tướng quốc' của Việt Nam.",
+      "source": "Đại Việt sử ký toàn thư",
+      "reliability": 95,
+      "tags": ["tiểu sử", "danh hiệu"]
+    },
+    {
+      "id": "thd-002",
+      "content": "Trận Bạch Đằng năm 1288 là đỉnh cao của sự nghiệp quân sự Trần Hưng Đạo. Ông cho đóng cọc gỗ lim xuống sông Bạch Đằng, dụ quân đoàn Nguyên vào bẫy, kết hợp thủy chiến và bộ chiến tiêu diệt toàn bộ hạm đội địch.",
+      "source": "Đại Việt sử ký toàn thư, Quyển V",
+      "reliability": 97,
+      "tags": ["Bạch Đằng", "chiến thắng", "chiến lược"]
+    },
+    {
+      "id": "thd-003",
+      "content": "Ngoài tài quân sự, Trần Hưng Đạo còn là tác giả 'Hịch tướng sĩ' - bản hịch nổi tiếng kêu gọi tinh thần đoàn kết và yêu nước, trở thành một trong những văn bản lịch sử quan trọng nhất của Việt Nam.",
+      "source": "Hịch tướng sĩ; Đại Việt sử ký toàn thư",
+      "reliability": 94,
+      "tags": ["Hịch tướng sĩ", "văn học", "yêu nước"]
+    },
+    {
+      "id": "thd-004",
+      "content": "Sau chiến thắng, Trần Hưng Đạo từ chối ngôi vị khi vua ban thưởng, xin về quê ở ẩn. Đây là tấm gương về đức tính khiêm nhường và trung thành với hoàng tộc nhà Trần.",
+      "source": "Đại Việt sử ký toàn thư",
+      "reliability": 88,
+      "tags": ["nhân cách", "khiêm nhường"]
+    }
+  ]
+}

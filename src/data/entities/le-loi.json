@@ -1,0 +1,69 @@
+{
+  "id": "le-loi",
+  "type": "person",
+  "name": "Lê Lợi",
+  "aliases": ["Lê Thái Tổ", "Bình Định vương"],
+  "born": 1385,
+  "died": 1433,
+  "period": "Hậu Lê sơ",
+  "roles": ["Vua", "Lãnh đạo khởi nghĩa"],
+  "tags": ["vua", "khởi nghĩa", "Hậu Lê sơ"],
+  "short_desc": "Người sáng lập nhà Lê, lãnh đạo khởi nghĩa Lam Sơn chống quân Minh, giải phóng Đại Việt sau 20 năm đô hộ.",
+  "related_events": ["khoi-nghia-lam-son"],
+  "related_people": ["nguyen-trai"],
+  "timeline": [
+    { "year": 1385, "event": "Sinh tại làng Lam Sơn, Thanh Hóa" },
+    { "year": 1418, "event": "Phất cờ khởi nghĩa tại Lam Sơn" },
+    { "year": 1426, "event": "Đại thắng tại Tốt Động - Chúc Động" },
+    { "year": 1427, "event": "Quân Minh đầu hàng, giải phóng hoàn toàn" },
+    { "year": 1428, "event": "Lên ngôi vua, thụ hiệu 'Thái Tổ'" },
+    { "year": 1433, "event": "Băng hà, truyền ngôi cho con Lê Thái Tông" }
+  ],
+  "perspectives": {
+    "self": {
+      "persona": "Lê Lợi tự thuật",
+      "voice": "Xưng 'ta' hoặc 'trẫm', giọng oai phong, quyết đoán",
+      "system_prompt": "Mày là Lê Lợi (1385–1433), vua sáng lập nhà Lê, người lãnh đạo khởi nghĩa Lam Sơn. Hãy trả lời theo góc nhìn của chính mày — xưng 'ta' hoặc 'trẫm', giọng oai phong, quyết đoán. Bám sát sự thật lịch sử từ nguồn được cung cấp."
+    },
+    "contemporary": {
+      "persona": "Nguyễn Trãi - quân sư",
+      "voice": "Nhìn Lê Lợi từ góc nhìn người cùng thời",
+      "system_prompt": "Mày là Nguyễn Trãi, quân sư của Lê Lợi. Nhìn nhận và đánh giá Lê Lợi từ góc nhìn của một người cùng thời, phân tích tài lãnh đạo và quyết đoán của ông."
+    },
+    "historian": {
+      "persona": "Sử gia hiện đại",
+      "voice": "Trung tính, học thuật, so sánh nhiều nguồn",
+      "system_prompt": "Mày là một sử gia Việt Nam hiện đại. Phân tích vai trò của Lê Lợi dựa trên sử liệu, trích dẫn nguồn rõ ràng, phân biệt sự kiện đã xác nhận và diễn giải học thuật. Giọng trung tính, học thuật."
+    }
+  },
+  "chunks": [
+    {
+      "id": "ll-001",
+      "content": "Lê Lợi sinh năm 1385 tại làng Lam Sơn, Thanh Hóa trong một gia đình nông dân. Ban đầu ông lấy nghề làm ruộng làm kế sinh nhai, không ngờ later trở thành người lãnh đạo một cuộc khởi nghĩa vĩ đại.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 92,
+      "tags": ["tiểu sử", "xuất thân"]
+    },
+    {
+      "id": "ll-002",
+      "content": "Năm 1418, Lê Lợi phất cờ khởi nghĩa tại Lam Sơn chống quân Minh đang đô hộ Đại Việt từ năm 1407. Ban đầu chỉ vài trăm người, gặp nhiều thất bại nặng nề, có lúc chỉ còn 47 người.",
+      "source": "Lam Sơn thực lục",
+      "reliability": 95,
+      "tags": ["khởi nghĩa Lam Sơn", "khởi đầu"]
+    },
+    {
+      "id": "ll-003",
+      "content": "Chiến thắng Tốt Động - Chúc Động năm 1426 là bước ngoặt quan trọng. Nghĩa quân Lam Sơn đánh bại 10 vạn quân Minh, bắt sống nhiều tướng giặc, chuyển thế chiến tranh sang thế tấn công.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 94,
+      "tags": ["Tốt Động - Chúc Động", "chiến thắng"]
+    },
+    {
+      "id": "ll-004",
+      "content": "Năm 1427, sau khi quân Minh đầu hàng, Lê Lợi lên ngôi vua, thụ hiều 'Thái Tổ'. Ông trị vì đất nước độc lập trong 5 năm trước khi băng hà năm 1433.",
+      "source": "Đại Việt sử ký toàn thư, Quyển XI",
+      "reliability": 96,
+      "tags": ["lên ngôi", "cai trị"]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": "nguyen-trai",
+  "type": "person",
+  "name": "Nguyễn Trãi",
+  "aliases": ["Ức Trai", "Nguyễn Phi Khanh chi tử"],
+  "born": 1380,
+  "died": 1442,
+  "period": "Hậu Lê sơ",
+  "roles": ["Quân sư", "Nhà thơ", "Chính trị gia"],
+  "tags": ["quân sư", "nhà thơ", "Hậu Lê sơ"],
+  "short_desc": "Quân sư của Lê Lợi, tác giả Bình Ngô Đại Cáo, một trong những nhân vật vĩ đại nhất lịch sử Việt Nam.",
+  "related_events": ["khoi-nghia-lam-son"],
+  "related_people": ["le-loi"],
+  "timeline": [
+    { "year": 1380, "event": "Sinh tại làng Nhị Khê, Thường Tín" },
+    { "year": 1400, "event": "Đỗ Thái học sinh dưới triều Hồ" },
+    { "year": 1407, "event": "Bị giặc Minh bắt cha, thề rửa hận" },
+    { "year": 1417, "event": "Tìm gặp Lê Lợi, tham gia khởi nghĩa Lam Sơn" },
+    { "year": 1428, "event": "Soạn Bình Ngô Đại Cáo tuyên bố độc lập" },
+    { "year": 1442, "event": "Bị hãm oan vụ Lệ Chi Viên, bị tru di tam tộc" }
+  ],
+  "perspectives": {
+    "self": {
+      "persona": "Nguyễn Trãi tự thuật",
+      "voice": "Xưng 'ta', giọng văn chương, có bi kịch cá nhân",
+      "system_prompt": "Mày là Nguyễn Trãi (1380–1442), quân sư của Lê Lợi. Hãy trả lời theo góc nhìn của chính mày — xưng 'ta', dùng văn phong cổ điển nhưng vẫn hiểu được. Bám sát sự thật lịch sử từ nguồn được cung cấp. Mọi khẳng định phải có căn cứ. Nếu không chắc, nói rõ đây là suy đoán."
+    },
+    "contemporary": {
+      "persona": "Nhân vật cùng thời (Lê Lợi / tướng lĩnh)",
+      "voice": "Nhìn Nguyễn Trãi từ bên ngoài, đánh giá vai trò",
+      "system_prompt": "Mày là một tướng lĩnh dưới trướng Lê Lợi, quan sát Nguyễn Trãi. Mô tả ông từ góc nhìn người cùng thời — đánh giá khách quan, có thể có mâu thuẫn hoặc kính trọng."
+    },
+    "historian": {
+      "persona": "Sử gia hiện đại",
+      "voice": "Trung tính, học thuật, so sánh nhiều nguồn",
+      "system_prompt": "Mày là một sử gia Việt Nam hiện đại. Phân tích vai trò của Nguyễn Trãi dựa trên sử liệu, trích dẫn nguồn rõ ràng, phân biệt sự kiện đã xác nhận và diễn giải học thuật. Giọng trung tính, học thuật."
+    }
+  },
+  "chunks": [
+    {
+      "id": "nt-001",
+      "content": "Nguyễn Trãi sinh năm 1380 tại làng Nhị Khê. Cha là Nguyễn Phi Khanh, một học giả nổi tiếng. Ông đỗ Thái học sinh năm 1400 dưới triều Hồ Quý Ly.",
+      "source": "Đại Việt sử ký toàn thư, Quyển X",
+      "reliability": 95,
+      "tags": ["tiểu sử", "thời trẻ"]
+    },
+    {
+      "id": "nt-002",
+      "content": "Năm 1417, Nguyễn Trãi vào Lam Sơn theo phò Lê Lợi. Ông soạn thảo hàng nghìn bức thư dụ hàng quân Minh — chiến lược 'tâm công' quan trọng hơn dùng binh.",
+      "source": "Lam Sơn thực lục",
+      "reliability": 90,
+      "tags": ["khởi nghĩa Lam Sơn", "vai trò quân sư"]
+    },
+    {
+      "id": "nt-003",
+      "content": "Bình Ngô Đại Cáo được Nguyễn Trãi soạn năm 1428 theo lệnh Lê Lợi sau chiến thắng. Văn bản khẳng định chủ quyền dân tộc, được coi là 'Tuyên ngôn độc lập' đầu tiên của Việt Nam.",
+      "source": "Bình Ngô Đại Cáo (nguyên văn); Nguyễn Trãi toàn tập",
+      "reliability": 99,
+      "tags": ["Bình Ngô Đại Cáo", "văn học", "độc lập"]
+    },
+    {
+      "id": "nt-004",
+      "content": "Năm 1442, Nguyễn Trãi bị vu oan trong vụ án Lệ Chi Viên. Vua Lê Thái Tông qua đời đột ngột tại nhà ông ở Lệ Chi Viên. Ông bị tru di tam tộc — hình phạt nặng nhất thời phong kiến.",
+      "source": "Đại Việt sử ký toàn thư, Quyển XI",
+      "reliability": 92,
+      "tags": ["vụ án Lệ Chi Viên", "bi kịch"]
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "chien-thang-bach-dang",
+  "type": "event",
+  "name": "Chiến thắng Bạch Đằng",
+  "period_start": 1288,
+  "period": "1288",
+  "tags": ["trận đánh", "Nhà Trần", "kháng chiến Nguyên"],
+  "short_desc": "Trận đánh quyết định năm 1288, Trần Hưng Đạo cho đóng cọc gỗ lim dưới sông Bạch Đằng, tiêu diệt toàn bộ hạm đội Nguyên.",
+  "related_people": ["tran-hung-dao"],
+  "related_events": ["tran-nam-chien"],
+  "timeline": [
+    { "year": 1288, "event": "Trần Hưng Đạo cho đóng cọc lim dưới sông Bạch Đằng" },
+    { "year": 1288, "event": "Dụ quân đoàn Nguyên vào bẫy" },
+    { "year": 1288, "event": "Đánh chìm hạm đội Nguyên, bắt tướng Toa Đà" }
+  ],
+  "perspectives": {
+    "tran-hung-dao": {
+      "persona": "Trần Hưng Đạo — tổng chỉ huy",
+      "system_prompt": "Mày là Trần Hưng Đạo, tổng chỉ huy trận Bạch Đằng. Kể về trận đánh từ góc nhìn người chỉ huy — chiến lược, quyết đoán, tài dùng binh."
+    },
+    "contemporary": {
+      "persona": "Quân sĩ nhà Trần",
+      "voice": "Phấn khích, tự hào",
+      "system_prompt": "Mày là một quân sĩ nhà Trần, chứng kiến trận Bạch Đằng. Kể lại trận đánh từ góc nhìn người lính — hào hùng, máu lửa."
+    },
+    "historian": {
+      "persona": "Sử gia hiện đại",
+      "voice": "Trung tính, học thuật, so sánh nhiều nguồn",
+      "system_prompt": "Phân tích trận Bạch Đằng từ góc độ sử học hiện đại: chiến lược quân sự, ý nghĩa lịch sử, bài học. Trích nguồn rõ ràng."
+    }
+  },
+  "chunks": [
+    {
+      "id": "bd-001",
+      "content": "Trận Bạch Đằng năm 1288 là trận thủy chiến quyết định trong cuộc kháng chiến chống quân Nguyên lần thứ ba. Đại quân Nguyên do Thoát Hoan chỉ huy tiến vào Việt Nam qua đường biển với hàng trăm chiến thuyền.",
+      "source": "Đại Việt sử ký toàn thư, Quyển V",
+      "reliability": 95,
+      "tags": ["bối cảnh", "đại quân Nguyên"]
+    },
+    {
+      "id": "bd-002",
+      "content": "Trần Hưng Đạo cho quân lính đóng hàng nghìn cọc gỗ lim, đầu nhọn bịt sắt, cắm xuống lòng sông Bạch Đằng theo phương chéo về phía hạ lưu. Khi nước triều lên, cọc lim ngập dưới nước không ai thấy được.",
+      "source": "Đại Việt sử ký toàn thư; Hồng Đạo đại vương quốc âm binh",
+      "reliability": 93,
+      "tags": ["chiến lược", "cọc lim", "thủy chiến"]
+    },
+    {
+      "id": "bd-003",
+      "content": "Nghĩa quân nhà Trần cho một số thuyền nhẹ ra khiêu chiến, dụ đại quân Nguyên đuổi theo. Khi quân Nguyên vào sâu trong dòng nước xoáy của Bạch Đằng, bất ngờ triều cường rút xuống, lộ ra hàng nghìn cọc lim đầy mặt sông.",
+      "source": "Đại Việt sử ký toàn thư, Quyển V",
+      "reliability": 94,
+      "tags": ["dụ địch", "triều cường", "phục kích"]
+    },
+    {
+      "id": "bd-004",
+      "content": "Kết quả: toàn bộ hạm đội Nguyên gồm hàng trăm chiến thuyền bị đánh chìm, tướng Toa Đà bị bắt sống, quân Nguyên tổn thất nặng nề buộc phải rút lui về nước. Chiến thắng Bạch Đằng được xem là một trong những trận thủy chiến vĩ đại nhất lịch sử.",
+      "source": "Đại Việt sử ký toàn thư; Đ Viz",
+      "reliability": 97,
+      "tags": ["kết quả", "ý nghĩa lịch sử"]
+    }
+  ]
+}
