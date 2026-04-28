@@ -41,12 +41,26 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
         if (done) break
 
         const chunk = decoder.decode(value)
-        assistantMessage += chunk
-        setMessages(prev => {
-          const updated = [...prev]
-          updated[updated.length - 1] = { role: 'assistant', content: assistantMessage }
-          return updated
-        })
+        // Gemini streaming returns SSE format: "data: {...}"
+        const lines = chunk.split('\n')
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6))
+              const text = data.candidates?.[0]?.content?.parts?.[0]?.text || ''
+              if (text) {
+                assistantMessage += text
+                setMessages(prev => {
+                  const updated = [...prev]
+                  updated[updated.length - 1] = { role: 'assistant', content: assistantMessage }
+                  return updated
+                })
+              }
+            } catch (e) {
+              // Skip invalid JSON
+            }
+          }
+        }
       }
     } catch (err) {
       if (err.name !== 'AbortError') {

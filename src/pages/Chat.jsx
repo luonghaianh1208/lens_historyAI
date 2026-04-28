@@ -53,22 +53,7 @@ export default function Chat() {
   }
 
   const renderMessage = (content) => {
-    const parts = content.split(/(\[[\d]+\])/g)
-    return parts.map((part, i) => {
-      if (part.match(/\[[\d]+\]/)) {
-        const num = part.match(/\[(\d+)\]/)?.[1]
-        return (
-          <sup
-            key={i}
-            className="text-blue-600 cursor-pointer hover:text-blue-800 mx-0.5"
-            title={`Nguồn [${num}]`}
-          >
-            [{num}]
-          </sup>
-        )
-      }
-      return <span key={i}>{part}</span>
-    })
+    return content
   }
 
   if (!entity) {
