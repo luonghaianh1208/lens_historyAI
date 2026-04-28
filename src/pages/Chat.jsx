@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
-import { useAuth } from '../hooks/useAuth'
 
 const perspectiveLabels = {
   self: 'Nhập vai',
@@ -20,7 +19,6 @@ export default function Chat() {
   const { entityId } = useParams()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { user } = useAuth()
 
   const [perspective, setPerspective] = useState(searchParams.get('perspective') || 'self')
   const [lengthLevel, setLengthLevel] = useState('medium')
@@ -28,7 +26,7 @@ export default function Chat() {
   const messagesEndRef = useRef(null)
 
   const entity = getEntity(entityId)
-  const { messages, loading, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
+  const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -132,6 +130,11 @@ export default function Chat() {
 
       {/* Messages */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 overflow-auto">
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+            <strong>Lỗi:</strong> {error}
+          </div>
+        )}
         {messages.length === 0 && (
           <div className="text-center py-12">
             <div className="text-4xl mb-4">💬</div>

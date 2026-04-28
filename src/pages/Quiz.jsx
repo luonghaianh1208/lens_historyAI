@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getEntity } from '../services/retrieval'
-import { useAuth } from '../hooks/useAuth'
 
 const sampleQuestions = [
   {
@@ -39,7 +38,6 @@ const sampleQuestions = [
 export default function Quiz() {
   const { entityId } = useParams()
   const navigate = useNavigate()
-  const { user } = useAuth()
   const entity = getEntity(entityId)
 
   const [questions, setQuestions] = useState([])

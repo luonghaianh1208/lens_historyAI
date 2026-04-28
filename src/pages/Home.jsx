@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { searchEntities, getIndex } from '../services/retrieval'
-import { useAuth } from '../hooks/useAuth'
+import { searchEntities } from '../services/retrieval'
 
 const suggestions = [
   { id: 'nguyen-trai', name: 'Nguyễn Trãi', type: 'person' },
@@ -13,7 +12,6 @@ export default function Home() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [showResults, setShowResults] = useState(false)
-  const { user, login, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleSearch = (value) => {
@@ -38,24 +36,17 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🔍</span>
             <h1 className="text-xl font-bold text-gray-800">HistoryLens AI</h1>
           </div>
-          <nav className="flex items-center gap-4">
-            <Link to="/teacher" className="text-gray-600 hover:text-gray-900">Giáo viên</Link>
-            {user ? (
-              <div className="flex items-center gap-3">
-                <img src={user.photoURL} alt={user.displayName} className="w-8 h-8 rounded-full" />
-                <button onClick={logout} className="text-sm text-gray-500 hover:text-red-600">Đăng xuất</button>
-              </div>
-            ) : (
-              <button onClick={login} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
-                Đăng nhập
-              </button>
-            )}
-          </nav>
+          <Link
+            to="/teacher"
+            className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg text-sm font-medium hover:bg-purple-200 transition"
+          >
+            👨‍🏫 Giáo viên
+          </Link>
         </div>
       </header>
 
@@ -125,7 +116,7 @@ export default function Home() {
         </div>
 
         {/* Feature Cards */}
-        <div className="mt-16 grid md:grid-cols-3 gap-6">
+        <div className="mt-16 grid md:grid-cols-2 gap-6 justify-center max-w-2xl mx-auto">
           <Link
             to="/entity/nguyen-trai"
             className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition"
@@ -141,14 +132,6 @@ export default function Home() {
             <div className="text-3xl mb-4">📝</div>
             <h3 className="font-semibold text-gray-900 mb-2">Luyện Quiz</h3>
             <p className="text-sm text-gray-600">Kiểm tra kiến thức với câu hỏi trắc nghiệm sinh tự động</p>
-          </Link>
-          <Link
-            to="/teacher"
-            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition"
-          >
-            <div className="text-3xl mb-4">👨‍🏫</div>
-            <h3 className="font-semibold text-gray-900 mb-2">Lớp học</h3>
-            <p className="text-sm text-gray-600">Giáo viên tạo lớp, giao bài tập cho học sinh</p>
           </Link>
         </div>
       </main>
