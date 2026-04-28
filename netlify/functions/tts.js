@@ -64,7 +64,7 @@ export default async (req) => {
     const data = await response.json()
 
     const parts = data?.candidates?.[0]?.content?.parts || []
-    const audioPart = parts.find(p => p.inlineData && p.inlineData.mimeType.startsWith('audio/pcm'))
+    const audioPart = parts.find(p => p.inlineData && (p.inlineData.mimeType.startsWith('audio/pcm') || p.inlineData.mimeType.startsWith('audio/l16')))
 
     if (!audioPart) {
       return new Response(JSON.stringify({ error: 'Gemini did not return audio', data }), {
