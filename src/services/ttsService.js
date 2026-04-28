@@ -83,17 +83,11 @@ export function getVoiceConfig(entityId) {
 export function buildTTSPayload(text, entityId) {
   const voice = getVoiceConfig(entityId)
   return {
-    input: { text },
-    voice: {
-      languageCode: voice.locale,
-      name: voice.voiceName
-    },
-    audioConfig: {
-      audioEncoding: 'MP3',
-      speakingRate: voice.speakingRate,
-      pitch: voice.pitch,
-      sampleRateHertz: 24000
-    }
+    text,
+    voiceName: voice.voiceName,
+    locale: voice.locale,
+    speakingRate: voice.speakingRate,
+    pitch: voice.pitch
   }
 }
 
