@@ -2,61 +2,45 @@
 
 ---
 
-## MUC TIEU
+## MỤC TIÊU
 
-Xay dung **HistoryLens AI** — webapp AI nhap vai nhan vat lich su Viet Nam.
-Muc tieu: **chay duoc tren Netlify**, dung de thi Tin hoc tre.
+**HistoryLens AI** — webapp AI nhập vai nhân vật lịch sử Việt Nam.
+Mục tiêu: **chạy được trên Netlify**, dùng cho thi Tin học trẻ.
 
 ---
 
 ## STACK
 
 ```
-Frontend : React + Vite + TailwindCSS
-Hosting  : Netlify (deploy tu dong qua GitHub)
-AI API   : Google Gemini API (gemini-2.5-flash)
-Data     : JSON tinh trong src/data/ (entities + events)
+Frontend : React 19 + Vite + TailwindCSS v4
+Hosting  : Netlify (deploy tự động qua GitHub)
+AI API   : Gemini 2.5 Flash (server-side, key never exposed)
+Data     : JSON tĩnh trong src/data/ (entities + events)
 ```
 
-> KHONG dung Next.js, KHONG dung Supabase, KHONG dung vector DB.
-> Giu stack toi gian de deploy nhanh len Netlify.
-> Firebase Auth/Firestore se duoc them sau khi core features on dinh.
+> KHÔNG Firebase, KHÔNG Teacher page, KHÔNG login.
+> App công khai cho mọi người dùng.
 
 ---
 
-## CAU TRUC THU MUC
+## CẤU TRÚC THƯ MỤC
 
 ```
 historylens-ai/
-├── public/
 ├── src/
-│   ├── pages/
-│   │   ├── Home.jsx          ← Trang chu + search
-│   │   ├── Entity.jsx        ← Chi tiet nhan vat/su kien
-│   │   ├── Chat.jsx          ← Chat voi AI
-│   │   └── Quiz.jsx          ← Luyen trac nghiem
+│   ├── pages/           # Home, Entity, Chat, Quiz
+│   ├── hooks/            # useChat.js (streaming chat state)
 │   ├── services/
-│   │   ├── geminiApi.js       ← build system prompt + goi API helper
-│   │   ├── retrieval.js       ← tim kiem trong data JSON
-│   │   └── quizService.js     ← tao prompt quiz
+│   │   ├── geminiApi.js      # buildSystemPrompt() + API helpers
+│   │   ├── retrieval.js      # getEntity(), searchEntities() from JSON
+│   │   └── quizService.js    # Quiz generation helpers
 │   ├── data/
-│   │   ├── entities/          ← file JSON moi nhan vat
-│   │   │   ├── nguyen-trai.json
-│   │   │   ├── le-loi.json
-│   │   │   ├── tran-hung-dao.json
-│   │   │   └── ...
-│   │   └── events/
-│   │       ├── khoi-nghia-lam-son.json
-│   │       ├── chien-thang-bach-dang.json
-│   │       └── ...
-│   ├── hooks/
-│   │   └── useChat.js
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
+│   │   ├── entities/         # nguyen-trai.json, le-loi.json, tran-hung-dao.json
+│   │   └── events/           # khoi-nghia-lam-son.json, chien-thang-bach-dang.json
+│   └── index.css            # Tailwind imports only (@import "tailwindcss")
 ├── netlify/
 │   └── functions/
-│       └── chat.js            ← Netlify Function v2, goi Gemini API
+│       └── chat.js          # Netlify Function v2, proxy to Gemini API
 ├── netlify.toml
 ├── package.json
 └── CLAUDE.md
@@ -64,117 +48,82 @@ historylens-ai/
 
 ---
 
-## DATA SCHEMA (JSON)
+## DATA SCHEMA
 
-### Entity (person) — vi du `nguyen-trai.json`
+### Entity (person)
 
 ```json
 {
   "id": "nguyen-trai",
   "type": "person",
-  "name": "Nguyen Trai",
-  "aliases": ["Uc Trai"],
-  "born": 1380,
-  "died": 1442,
-  "period": "Hau Le so",
-  "roles": ["Quan su", "Nha tho"],
-  "tags": ["quan su", "nha tho"],
+  "name": "Nguyễn Trãi",
+  "period": "Hậu Lê sơ",
+  "roles": ["Quân sư", "Nhà thơ"],
+  "tags": ["quân sư", "nhà thơ"],
   "short_desc": "...",
-  "related_events": ["khoi-nghia-lam-son"],
-  "related_people": ["le-loi"],
   "timeline": [{ "year": 1380, "event": "..." }],
   "perspectives": {
-    "self": { "persona": "...", "system_prompt": "..." },
+    "self": { "persona": "Nguyễn Trãi tự thuật", "system_prompt": "..." },
     "contemporary": { "persona": "...", "system_prompt": "..." },
     "historian": { "persona": "...", "system_prompt": "..." }
   },
-  "chunks": [
-    { "id": "nt-001", "content": "...", "source": "...", "reliability": 95, "tags": [] }
-  ]
+  "chunks": [{ "id": "nt-001", "content": "...", "source": "...", "reliability": 95 }]
 }
 ```
 
-### Event — vi du `khoi-nghia-lam-son.json`
+### Event
 
-Event perspectives co the dung key bat ky (vi du: `le-loi`, `nguyen-trai`, `historian`).
-Chat page doc perspectives tu entity data, KHONG hardcode keys.
+Event perspectives dùng key bất kỳ (ví d: `le-loi`, `nguyen-trai`, `historian`).
+Chat page đọc perspectives từ entity data — KHÔNG hardcode keys.
 
 ```json
 {
   "id": "khoi-nghia-lam-son",
   "type": "event",
+  "period": "1418-1427",
   "perspectives": {
-    "le-loi": { "persona": "Le Loi — nguoi lanh dao", "system_prompt": "..." },
-    "nguyen-trai": { "persona": "Nguyen Trai — quan su", "system_prompt": "..." },
-    "historian": { "persona": "Su gia hien dai", "system_prompt": "..." }
+    "le-loi": { "persona": "Lê Lợi — người lãnh đạo", "system_prompt": "..." },
+    "nguyen-trai": { "persona": "Nguyễn Trãi — quân sư", "system_prompt": "..." },
+    "historian": { "persona": "Sử gia hiện đại", "system_prompt": "..." }
   }
 }
 ```
 
 ---
 
-## GEMINI API — CACH GOI
+## LỆNH THƯỜNG DÙNG
 
-### Netlify Function `netlify/functions/chat.js`
-
-- Dung **Netlify Functions v2** format (`export default async (req) => new Response(...)`)
-- Goi Gemini API `gemini-2.5-flash`
-- Ho tro streaming (SSE) va non-streaming
-- API key: `GEMINI_API_KEY` trong Netlify Environment Variables
-
-### System Prompt
-
-AI duoc cau hinh nhu **chuyen gia lich su Viet Nam** voi vai tro cu the (nhap vai / nguoi cung thoi / su gia).
-Hien tai AI tu tra loi dua tren kien thuc cua minh voi vai tro duoc chi dinh.
-Sau nay se bo sung chunks[] lam nguon tai lieu bat buoc + citation rules.
-
-```javascript
-function buildSystemPrompt(entity, perspective, lengthLevel) {
-  const perspectiveConfig = entity.perspectives[perspective]
-  const lengthGuide = {
-    short:  'Tra loi 5-8 cau.',
-    medium: 'Tra loi 3-5 doan.',
-    long:   'Tra loi day du: boi canh -> dien bien -> he qua -> nhan xet su hoc.'
-  }[lengthLevel]
-
-  return `${perspectiveConfig.system_prompt}
-
-Ban la chuyen gia lich su Viet Nam. Tra loi chinh xac dua tren kien thuc lich su.
-Neu khong chac chan, noi ro day la suy doan hoac can xac minh them.
-Phan biet ro: SU KIEN (da xac nhan) vs DIEN GIAI (suy luan hop ly).
-${lengthGuide}
-Tra loi hoan toan bang tieng Viet.`
-}
+```bash
+npm run dev      # Local dev: http://localhost:5173
+npm run build    # Production build → dist/
+npm run preview  # Preview production build
 ```
 
 ---
 
-## CAC MAN HINH
+## NETLIFY FUNCTION
 
-### 1. Home (`/`)
-- Thanh search lon
-- Goi y nhanh: Nguyen Trai / Tran Hung Dao / Khoi nghia Lam Son
-- Feature cards: "Chat voi nhan vat" | "Luyen Quiz"
+### `netlify/functions/chat.js`
 
-### 2. Entity Page (`/entity/:id`)
-- Header: ten + tom tat + tags
-- Tab: **Tong quan** | **Timeline** | **Nguon**
-- CTA: dropdown chon goc nhin -> vao Chat
+- Netlify Functions v2 format: `export default async (req) => new Response(...)`
+- Model: `gemini-2.5-flash`
+- Streaming (SSE) và non-streaming đều hỗ trợ
+- API key: `GEMINI_API_KEY` trong Netlify Environment Variables
 
-### 3. Chat Page (`/chat/:entityId`)
-- Selector goc nhin: doc tu entity.perspectives (dong, khong hardcode)
-- Chat streaming (SSE tu Netlify Function)
-- Nut: "Chuyen goc nhin" | "Tao quiz"
-- Thanh do dai: Ngan / Vua / Dai
+### Build System Prompt
 
-### 4. Quiz Page (`/quiz/:entityId`)
-- 5 cau MCQ sinh tu Gemini API
-- Cham diem + giai thich
-- Nut "Lam lai" | "Chat them"
+```javascript
+// src/services/geminiApi.js
+buildSystemPrompt(entity, perspective, lengthLevel)
+// → Combines perspective config + length guide
+// → No citation requirements
+```
+
+AI trả lời tự do dựa trên kiến thức model, KHÔNG bắt buộc dùng chunks.
 
 ---
 
-## CAU HINH DEPLOY
+## CẤU HÌNH DEPLOY
 
 ### `netlify.toml`
 ```toml
@@ -193,20 +142,31 @@ Tra loi hoan toan bang tieng Viet.`
   port = 5173
 ```
 
-### `.env.example`
-```
-GEMINI_API_KEY=      # chi dung trong Netlify Functions, KHONG VITE_
-```
+### Environment Variables (Netlify Dashboard)
+
+| Variable | Giá trị |
+|---|---|
+| `GEMINI_API_KEY` | Key từ aistudio.google.com |
 
 ---
 
-## RANG BUOC BAT BUOC
+## RÀNG BUỘC
 
-1. **API key KHONG duoc expose ra frontend** — phai qua Netlify Function
-2. **KHONG dung vector DB** — tim kiem bang keyword match tren data JSON
-3. **AI tu tra loi voi vai tro chuyen biet** — chua yeu cau bam vao chunks (se bo sung sau)
+1. **API key KHÔNG expose ra frontend** — phải qua Netlify Function
+2. **Không vector DB** — tìm kiếm bằng keyword match trên JSON
+3. **AI trả lời tự do** — không citation, dùng kiến thức model
 4. **Mobile-friendly** — TailwindCSS responsive
-5. **Guest mode** — ai cung truy cap duoc, khong can login
-6. **KHONG co trang Teacher** — app cong khai cho moi nguoi
+5. **Guest mode** — không login, không Teacher page
+6. **maxTokens theo lengthLevel**: short=800, medium=2000, long=3500
+7. **AI response phải dùng markdown** — in đậm, đoạn văn rõ ràng
+8. **Chat page phải render ReactMarkdown** cho assistant messages
 
 ---
+
+## GHI CHÚ
+
+- Search: `retrieval.js:searchEntities()` match theo name, aliases, tags, period
+- Perspectives dynamic: Entity page đọc `Object.entries(entity.perspectives)` để render buttons
+- Quiz: gọi Gemini tạo câu hỏi, fallback hardcoded nếu API lỗi
+- Local dev: nếu `VITE_NETLIFY` không set, useChat sẽ trả mock response
+- System prompt inject `entity.chunks[]` làm tài liệu tham khảo ưu tiên

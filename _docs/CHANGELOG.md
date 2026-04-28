@@ -1,56 +1,36 @@
 # Changelog
 
-## [2026-04-28] - Bỏ chức năng Giáo viên & Auth, công khai app
-### Đã xóa
-- Trang `Teacher.jsx` và route `/teacher`
-- Hook `useAuth.js` (không cần đăng nhập)
-- File `firebase.js` (không dùng Firebase nữa)
-- Dependency `firebase` khỏi `package.json`
-- Nút "Giáo viên" trên header trang Home
-- Các biến Firebase khỏi `.env.example`
+## [2026-04-28] Session 2 — Fix Bugs + Phát triển
 ### Đã sửa
-- `.env.example` chỉ còn `GEMINI_API_KEY`
-- Cập nhật toàn bộ `_docs/` phản ánh kiến trúc mới
+- BUG-005: maxTokens theo lengthLevel (short=800, medium=2000, long=3500) thay vì hardcode 1000
+- BUG-007: Quiz reset toàn bộ state khi navigate sang entity khác
+- BUG-008: Quiz review hiển thị từng option với highlight xanh/đỏ + icon ✓/✗
+### Đã thêm
+- `react-markdown` — render markdown trong chat assistant messages
+- Typing indicator 3 bouncing dots khi AI đang stream
+- Quick suggestions động sinh từ entity data + perspective
+- Nút "↓ Tin mới nhất" khi scroll lên trong chat
+- System prompt inject `entity.chunks[]` làm tài liệu tham khảo
+- Related people resolve tên thật từ `getEntity()`
+- Entity: **Lý Thường Kiệt** (`ly-thuong-kiet.json`) — 3 perspectives, 7 timeline, 5 chunks
+- Event: **Chiến tranh Lý–Tống** (`chien-tranh-ly-tong.json`) — 3 perspectives, 6 timeline, 4 chunks
+- Thêm 2 entity mới vào Home suggestions
 ### File bị ảnh hưởng
-- `src/App.jsx`
-- `src/pages/Home.jsx`
-- `src/pages/Teacher.jsx` (xóa)
-- `src/hooks/useAuth.js` (xóa)
-- `src/services/firebase.js` (xóa)
-- `.env.example`
-- `package.json`
+- `src/hooks/useChat.js`, `src/pages/Quiz.jsx`, `src/pages/Chat.jsx`
+- `src/services/geminiApi.js`, `src/services/retrieval.js`
+- `src/pages/Entity.jsx`, `src/pages/Home.jsx`
+- `src/data/entities/ly-thuong-kiet.json` (NEW)
+- `src/data/events/chien-tranh-ly-tong.json` (NEW)
+- `package.json` (thêm react-markdown)
 
 ---
 
-## [2026-04-28] - Fix bugs và đồng bộ codebase
-### Đã sửa
-- [BUG-001] Đổi tên `claudeApi.js` → `geminiApi.js`, sửa `.env.example` từ `ANTHROPIC_API_KEY` → `GEMINI_API_KEY`
-- [BUG-002] SSE Stream parser thêm `sseBuffer` để xử lý TCP chunk không trọn vẹn
-- [BUG-003] Thêm route `/teacher` vào `App.jsx`
-- [BUG-004] Gỡ dependency `@anthropic-ai/sdk`
-### Đã thêm
-- Nút "Giáo viên" trên header trang Home
+## [2026-04-28] — Bỏ Teacher/Auth/Firebase, công khai app
 ### Đã xóa
-- File `src/services/claudeApi.js`
-- Dependency `@anthropic-ai/sdk`
+- Teacher.jsx, useAuth.js, firebase.js, dependency firebase
 
 ---
 
-## [2026-04-28] - Khởi tạo tài liệu dự án
-### Trạng thái hiện tại
-- **Core Modules**: Router, Netlify serverless functions hoạt động.
-- **Entity View**: Hiển thị nhân vật và sự kiện từ mock data JSON.
-- **Chatbot AI**: Tích hợp Gemini 2.5 Flash qua Netlify API với SSE.
-
-### Hướng dẫn cập nhật
-Sau mỗi session làm việc, thêm block mới theo format:
-
-## [YYYY-MM-DD] - Tên tính năng / công việc
-### Đã thêm
-- ...
+## [2026-04-28] — Fix bugs và đồng bộ codebase
 ### Đã sửa
-- ...
-### Đã xóa
-- ...
-### File bị ảnh hưởng
-- đường dẫn file 1
+- BUG-001–004: đổi tên claudeApi→geminiApi, SSE buffer, route Teacher, gỡ @anthropic-ai/sdk

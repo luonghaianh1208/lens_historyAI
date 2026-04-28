@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
+import ReactMarkdown from 'react-markdown'
 
 const lengthLabels = {
   short: 'Ngắn',
@@ -18,6 +19,22 @@ function getPerspectiveLabel(key, entity) {
   return entity?.perspectives?.[key]?.persona || key
 }
 
+function getQuickSuggestions(entity, perspective) {
+  if (!entity) return []
+  if (perspective === 'historian') {
+    return [
+      `Đánh giá vai trò của ${entity.name} theo sử học hiện đại?`,
+      `Các sử gia có quan điểm khác nhau thế nào về ${entity.name}?`,
+      `Tầm quan trọng của ${entity.name} trong lịch sử Việt Nam?`,
+    ]
+  }
+  return [
+    `Kể về cuộc đời của ${entity.type === 'person' ? 'ngài' : 'sự kiện này'}?`,
+    `${entity.type === 'person' ? 'Chiến công hay đóng góp lớn nhất là gì?' : 'Nguyên nhân dẫn đến sự kiện này là gì?'}`,
+    `${entity.type === 'person' ? 'Bài học lịch sử từ cuộc đời ngài?' : 'Ý nghĩa lịch sử của sự kiện này?'}`,
+  ]
+}
+
 export default function Chat() {
   const { entityId } = useParams()
   const [searchParams] = useSearchParams()
@@ -30,9 +47,13 @@ export default function Chat() {
   const [perspective, setPerspective] = useState(defaultPerspective)
   const [lengthLevel, setLengthLevel] = useState('medium')
   const [input, setInput] = useState('')
+  const [showScrollBtn, setShowScrollBtn] = useState(false)
   const messagesEndRef = useRef(null)
+  const mainRef = useRef(null)
 
   const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
+
+  const suggestions = getQuickSuggestions(entity, perspective)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -99,11 +120,10 @@ export default function Chat() {
               <button
                 key={key}
                 onClick={() => handleChangePerspective(key)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                  perspective === key
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${perspective === key
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+                  }`}
               >
                 {config.persona || key}
               </button>
@@ -117,11 +137,10 @@ export default function Chat() {
               <button
                 key={key}
                 onClick={() => setLengthLevel(key)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-                  lengthLevel === key
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${lengthLevel === key
                     ? 'bg-gray-800 text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
+                  }`}
               >
                 {label}
               </button>
@@ -131,7 +150,14 @@ export default function Chat() {
       </div>
 
       {/* Messages */}
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 overflow-auto">
+      <main
+        ref={mainRef}
+        onScroll={(e) => {
+          const el = e.currentTarget
+          setShowScrollBtn(el.scrollHeight - el.scrollTop - el.clientHeight > 100)
+        }}
+        className="flex-1 max-w-3xl mx-auto w-full px-4 py-6 overflow-auto relative"
+      >
         {error && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
             <strong>Lỗi:</strong> {error}
@@ -142,24 +168,15 @@ export default function Chat() {
             <div className="text-4xl mb-4">💬</div>
             <p className="text-gray-500 mb-6">Bắt đầu cuộc trò chuyện với {entity.name}</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <button
-                onClick={() => setInput('Cho ta biết về cuộc đời của người?')}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700"
-              >
-                Cuộc đời
-              </button>
-              <button
-                onClick={() => setInput('Kể về chiến công lớn nhất của người?')}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700"
-              >
-                Chiến công
-              </button>
-              <button
-                onClick={() => setInput('Người đánh giá thế nào về thời kỳ đó?')}
-                className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700"
-              >
-                Đánh giá
-              </button>
+              {suggestions.map((text, i) => (
+                <button
+                  key={i}
+                  onClick={() => setInput(text)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full text-sm text-gray-700 transition"
+                >
+                  {text}
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -168,26 +185,43 @@ export default function Chat() {
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 ${
-                  msg.role === 'user'
+                className={`max-w-[85%] rounded-2xl px-4 py-3 ${msg.role === 'user'
                     ? 'bg-blue-600 text-white'
                     : 'bg-white shadow-sm'
-                }`}
+                  }`}
               >
                 <div className="text-sm mb-1 opacity-60">
                   {msg.role === 'user' ? 'Bạn' : entity.name}
                 </div>
-                <div className={`leading-relaxed ${msg.role === 'user' ? '' : 'prose prose-sm max-w-none'}`}>
-                  {msg.content || ''}
-                </div>
-                {loading && msg.role === 'assistant' && !msg.content && (
-                  <span className="inline-block animate-pulse">Đang trả lời...</span>
+                {msg.role === 'assistant' ? (
+                  <div className="leading-relaxed prose prose-sm max-w-none">
+                    {msg.content ? (
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    ) : loading && i === messages.length - 1 ? (
+                      <div className="flex gap-1 items-center py-1">
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
+                    ) : null}
+                  </div>
+                ) : (
+                  <div className="leading-relaxed">{msg.content || ''}</div>
                 )}
               </div>
             </div>
           ))}
         </div>
         <div ref={messagesEndRef} />
+
+        {showScrollBtn && (
+          <button
+            onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })}
+            className="fixed bottom-24 right-6 bg-white shadow-md border border-gray-200 rounded-full px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 z-10"
+          >
+            ↓ Tin mới nhất
+          </button>
+        )}
       </main>
 
       {/* Input */}

@@ -1,15 +1,19 @@
 import nguyenTrai from '../data/entities/nguyen-trai.json'
 import leLoi from '../data/entities/le-loi.json'
 import tranHungDao from '../data/entities/tran-hung-dao.json'
+import lyThuongKiet from '../data/entities/ly-thuong-kiet.json'
 import khoiNghiaLamSon from '../data/events/khoi-nghia-lam-son.json'
 import chienThangBachDang from '../data/events/chien-thang-bach-dang.json'
+import chienTranhLyTong from '../data/events/chien-tranh-ly-tong.json'
 
 const entities = {
   'nguyen-trai': nguyenTrai,
   'le-loi': leLoi,
   'tran-hung-dao': tranHungDao,
+  'ly-thuong-kiet': lyThuongKiet,
   'khoi-nghia-lam-son': khoiNghiaLamSon,
-  'chien-thang-bach-dang': chienThangBachDang
+  'chien-thang-bach-dang': chienThangBachDang,
+  'chien-tranh-ly-tong': chienTranhLyTong
 }
 
 export function getEntity(id) {
@@ -38,7 +42,9 @@ export function getIndex() {
     { id: 'nguyen-trai', type: 'person', name: 'Nguyễn Trãi', period: 'Hậu Lê sơ', tags: ['quân sư', 'nhà thơ'] },
     { id: 'le-loi', type: 'person', name: 'Lê Lợi', period: 'Hậu Lê sơ', tags: ['vua', 'khởi nghĩa'] },
     { id: 'tran-hung-dao', type: 'person', name: 'Trần Hưng Đạo', period: 'Nhà Trần', tags: ['tướng quân'] },
+    { id: 'ly-thuong-kiet', type: 'person', name: 'Lý Thường Kiệt', period: 'Nhà Lý', tags: ['tướng quân', 'chống Tống'] },
     { id: 'khoi-nghia-lam-son', type: 'event', name: 'Khởi nghĩa Lam Sơn', period: '1418-1427', tags: ['kháng chiến'] },
-    { id: 'chien-thang-bach-dang', type: 'event', name: 'Chiến thắng Bạch Đằng', period: '1288', tags: ['trận đánh'] }
+    { id: 'chien-thang-bach-dang', type: 'event', name: 'Chiến thắng Bạch Đằng', period: '1288', tags: ['trận đánh'] },
+    { id: 'chien-tranh-ly-tong', type: 'event', name: 'Chiến tranh Lý–Tống', period: '1075-1077', tags: ['kháng chiến', 'nhà Lý'] }
   ]
 }

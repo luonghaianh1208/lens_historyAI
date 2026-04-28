@@ -5,7 +5,9 @@ import { searchEntities } from '../services/retrieval'
 const suggestions = [
   { id: 'nguyen-trai', name: 'Nguyễn Trãi', type: 'person' },
   { id: 'tran-hung-dao', name: 'Trần Hưng Đạo', type: 'person' },
+  { id: 'ly-thuong-kiet', name: 'Lý Thường Kiệt', type: 'person' },
   { id: 'khoi-nghia-lam-son', name: 'Khởi nghĩa Lam Sơn', type: 'event' },
+  { id: 'chien-tranh-ly-tong', name: 'Chiến tranh Lý–Tống', type: 'event' },
 ]
 
 export default function Home() {

@@ -1,0 +1,100 @@
+{
+    "id": "chien-tranh-ly-tong",
+    "type": "event",
+    "name": "Chiến tranh Lý–Tống",
+    "period_start": 1075,
+    "period_end": 1077,
+    "tags": [
+        "kháng chiến",
+        "nhà Lý",
+        "chống Tống",
+        "phòng tuyến Như Nguyệt"
+    ],
+    "short_desc": "Chiến tranh Lý–Tống (1075–1077) là cuộc chiến tranh giữa Đại Việt thời nhà Lý và nhà Tống (Trung Quốc). Đại Việt chủ động tấn công phủ đầu vào đất Tống rồi rút về lập phòng tuyến, đánh bại 30 vạn quân xâm lược trên sông Như Nguyệt, bảo vệ vững chắc nền độc lập.",
+    "related_people": [
+        "ly-thuong-kiet"
+    ],
+    "timeline": [
+        {
+            "year": 1073,
+            "event": "Vương An Thạch (nhà Tống) đề xuất kế hoạch xâm lược Đại Việt nhằm lập chiến công chính trị"
+        },
+        {
+            "year": 1075,
+            "event": "Lý Thường Kiệt chủ động tấn công phủ đầu, đánh phá Ung Châu, Khâm Châu, Liêm Châu của nhà Tống"
+        },
+        {
+            "year": 1076,
+            "event": "Đại Việt rút quân về nước, xây dựng phòng tuyến kiên cố trên sông Như Nguyệt (sông Cầu)"
+        },
+        {
+            "year": 1077,
+            "event": "30 vạn quân Tống do Quách Quỳ chỉ huy tràn sang, bị chặn đứng tại phòng tuyến Như Nguyệt"
+        },
+        {
+            "year": 1077,
+            "event": "Đại Việt phản công quyết định, đại phá quân Tống. Bài thơ 'Nam quốc sơn hà' vang lên trên sông Như Nguyệt"
+        },
+        {
+            "year": 1078,
+            "event": "Hai bên hòa đàm, nhà Tống công nhận Đại Việt, trả lại đất đai đã chiếm"
+        }
+    ],
+    "perspectives": {
+        "ly-thuong-kiet": {
+            "persona": "Lý Thường Kiệt — Tổng chỉ huy",
+            "system_prompt": "Bạn là Lý Thường Kiệt, tổng chỉ huy cuộc kháng chiến chống Tống 1075–1077. Hãy kể lại chiến tranh này từ góc nhìn của người trực tiếp chỉ huy, nói ở ngôi thứ nhất. Chia sẻ lý do tấn công phủ đầu, quá trình xây phòng tuyến Như Nguyệt, và khoảnh khắc quyết định trong trận đánh."
+        },
+        "tong-quan": {
+            "persona": "Tướng nhà Tống",
+            "system_prompt": "Bạn là một viên tướng nhà Tống tham gia cuộc chiến năm 1077. Hãy kể lại sự kiện từ phía quân Tống: mệnh lệnh từ triều đình, cuộc hành quân xuống phương Nam, những khó khăn gặp phải tại phòng tuyến Như Nguyệt, và lý do thất bại. Giọng điệu trung thực, thừa nhận sức mạnh của đối phương."
+        },
+        "historian": {
+            "persona": "Sử gia hiện đại",
+            "system_prompt": "Bạn là sử gia hiện đại phân tích chiến tranh Lý–Tống 1075–1077. Hãy đánh giá khách quan chiến lược 'tiên phát chế nhân' của Lý Thường Kiệt, so sánh với các cuộc kháng chiến khác trong lịch sử Việt Nam, phân tích nguyên nhân thắng lợi và ý nghĩa lịch sử dựa trên sử liệu đáng tin cậy từ cả phía Việt lẫn Trung Quốc."
+        }
+    },
+    "chunks": [
+        {
+            "id": "clt-001",
+            "content": "Năm 1073, Tể tướng nhà Tống Vương An Thạch chủ trương đánh Đại Việt nhằm lập chiến công bù đắp thất bại cải cách nội chính. Nhà Tống tích cực chuẩn bị quân lương tại các châu biên giới, huấn luyện các dân tộc thiểu số làm hướng đạo, và gây sức ép ngoại giao đòi Đại Việt cắt đất.",
+            "source": "Tống sử, Tục tư trị thông giám trường biên",
+            "reliability": 90,
+            "tags": [
+                "nguyên nhân",
+                "Vương An Thạch"
+            ]
+        },
+        {
+            "id": "clt-002",
+            "content": "Tháng 10 năm 1075, Lý Thường Kiệt thực hiện chiến lược 'tiên phát chế nhân' (đánh trước để chế ngự đối phương). Ông chỉ huy khoảng 10 vạn quân chia làm hai đường thủy bộ tấn công vào các châu Ung, Khâm, Liêm của nhà Tống. Mục tiêu chính là phá hủy kho quân lương và căn cứ tập kết mà nhà Tống chuẩn bị để xâm lược Đại Việt.",
+            "source": "Đại Việt sử ký toàn thư, Tống sử",
+            "reliability": 92,
+            "tags": [
+                "tấn công phủ đầu",
+                "Ung Châu"
+            ]
+        },
+        {
+            "id": "clt-003",
+            "content": "Đầu năm 1077, quân Tống do Quách Quỳ và Triệu Tiết chỉ huy khoảng 30 vạn quân (gồm bộ binh, kỵ binh và thủy binh) tràn sang Đại Việt. Lý Thường Kiệt đã lập phòng tuyến kiên cố dọc bờ nam sông Như Nguyệt (sông Cầu ngày nay), dài hàng chục km với hào sâu, rào tre và cọc nhọn. Quân Tống nhiều lần cố vượt sông đều bị đánh bại.",
+            "source": "Đại Việt sử ký toàn thư",
+            "reliability": 90,
+            "tags": [
+                "phòng tuyến Như Nguyệt",
+                "Quách Quỳ"
+            ]
+        },
+        {
+            "id": "clt-004",
+            "content": "Sau nhiều tháng bị chặn tại sông Như Nguyệt, quân Tống hao hụt vì bệnh dịch, thiếu lương thực và bị quân Đại Việt liên tục tập kích. Lý Thường Kiệt tổ chức trận phản công quyết định vượt sông đánh úp, gây tổn thất nặng cho quân Tống. Nhận thấy không thể thắng, Quách Quỳ buộc phải chấp nhận đề nghị hòa đàm của phía Đại Việt và rút quân về nước.",
+            "source": "Đại Việt sử ký toàn thư, Tống sử",
+            "reliability": 88,
+            "tags": [
+                "phản công",
+                "hòa đàm",
+                "kết thúc chiến tranh"
+            ]
+        }
+    ]
+}

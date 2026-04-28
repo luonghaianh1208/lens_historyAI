@@ -7,42 +7,39 @@ Trạng thái: open | in-progress | fixed | wont-fix
 ---
 
 ## [BUG-001] Mâu thuẫn tên module và biến cấu hình LLM
-- **Mô tả**: Tên file dịch vụ frontend gọi là `claudeApi.js` nhưng backend gọi Gemini. `.env.example` liệt kê `ANTHROPIC_API_KEY` nhưng backend cần `GEMINI_API_KEY`.
-- **Tái hiện**:
-  1. Dev clone project.
-  2. Cấu hình `.env` theo `.env.example` → thiếu `GEMINI_API_KEY`.
-- **Nguyên nhân**: Refactoring từ Claude sang Gemini nhưng quên đồng bộ tên file và biến.
-- **Trạng thái**: fixed
-- **File liên quan**: `src/services/claudeApi.js` → `src/services/geminiApi.js`, `.env.example`
-- **Fix tại**: Session 2026-04-28 — Đổi tên file, cập nhật `.env.example`, gỡ `@anthropic-ai/sdk`
-
----
+- **Trạng thái**: fixed — Session 2026-04-28
 
 ## [BUG-002] SSE Stream Parser thiếu buffer gây mất chữ
-- **Mô tả**: Vòng lặp giải mã SSE chunk dùng `decoder.decode(value)` rồi cắt `'\n'` trực tiếp. Nếu TCP chunk bị chia giữa JSON object, `JSON.parse` sẽ fail và mất text.
-- **Tái hiện**:
-  1. Gửi câu hỏi cần AI trả lời dài.
-  2. Một phần chữ có thể bị mất (không xuất hiện trên màn hình).
-- **Nguyên nhân**: Thiếu buffer đệm cho SSE data chưa trọn vẹn.
-- **Trạng thái**: fixed
-- **File liên quan**: `src/hooks/useChat.js`
-- **Fix tại**: Session 2026-04-28 — Thêm `sseBuffer` giữ lại dòng cuối chưa hoàn chỉnh
+- **Trạng thái**: fixed — Session 2026-04-28
+
+## [BUG-003] Trang Teacher không có route
+- **Trạng thái**: fixed → removed (đã bỏ chức năng Teacher)
+
+## [BUG-004] Dependency `@anthropic-ai/sdk` thừa
+- **Trạng thái**: fixed — Session 2026-04-28
 
 ---
 
-## [BUG-003] Trang Teacher không có route → không truy cập được
-- **Mô tả**: `Teacher.jsx` đã tồn tại nhưng không có entry trong `App.jsx` Routes.
-- **Tái hiện**:
-  1. Truy cập `/teacher` → hiện trang trắng.
-- **Nguyên nhân**: Quên thêm Route khi tạo page mới.
+## [BUG-005] maxTokens hardcode 1000 — AI bị cụt giữa chừng
+- **Mô tả**: `useChat.js` hardcode `maxTokens: 1000` cho mọi lengthLevel. Khi user chọn "Dài", AI trả lời bị ở khoảng 5-6 câu rồi dừng.
+- **Nguyên nhân**: Không tính maxTokens theo lengthLevel.
 - **Trạng thái**: fixed
-- **File liên quan**: `src/App.jsx`
-- **Fix tại**: Session 2026-04-28 — Thêm `<Route path="/teacher" element={<Teacher />} />`
+- **Fix**: `maxTokens = { short: 800, medium: 2000, long: 3500 }[lengthLevel]`
+- **File**: `src/hooks/useChat.js`
 
----
+## [BUG-006] lengthLevel không reactive trong useCallback
+- **Mô tả**: `sendMessage` dùng `useCallback` nhưng `lengthLevel` có thể thiếu trong dependency array.
+- **Trạng thái**: fixed (đã có sẵn trong dependency array)
+- **File**: `src/hooks/useChat.js`
 
-## [BUG-004] Dependency `@anthropic-ai/sdk` thừa trong package.json
-- **Mô tả**: SDK Anthropic vẫn nằm trong dependencies dù không có file nào import. Tốn dung lượng node_modules và gây nhầm lẫn.
+## [BUG-007] Quiz không reset state khi đổi entity
+- **Mô tả**: Navigate từ quiz entity A sang B, score/answers/currentQuestion giữ nguyên giá trị cũ.
 - **Trạng thái**: fixed
-- **File liên quan**: `package.json`
-- **Fix tại**: Session 2026-04-28 — `npm uninstall @anthropic-ai/sdk`
+- **Fix**: Thêm full state reset trong `useEffect([entityId])`
+- **File**: `src/pages/Quiz.jsx`
+
+## [BUG-008] Quiz review không highlight đáp án sai/đúng
+- **Mô tả**: Phần review chỉ hiện text "Đáp án đúng: X", không có visual rõ ràng.
+- **Trạng thái**: fixed
+- **Fix**: Render từng option với nền xanh (đúng) / đỏ (sai) + icon ✓/✗
+- **File**: `src/pages/Quiz.jsx`

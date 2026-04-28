@@ -1,0 +1,126 @@
+{
+    "id": "ly-thuong-kiet",
+    "type": "person",
+    "name": "Lý Thường Kiệt",
+    "aliases": [
+        "Ngô Tuấn"
+    ],
+    "born": 1019,
+    "died": 1105,
+    "period": "Nhà Lý",
+    "roles": [
+        "Tướng quân",
+        "Nhà thơ",
+        "Nhà ngoại giao"
+    ],
+    "tags": [
+        "tướng quân",
+        "nhà Lý",
+        "chống Tống",
+        "phòng tuyến Như Nguyệt"
+    ],
+    "short_desc": "Lý Thường Kiệt (1019–1105) là danh tướng kiệt xuất thời nhà Lý, người chỉ huy cuộc tấn công phủ đầu vào đất Tống năm 1075 và xây dựng phòng tuyến sông Như Nguyệt đánh bại quân Tống xâm lược. Ông được coi là tác giả bài thơ \"Nam quốc sơn hà\" — bản tuyên ngôn độc lập đầu tiên của Việt Nam.",
+    "related_events": [
+        "chien-tranh-ly-tong"
+    ],
+    "related_people": [
+        "tran-hung-dao",
+        "le-loi"
+    ],
+    "timeline": [
+        {
+            "year": 1019,
+            "event": "Sinh tại Thăng Long, tên thật là Ngô Tuấn, xuất thân từ dòng dõi quan lại"
+        },
+        {
+            "year": 1041,
+            "event": "Được vua Lý Thái Tông tin dùng, giữ chức Kỵ mã hiệu úy"
+        },
+        {
+            "year": 1061,
+            "event": "Chỉ huy quân Đại Việt bình định Chiêm Thành phương Nam"
+        },
+        {
+            "year": 1075,
+            "event": "Chủ động tấn công phủ đầu vào Ung Châu, Khâm Châu, Liêm Châu của nhà Tống"
+        },
+        {
+            "year": 1077,
+            "event": "Xây phòng tuyến sông Như Nguyệt, đại phá 30 vạn quân Tống xâm lược"
+        },
+        {
+            "year": 1082,
+            "event": "Được phong Phụ quốc Thái úy, tiếp tục giữ vai trò trụ cột triều đình"
+        },
+        {
+            "year": 1105,
+            "event": "Qua đời ở tuổi 86, được truy tặng tước vương, thờ tại nhiều đền miếu"
+        }
+    ],
+    "perspectives": {
+        "self": {
+            "persona": "Lý Thường Kiệt — nhập vai",
+            "system_prompt": "Bạn là Lý Thường Kiệt, danh tướng thời nhà Lý. Hãy nhập vai và trả lời như chính Lý Thường Kiệt đang kể lại cuộc đời mình. Nói ở ngôi thứ nhất (ta, lão phu). Thể hiện khí phách của một vị tướng dày dạn chiến trận, từng đánh bại quân Tống trên phòng tuyến Như Nguyệt. Giọng điệu uy nghiêm nhưng nhân từ, tự hào về chiến công bảo vệ bờ cõi Đại Việt."
+        },
+        "contemporary": {
+            "persona": "Người cùng thời",
+            "system_prompt": "Bạn là một quan lại triều Lý, người cùng thời với Lý Thường Kiệt. Hãy kể về những gì bạn chứng kiến và nghe kể về Thái úy Lý Thường Kiệt. Nói với giọng kính trọng, ngưỡng mộ. Chia sẻ những câu chuyện về chiến dịch Ung Châu, phòng tuyến Như Nguyệt mà bạn được tận mắt chứng kiến hoặc nghe tường thuật."
+        },
+        "historian": {
+            "persona": "Sử gia hiện đại",
+            "system_prompt": "Bạn là sử gia hiện đại nghiên cứu về Lý Thường Kiệt và thời nhà Lý. Hãy phân tích vai trò của Lý Thường Kiệt trong lịch sử Việt Nam một cách khách quan, khoa học. Đánh giá chiến lược quân sự, tầm nhìn ngoại giao và di sản lịch sử của ông dựa trên các nguồn sử liệu đáng tin cậy."
+        }
+    },
+    "chunks": [
+        {
+            "id": "ltk-001",
+            "content": "Lý Thường Kiệt tên thật là Ngô Tuấn, sinh năm 1019 tại phường Thái Hòa, kinh thành Thăng Long. Ông xuất thân từ dòng dõi quan lại, được tiến cung từ nhỏ và dần trở thành tướng lĩnh tin cậy nhất của triều Lý qua nhiều đời vua.",
+            "source": "Đại Việt sử ký toàn thư",
+            "reliability": 90,
+            "tags": [
+                "tiểu sử",
+                "xuất thân"
+            ]
+        },
+        {
+            "id": "ltk-002",
+            "content": "Năm 1075, nhận thấy nhà Tống đang chuẩn bị xâm lược Đại Việt, Lý Thường Kiệt quyết định chủ động tấn công phủ đầu. Ông chỉ huy 10 vạn quân đánh vào các châu Ung, Khâm, Liêm của nhà Tống, phá hủy kho quân lương và căn cứ tập kết quân địch, rồi rút về nước lập phòng tuyến.",
+            "source": "Đại Việt sử ký toàn thư, Tống sử",
+            "reliability": 92,
+            "tags": [
+                "chiến tranh Tống-Việt",
+                "tấn công phủ đầu"
+            ]
+        },
+        {
+            "id": "ltk-003",
+            "content": "Năm 1077, quân Tống do Quách Quỳ chỉ huy 30 vạn binh kéo sang đánh Đại Việt. Lý Thường Kiệt xây dựng phòng tuyến kiên cố trên sông Như Nguyệt (sông Cầu ngày nay). Theo truyền thuyết, trong đêm ông cho người đọc vang bài thơ thần 'Nam quốc sơn hà Nam đế cư' để khích lệ tinh thần quân sĩ, khiến quân Tống khiếp sợ. Quân Đại Việt đánh bại hoàn toàn quân xâm lược.",
+            "source": "Đại Việt sử ký toàn thư, Việt điện u linh",
+            "reliability": 88,
+            "tags": [
+                "phòng tuyến Như Nguyệt",
+                "Nam quốc sơn hà"
+            ]
+        },
+        {
+            "id": "ltk-004",
+            "content": "Bài thơ 'Nam quốc sơn hà' được coi là bản tuyên ngôn độc lập đầu tiên của Việt Nam: 'Nam quốc sơn hà Nam đế cư / Tiệt nhiên phận định tại thiên thư / Như hà nghịch lỗ lai xâm phạm / Nhữ đẳng hành khan thủ bại hư'. Mặc dù vấn đề tác giả chính xác vẫn còn tranh luận trong giới sử học, nhưng bài thơ gắn liền với chiến thắng Như Nguyệt 1077 và tên tuổi Lý Thường Kiệt.",
+            "source": "Việt điện u linh, nghiên cứu sử học hiện đại",
+            "reliability": 85,
+            "tags": [
+                "Nam quốc sơn hà",
+                "tuyên ngôn độc lập"
+            ]
+        },
+        {
+            "id": "ltk-005",
+            "content": "Sau chiến thắng Như Nguyệt, Lý Thường Kiệt chủ động đề nghị hòa đàm, thể hiện tầm nhìn ngoại giao sáng suốt: vừa bảo toàn lực lượng, vừa duy trì quan hệ với nhà Tống. Ông tiếp tục phụng sự triều Lý qua 3 đời vua, giữ vai trò trụ cột đến khi qua đời năm 1105 ở tuổi 86.",
+            "source": "Đại Việt sử ký toàn thư",
+            "reliability": 90,
+            "tags": [
+                "ngoại giao",
+                "di sản"
+            ]
+        }
+    ]
+}

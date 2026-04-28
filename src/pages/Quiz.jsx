@@ -69,6 +69,11 @@ export default function Quiz() {
   const [genError, setGenError] = useState(null)
 
   useEffect(() => {
+    setCurrentQuestion(0)
+    setSelectedAnswer(null)
+    setShowResult(false)
+    setScore(0)
+    setAnswers([])
     generateQuestions()
   }, [entityId])
 
@@ -171,8 +176,8 @@ export default function Quiz() {
               {showResult
                 ? `Kết quả: ${score}/${questions.length}`
                 : loading
-                ? 'Đang tạo câu hỏi...'
-                : `Câu ${currentQuestion + 1}/${questions.length}`
+                  ? 'Đang tạo câu hỏi...'
+                  : `Câu ${currentQuestion + 1}/${questions.length}`
               }
             </p>
           </div>
@@ -204,11 +209,10 @@ export default function Quiz() {
         ) : showResult ? (
           <div className="space-y-6">
             {/* Score Card */}
-            <div className={`bg-white rounded-2xl shadow-sm p-8 text-center ${
-              score >= questions.length * 0.8 ? 'border-2 border-green-500' :
-              score >= questions.length * 0.5 ? 'border-2 border-yellow-500' :
-              'border-2 border-red-500'
-            }`}>
+            <div className={`bg-white rounded-2xl shadow-sm p-8 text-center ${score >= questions.length * 0.8 ? 'border-2 border-green-500' :
+                score >= questions.length * 0.5 ? 'border-2 border-yellow-500' :
+                  'border-2 border-red-500'
+              }`}>
               <div className="text-6xl mb-4">
                 {score >= questions.length * 0.8 ? '🎉' : score >= questions.length * 0.5 ? '👍' : '📚'}
               </div>
@@ -219,8 +223,8 @@ export default function Quiz() {
                 {score >= questions.length * 0.8
                   ? 'Xuất sắc! Bạn nắm vững kiến thức!'
                   : score >= questions.length * 0.5
-                  ? 'Khá tốt! Cần ôn tập thêm.'
-                  : 'Cần học thêm về ' + entity.name}
+                    ? 'Khá tốt! Cần ôn tập thêm.'
+                    : 'Cần học thêm về ' + entity.name}
               </div>
             </div>
 
@@ -230,10 +234,23 @@ export default function Quiz() {
               <div className="space-y-4">
                 {answers.map((answer, i) => (
                   <div key={i} className="p-4 bg-gray-50 rounded-xl">
-                    <div className="font-medium text-gray-900 mb-2">Câu {i + 1}: {questions[i].question}</div>
-                    <div className={`text-sm ${answer === questions[i].correct ? 'text-green-600' : 'text-red-600'}`}>
-                      Đáp án đúng: {questions[i].options[questions[i].correct]}
-                      {answer !== questions[i].correct && ` (Bạn chọn: ${questions[i].options[answer]})`}
+                    <div className="font-medium text-gray-900 mb-3">Câu {i + 1}: {questions[i].question}</div>
+                    <div className="space-y-1 mb-2">
+                      {questions[i].options.map((opt, j) => (
+                        <div
+                          key={j}
+                          className={`px-3 py-2 rounded-lg text-sm ${j === questions[i].correct
+                              ? 'bg-green-50 text-green-800 border border-green-300 font-medium'
+                              : j === answer && answer !== questions[i].correct
+                                ? 'bg-red-50 text-red-800 border border-red-300'
+                                : 'bg-gray-50 text-gray-600'
+                            }`}
+                        >
+                          {String.fromCharCode(65 + j)}. {opt}
+                          {j === questions[i].correct && ' ✓'}
+                          {j === answer && answer !== questions[i].correct && ' ✗'}
+                        </div>
+                      ))}
                     </div>
                     <div className="text-sm text-gray-600 mt-2 italic">{questions[i].explanation}</div>
                   </div>
@@ -284,11 +301,10 @@ export default function Quiz() {
                 <button
                   key={i}
                   onClick={() => handleSelect(i)}
-                  className={`w-full p-4 rounded-xl text-left transition ${
-                    selectedAnswer === i
+                  className={`w-full p-4 rounded-xl text-left transition ${selectedAnswer === i
                       ? 'bg-blue-50 border-2 border-blue-500 text-blue-700'
                       : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                  }`}
+                    }`}
                 >
                   <span className="font-medium mr-3">{String.fromCharCode(65 + i)}.</span>
                   {option}

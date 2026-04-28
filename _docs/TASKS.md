@@ -1,23 +1,39 @@
 # Task Board
 
 ## 🔴 Đang làm
-(để trống — điền khi bắt đầu session mới)
+(để trống)
 
 ## 🟡 Cần làm tiếp
-- [ ] Tích hợp Quiz với Gemini — Hiện quiz dùng câu hỏi tĩnh hardcode, cần gọi Gemini API để sinh câu hỏi động theo entity — độ ưu tiên: cao
-- [ ] Mở rộng dữ liệu `entities` và `events` — Thêm nhiều nhân vật/sự kiện lịch sử hơn — độ ưu tiên: tb
+- [ ] Thêm nhân vật: Nguyễn Huệ/Quang Trung — độ ưu tiên: cao
+- [ ] Thêm nhân vật: Hồ Chí Minh — độ ưu tiên: cao
+- [ ] Thêm sự kiện: Trận Đống Đa 1789 — độ ưu tiên: cao
+- [ ] Thêm sự kiện: Chiến thắng Điện Biên Phủ — độ ưu tiên: cao
+- [ ] Tính năng: Share conversation — độ ưu tiên: thấp
+- [ ] Tính năng: Export quiz results — độ ưu tiên: thấp
+- [ ] Tính năng: Flashcard mode từ chunks của entity — độ ưu tiên: tb
 
 ## ✅ Đã hoàn thành
-- [x] Tạo khung kiến trúc React app (Vite + Tailwind) — hoàn thành ngày 2026-04-28
-- [x] Tích hợp Chatbot SSE logic (Gemini + Netlify Functions) — hoàn thành ngày 2026-04-28
-- [x] Thiết lập repo và deploy init — hoàn thành ngày 2026-04-28
-- [x] Đồng bộ tên module API `claudeApi.js` → `geminiApi.js` — hoàn thành ngày 2026-04-28
-- [x] Fix SSE Stream buffer bug — hoàn thành ngày 2026-04-28
-- [x] Gỡ dependency `@anthropic-ai/sdk` thừa — hoàn thành ngày 2026-04-28
-- [x] Bỏ chức năng Giáo viên (Teacher) — hoàn thành ngày 2026-04-28
-- [x] Bỏ Auth/Firebase, app công khai cho tất cả — hoàn thành ngày 2026-04-28
+- [x] Khung React app (Vite + Tailwind) — 2026-04-28
+- [x] Chatbot SSE (Gemini + Netlify Functions) — 2026-04-28
+- [x] Repo + deploy init — 2026-04-28
+- [x] Đồng bộ `claudeApi.js` → `geminiApi.js` — 2026-04-28
+- [x] Fix SSE Stream buffer — 2026-04-28
+- [x] Gỡ `@anthropic-ai/sdk` — 2026-04-28
+- [x] Bỏ Teacher + Auth/Firebase — 2026-04-28
+- [x] BUG-005: maxTokens theo lengthLevel — 2026-04-28
+- [x] BUG-007: Quiz reset state khi đổi entity — 2026-04-28
+- [x] BUG-008: Quiz review highlight đáp án — 2026-04-28
+- [x] TASK-01: Render Markdown (react-markdown) — 2026-04-28
+- [x] TASK-02: Typing indicator animation — 2026-04-28
+- [x] TASK-03: System prompt nâng cấp + chunk context — 2026-04-28
+- [x] TASK-04: Quick suggestions động từ entity — 2026-04-28
+- [x] TASK-05: Related people tên thật — 2026-04-28
+- [x] TASK-06: Nút cuộn xuống tin mới nhất — 2026-04-28
+- [x] TASK-07: Thêm Lý Thường Kiệt — 2026-04-28
+- [x] TASK-08: Thêm Chiến tranh Lý–Tống — 2026-04-28
+- [x] TASK-09: Đăng ký 2 entity mới vào retrieval.js — 2026-04-28
 
-## ❌ Đã bỏ / không làm nữa
-- Sử dụng Claude / Anthropic API — Chuyển sang Gemini API
-- Chức năng Giáo viên (Teacher) — User quyết định bỏ
-- Firebase Auth / Firestore — Không cần auth, app công khai
+## ❌ Đã bỏ
+- Claude/Anthropic API → đã chuyển sang Gemini
+- Chức năng Teacher → user quyết định bỏ
+- Firebase Auth/Firestore → app công khai

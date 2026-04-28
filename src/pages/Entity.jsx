@@ -49,11 +49,10 @@ export default function Entity() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                activeTab === tab.id
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${activeTab === tab.id
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
-              }`}
+                }`}
             >
               {tab.label}
             </button>
@@ -112,16 +111,20 @@ export default function Entity() {
             {entity.related_people?.length > 0 && (
               <div className="bg-white rounded-2xl shadow-sm p-6">
                 <h3 className="font-semibold text-gray-900 mb-3">Nhân vật liên quan</h3>
-                <div className="space-y-2">
-                  {entity.related_people.map((personId) => (
-                    <Link
-                      key={personId}
-                      to={`/entity/${personId}`}
-                      className="block p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition"
-                    >
-                      👤 {personId.replace(/-/g, ' ')}
-                    </Link>
-                  ))}
+                <div className="flex flex-wrap gap-2">
+                  {entity.related_people.map((personId) => {
+                    const related = getEntity(personId)
+                    return (
+                      <Link
+                        key={personId}
+                        to={`/entity/${personId}`}
+                        className="px-3 py-2 bg-gray-50 hover:bg-blue-50 hover:text-blue-700 rounded-lg text-sm transition flex items-center gap-2"
+                      >
+                        <span>👤</span>
+                        <span>{related ? related.name : personId.replace(/-/g, ' ')}</span>
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
             )}
