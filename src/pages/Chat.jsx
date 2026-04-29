@@ -36,17 +36,30 @@ function getSpeakerName(entity, perspective) {
 
 function getQuickSuggestions(entity, perspective) {
   if (!entity) return []
+
+  const name = entity.name
+
   if (perspective === 'historian') {
     return [
-      `Đánh giá vai trò của ${entity.name} theo sử học hiện đại?`,
-      `Các sử gia có quan điểm khác nhau thế nào về ${entity.name}?`,
-      `Tầm quan trọng của ${entity.name} trong lịch sử Việt Nam?`,
+      `Đánh giá vai trò của ${name} theo sử học hiện đại?`,
+      `Các sử gia có quan điểm khác nhau thế nào về ${name}?`,
+      `Tầm quan trọng của ${name} trong lịch sử Việt Nam?`,
     ]
   }
+
+  if (perspective === 'self') {
+    return [
+      `Kể về cuộc đời của ngài?`,
+      `Chiến công hay đóng góp lớn nhất của ngài là gì?`,
+      `Điều gì khiến ngài tự hào nhất trong cuộc đời?`,
+    ]
+  }
+
+  // contemporary — câu hỏi hướng về nhân vật chính qua góc nhìn người nói
   return [
-    `Kể về cuộc đời của ${entity.type === 'person' ? 'ngài' : 'sự kiện này'}?`,
-    `${entity.type === 'person' ? 'Chiến công hay đóng góp lớn nhất là gì?' : 'Nguyên nhân dẫn đến sự kiện này là gì?'}`,
-    `${entity.type === 'person' ? 'Bài học lịch sử từ cuộc đời ngài?' : 'Ý nghĩa lịch sử của sự kiện này?'}`,
+    `Ngài nhận xét thế nào về ${name}?`,
+    `${name} là người như thế nào trong mắt ngài?`,
+    `Kỷ niệm đáng nhớ nhất của ngài với ${name} là gì?`,
   ]
 }
 
