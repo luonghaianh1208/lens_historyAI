@@ -272,16 +272,25 @@ export default function Chat() {
       <div className="relative z-10 flex flex-1 overflow-hidden">
 
         {/* CHARACTER SIDEBAR — desktop only */}
-        <aside className="hidden md:flex w-52 flex-col items-center justify-end pb-4 px-2 flex-shrink-0"
+        <aside className="hidden md:flex w-52 flex-col items-center justify-end pb-0 px-2 flex-shrink-0"
           style={{ background: 'rgba(245,239,224,0.6)' }}>
-          <img
-            src={getCharacterUrl(entityId)}
-            alt={entity.name}
-            className="character-float w-full max-h-80 object-contain"
-            style={{ objectPosition: 'top center' }}
-            onError={(e) => { e.target.style.display = 'none' }}
-          />
-          <div className="mt-2 text-center">
+          <div className="character-vignette character-stage relative">
+            <div className="character-floor" />
+            <img
+              src={getCharacterUrl(entityId)}
+              alt={entity.name}
+              className="character-blend character-hero relative z-10"
+              style={{
+                height: 'min(60vh, 480px)',
+                width: 'auto',
+                objectFit: 'contain',
+                objectPosition: 'bottom center',
+                display: 'block',
+              }}
+              onError={(e) => { e.target.style.display = 'none' }}
+            />
+          </div>
+          <div className="mt-2 mb-3 text-center">
             <p className="text-xs font-semibold" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
               {getSpeakerName(entity, perspective)}
             </p>

@@ -387,3 +387,204 @@ h1, h2, h3 { font-family: var(--font-serif); }
   .dust-particle { display: none; }
   .dongson-ring-rotate { animation: none; }
 }
+
+/* ============================================
+   IMMERSIVE UI — CUỘN THƯ CỔ + BLEND MODE
+   ============================================ */
+
+/* ===== ẢNH NHÂN VẬT — kỹ thuật bỏ nền trắng bằng blend mode ===== */
+.character-blend {
+  mix-blend-mode: multiply;
+  filter: contrast(1.05) saturate(1.1);
+}
+
+/* Container có nền tương đồng để blend hoạt động đúng */
+.character-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Vignette gradient bao quanh nhân vật để hòa nhân vật vào cảnh */
+.character-vignette {
+  position: relative;
+}
+.character-vignette::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(ellipse at center,
+    transparent 40%,
+    rgba(245,239,224,0.6) 70%,
+    rgba(245,239,224,0.95) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== CUỘN THƯ MỞ RA ===== */
+@keyframes scrollUnfurl {
+  from {
+    opacity: 0;
+    transform: scaleY(0.3) translateY(-20px);
+    transform-origin: top center;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    transform-origin: top center;
+  }
+}
+
+.scroll-paper {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(245,239,224,0.95) 8%, rgba(245,239,224,0.95) 92%, transparent 100%),
+    linear-gradient(135deg, #f5efe0 0%, #ede0c8 100%);
+  border-left: 1px solid rgba(184,134,11,0.25);
+  border-right: 1px solid rgba(184,134,11,0.25);
+  box-shadow:
+    inset 0 0 30px rgba(184,134,11,0.08),
+    0 4px 24px rgba(26,15,10,0.15);
+  animation: scrollUnfurl 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  position: relative;
+}
+
+/* Đầu cuộn thư trên/dưới — chi tiết bằng wood texture */
+.scroll-paper::before,
+.scroll-paper::after {
+  content: '';
+  position: absolute;
+  left: -8px; right: -8px;
+  height: 16px;
+  background:
+    linear-gradient(180deg, #6b3410 0%, #8b4513 50%, #5a2a0a 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.scroll-paper::before { top: -8px; }
+.scroll-paper::after  { bottom: -8px; }
+
+/* ===== ANCIENT FRAME — khung viền cổ điển ===== */
+.ancient-frame {
+  position: relative;
+  padding: 28px;
+}
+.ancient-frame::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(184,134,11,0.3);
+  pointer-events: none;
+}
+.ancient-frame::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 0.5px solid rgba(184,134,11,0.15);
+  pointer-events: none;
+}
+
+/* ===== CORNER ORNAMENTS — họa tiết góc ===== */
+.corner-ornament {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+}
+.corner-tl { top: 4px; left: 4px;  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+.corner-tr { top: 4px; right: 4px; transform: rotate(90deg);  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+.corner-bl { bottom: 4px; left: 4px; transform: rotate(-90deg); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+.corner-br { bottom: 4px; right: 4px; transform: rotate(180deg); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+
+/* ===== STAGE FLOOR — sàn nhân vật đứng ===== */
+.character-floor {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 380px;
+  height: 80px;
+  background:
+    radial-gradient(ellipse at center bottom,
+      rgba(184,134,11,0.35) 0%,
+      rgba(184,134,11,0.15) 30%,
+      transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* ===== HERO BACKDROP — cảnh quan phía sau nhân vật ===== */
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.85) saturate(1.1);
+}
+.hero-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center 70%,
+      transparent 0%,
+      rgba(245,239,224,0.4) 50%,
+      rgba(245,239,224,0.95) 100%),
+    linear-gradient(180deg,
+      rgba(26,15,10,0.3) 0%,
+      transparent 30%,
+      transparent 70%,
+      rgba(245,239,224,0.8) 100%);
+}
+
+/* ===== TITLE GLOW ===== */
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 0 2px 4px rgba(26,15,10,0.3), 0 0 24px rgba(212,168,67,0.15); }
+  50%       { text-shadow: 0 2px 4px rgba(26,15,10,0.4), 0 0 32px rgba(212,168,67,0.35); }
+}
+.title-glow {
+  animation: titleGlow 4s ease-in-out infinite;
+}
+
+/* ===== PERSPECTIVE BUTTON — wax seal style ===== */
+.btn-seal {
+  position: relative;
+  background: var(--clr-vermillion);
+  color: white;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.2);
+  box-shadow:
+    0 2px 6px rgba(192,57,43,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.btn-seal::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255,255,255,0.15);
+  pointer-events: none;
+}
+.btn-seal:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px rgba(192,57,43,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.btn-seal-ghost {
+  background: transparent;
+  color: var(--clr-ink-soft);
+  font-family: var(--font-serif);
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  border: 1px solid rgba(184,134,11,0.4);
+  transition: all 0.25s;
+}
+.btn-seal-ghost:hover {
+  background: rgba(184,134,11,0.08);
+  border-color: var(--clr-gold);
+  color: var(--clr-ink);
+}
