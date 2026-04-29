@@ -47,19 +47,15 @@ export default async (req) => {
       }
     }
 
+    // Đưa hướng dẫn tone vào ngay text được đọc (style instruction prefix)
+    // Đây là cách Gemini TTS chính thức hỗ trợ thay cho systemInstruction
+    const styledText = `Đọc đoạn sau bằng giọng tiếng Việt rõ ràng, tự nhiên, nhịp điệu vừa phải:\n\n${ttsText}`
+
     const payload = {
-      systemInstruction: {
-        parts: [{
-          text: `Đọc đoạn văn bản sau bằng tiếng Việt với giọng ${voiceName || 'Puck'}.
-Giữ tốc độ đọc vừa phải, rõ ràng, tự nhiên.
-Đây là một đoạn trong chuỗi nhiều đoạn liên tiếp — giữ nguyên tone và nhịp điệu xuyên suốt.
-Không thêm âm thanh giới thiệu hay kết thúc đặc biệt.`
-        }]
-      },
       contents: [
         {
           parts: [
-            { text: ttsText }
+            { text: styledText }
           ]
         }
       ],
