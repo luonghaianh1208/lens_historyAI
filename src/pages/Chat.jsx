@@ -183,12 +183,12 @@ export default function Chat() {
               {ttsLoading ? (
                 <>
                   <span className="animate-spin inline-block">⏳</span>
-                  {chunkInfo && chunkInfo.total > 1
-                    ? ` Đoạn ${chunkInfo.current}/${chunkInfo.total}...`
+                  {chunkInfo && chunkInfo.total > 1 && chunkInfo.phase === 'loading'
+                    ? ` Đang tải ${chunkInfo.current}/${chunkInfo.total}...`
                     : ' Đang tổng hợp...'
                   }
                 </>
-              ) : (
+              ) : ttsPlaying ? (
                 <>
                   <span className="animate-pulse">⏹</span>
                   {chunkInfo && chunkInfo.total > 1
@@ -196,7 +196,7 @@ export default function Chat() {
                     : ' Dừng đọc'
                   }
                 </>
-              )}
+              ) : null}
             </button>
           )}
 
@@ -325,8 +325,8 @@ export default function Chat() {
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                           </svg>
                           <span className="animate-pulse">
-                            {chunkInfo && chunkInfo.total > 1
-                              ? `Đoạn ${chunkInfo.current}/${chunkInfo.total}...`
+                            {chunkInfo && chunkInfo.total > 1 && chunkInfo.phase === 'loading'
+                              ? `Tải ${chunkInfo.current}/${chunkInfo.total}...`
                               : 'Đang tổng hợp...'
                             }
                           </span>
@@ -338,7 +338,7 @@ export default function Chat() {
                           </svg>
                           <span>
                             {chunkInfo && chunkInfo.total > 1
-                              ? `Dừng (đoạn ${chunkInfo.current}/${chunkInfo.total})`
+                              ? `Đoạn ${chunkInfo.current}/${chunkInfo.total}`
                               : 'Dừng'
                             }
                           </span>

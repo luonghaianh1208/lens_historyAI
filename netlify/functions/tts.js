@@ -48,6 +48,14 @@ export default async (req) => {
     }
 
     const payload = {
+      systemInstruction: {
+        parts: [{
+          text: `Đọc đoạn văn bản sau bằng tiếng Việt với giọng ${voiceName || 'Puck'}.
+Giữ tốc độ đọc vừa phải, rõ ràng, tự nhiên.
+Đây là một đoạn trong chuỗi nhiều đoạn liên tiếp — giữ nguyên tone và nhịp điệu xuyên suốt.
+Không thêm âm thanh giới thiệu hay kết thúc đặc biệt.`
+        }]
+      },
       contents: [
         {
           parts: [
@@ -60,7 +68,6 @@ export default async (req) => {
         speechConfig: {
           voiceConfig: {
             prebuiltVoiceConfig: {
-              // "Puck", "Charon", "Kore", "Fenrir", "Aoede" // Nguyễn Trãi nam thì chọn Puck
               voiceName: voiceName || "Puck"
             }
           }
