@@ -25,16 +25,26 @@ export default async (req) => {
       })
     }
 
-    // Truncate text to prevent timeout (Netlify free tier = 10s, ~200 chars → ~7s Gemini processing)
-    const MAX_TTS_CHARS = 200
+    // Truncate text to prevent timeout (Netlify free tier = 10s, ~900 chars is safe margin)
+    const MAX_TTS_CHARS = 900
     let ttsText = text
     if (ttsText.length > MAX_TTS_CHARS) {
-      // Try to cut at a sentence boundary
+      // Tìm điểm cắt tự nhiên: ưu tiên cuối đoạn văn, rồi cuối câu
       const truncated = ttsText.substring(0, MAX_TTS_CHARS)
-      const lastSentence = truncated.lastIndexOf('.')
-      ttsText = lastSentence > MAX_TTS_CHARS * 0.5
-        ? truncated.substring(0, lastSentence + 1)
-        : truncated + '...'
+      const lastParagraph = truncated.lastIndexOf('\n\n')
+      const lastSentence = Math.max(
+        truncated.lastIndexOf('。'),
+        truncated.lastIndexOf('.'),
+        truncated.lastIndexOf('!'),
+        truncated.lastIndexOf('?')
+      )
+      if (lastParagraph > MAX_TTS_CHARS * 0.6) {
+        ttsText = truncated.substring(0, lastParagraph).trim()
+      } else if (lastSentence > MAX_TTS_CHARS * 0.5) {
+        ttsText = truncated.substring(0, lastSentence + 1).trim()
+      } else {
+        ttsText = truncated.trim()
+      }
     }
 
     const payload = {

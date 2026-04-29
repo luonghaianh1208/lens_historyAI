@@ -54,7 +54,7 @@ export default function Chat() {
   const mainRef = useRef(null)
 
   const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
-  const { speak, stop, playing } = useTTS()
+  const { speak, stop, playing: ttsPlaying, loading: ttsLoading } = useTTS()
 
   const suggestions = getQuickSuggestions(entity, perspective)
   const lastSpokenIndexRef = useRef(-1)
@@ -111,15 +111,11 @@ export default function Chat() {
   }
 
   const handlePlayAudio = (content) => {
-    if (playing) {
+    if (ttsPlaying || ttsLoading) {
       stop()
     } else {
-      const cleanText = content
-        .replace(/[#*_`~\[\]]/g, '')
-        .replace(/\n+/g, '. ')
-        .trim()
-      if (cleanText) {
-        speak(cleanText, entityId)
+      if (content) {
+        speak(content, entityId)
       }
     }
   }
@@ -151,13 +147,17 @@ export default function Chat() {
           </div>
 
           {/* Global Stop TTS Button */}
-          {playing && (
+          {(ttsPlaying || ttsLoading) && (
             <button
               onClick={() => stop()}
               className="px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1 bg-red-100 text-red-700 border border-red-300 hover:bg-red-200"
-              title="Dừng âm thanh đang phát"
+              title={ttsLoading ? 'Hủy tổng hợp giọng đọc' : 'Dừng âm thanh đang phát'}
             >
-              <span className="animate-pulse">⏹</span> Dừng đọc
+              {ttsLoading ? (
+                <><span className="animate-spin inline-block">⏳</span> Đang tổng hợp...</>
+              ) : (
+                <><span className="animate-pulse">⏹</span> Dừng đọc</>
+              )}
             </button>
           )}
 
@@ -268,10 +268,42 @@ export default function Chat() {
                   {msg.role === 'assistant' && msg.content && (
                     <button
                       onClick={() => handlePlayAudio(msg.content)}
-                      className="text-xs opacity-60 hover:opacity-100 transition p-1"
-                      title={playing ? 'Dừng' : 'Nghe'}
+                      className={`flex items-center gap-1 text-xs transition p-1 rounded ${
+                        ttsLoading ? 'opacity-80 text-blue-500' 
+                        : ttsPlaying ? 'opacity-80 text-red-500' 
+                        : 'opacity-60 hover:opacity-100'
+                      }`}
+                      title={
+                        msg.content?.length > 900
+                          ? 'Nghe ~đoạn đầu (nội dung dài)'
+                          : ttsLoading ? 'Đang tổng hợp...'
+                          : ttsPlaying ? 'Dừng'
+                          : 'Nghe'
+                      }
                     >
-                      {playing ? '⏹' : '🔊'}
+                      {ttsLoading ? (
+                        <>
+                          <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                          </svg>
+                          <span className="animate-pulse">Đang tổng hợp...</span>
+                        </>
+                      ) : ttsPlaying ? (
+                        <>
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+                          </svg>
+                          <span>Dừng</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                          </svg>
+                          <span>{msg.content?.length > 900 ? 'Nghe đoạn đầu' : 'Nghe'}</span>
+                        </>
+                      )}
                     </button>
                   )}
                 </div>
