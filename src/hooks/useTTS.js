@@ -34,11 +34,14 @@ export function useTTS() {
   async function fetchSingleChunk(chunkText, entityId, signal) {
     const payload = buildTTSPayload(chunkText, entityId)
 
+    // Guard: nếu không có signal thì tạo dummy
+    const effectiveSignal = signal || new AbortController().signal
+
     const timeoutController = new AbortController()
     const timeoutId = setTimeout(() => timeoutController.abort(), 15000)
 
     const onUserAbort = () => timeoutController.abort()
-    signal.addEventListener('abort', onUserAbort)
+    effectiveSignal.addEventListener('abort', onUserAbort)
 
     try {
       const response = await fetch('/.netlify/functions/tts', {
@@ -48,7 +51,7 @@ export function useTTS() {
         signal: timeoutController.signal
       })
       clearTimeout(timeoutId)
-      signal.removeEventListener('abort', onUserAbort)
+      effectiveSignal.removeEventListener('abort', onUserAbort)
 
       if (!response.ok) {
         const err = await response.json().catch(() => ({}))
@@ -59,7 +62,7 @@ export function useTTS() {
       return data.audioContent
     } catch (e) {
       clearTimeout(timeoutId)
-      signal.removeEventListener('abort', onUserAbort)
+      effectiveSignal.removeEventListener('abort', onUserAbort)
       throw e
     }
   }
