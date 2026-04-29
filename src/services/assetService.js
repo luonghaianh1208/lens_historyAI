@@ -2,10 +2,12 @@ export function getBackgroundUrl(entityId) {
   const known = [
     'nguyen-trai', 'le-loi', 'tran-hung-dao', 'ly-thuong-kiet',
     'nguyen-hue', 'ho-chi-minh', 'khoi-nghia-lam-son',
-    'chien-thang-bach-dang', 'chien-tranh-ly-tong'
+    'chien-thang-bach-dang', 'chien-tranh-ly-tong',
+    'tran-dong-da', 'dien-bien-phu'
   ]
   const id = known.includes(entityId) ? entityId : 'default'
-  return `/assets/backgrounds/${id}.webp`
+  const fileName = id.replace(/-/g, '_')
+  return `/assets/backgrounds/bg_${fileName}.webp`
 }
 
 export function getCharacterUrl(entityId) {
@@ -14,7 +16,8 @@ export function getCharacterUrl(entityId) {
     'ly-thuong-kiet', 'nguyen-hue', 'ho-chi-minh'
   ]
   const id = known.includes(entityId) ? entityId : 'default'
-  return `/assets/characters/${id}.webp`
+  const fileName = id.replace(/-/g, '_')
+  return `/assets/characters/char_${fileName}.webp`
 }
 
 export function getBgStyle(entityId) {
