@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getEntity } from '../services/retrieval'
+import { getCharacterUrl, getBgStyle } from '../services/assetService'
 
 const fallbackQuestions = [
   {
@@ -67,6 +68,7 @@ export default function Quiz() {
   const [answers, setAnswers] = useState([])
   const [loading, setLoading] = useState(true)
   const [genError, setGenError] = useState(null)
+  const [characterMood, setCharacterMood] = useState('neutral')
 
   useEffect(() => {
     setCurrentQuestion(0)
@@ -74,6 +76,7 @@ export default function Quiz() {
     setShowResult(false)
     setScore(0)
     setAnswers([])
+    setCharacterMood('neutral')
     generateQuestions()
   }, [entityId])
 
@@ -99,7 +102,6 @@ export default function Quiz() {
       const data = await response.json()
       const text = data.text || ''
 
-      // Extract JSON from response — handle markdown code blocks
       const jsonMatch = text.match(/\[[\s\S]*\]/)
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0])
@@ -124,11 +126,17 @@ export default function Quiz() {
     setSelectedAnswer(index)
   }
 
-  const handleNext = () => {
+  const handleAnswer = () => {
+    if (selectedAnswer === null) return
+
+    const isCorrect = selectedAnswer === questions[currentQuestion].correct
+    setCharacterMood(isCorrect ? 'correct' : 'wrong')
+    setTimeout(() => setCharacterMood('neutral'), 2000)
+
     const newAnswers = [...answers, selectedAnswer]
     setAnswers(newAnswers)
 
-    if (selectedAnswer === questions[currentQuestion].correct) {
+    if (isCorrect) {
       setScore(score + 1)
     }
 
@@ -146,105 +154,135 @@ export default function Quiz() {
     setShowResult(false)
     setScore(0)
     setAnswers([])
+    setCharacterMood('neutral')
     generateQuestions()
   }
 
   if (!entity) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Không tìm thấy</h2>
-          <button onClick={() => navigate('/')} className="text-blue-600 hover:underline">Quay lại</button>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--clr-paper)' }}>
+        <div className="text-center card-ancient p-8">
+          <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>Không tìm thấy</h2>
+          <button onClick={() => navigate('/')} className="hover:underline" style={{ color: 'var(--clr-vermillion)' }}>Quay lại</button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center gap-4">
-          <button onClick={() => navigate(`/entity/${entityId}`)} className="text-gray-500 hover:text-gray-700">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <div>
-            <h1 className="text-lg font-bold text-gray-900">Quiz: {entity.name}</h1>
-            <p className="text-sm text-gray-500">
-              {showResult
-                ? `Kết quả: ${score}/${questions.length}`
-                : loading
-                  ? 'Đang tạo câu hỏi...'
-                  : `Câu ${currentQuestion + 1}/${questions.length}`
-              }
-            </p>
-          </div>
+    <div className="min-h-screen relative" style={{ background: 'var(--clr-paper)' }}>
+
+      {/* Decorative top band */}
+      <div className="h-0.5 w-full" style={{ background: 'linear-gradient(90deg, var(--clr-vermillion), var(--clr-gold), var(--clr-jade), var(--clr-gold), var(--clr-vermillion))' }} />
+
+      {/* Background */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none" style={getBgStyle(entityId)} />
+
+      {/* ===== HEADER ===== */}
+      <header className="relative z-10 px-4 py-4 flex items-center gap-4"
+        style={{ background: 'rgba(245,239,224,0.95)', borderBottom: '1px solid rgba(184,134,11,0.2)', backdropFilter: 'blur(8px)' }}>
+        <button onClick={() => navigate(`/entity/${entityId}`)} className="p-2 transition" style={{ color: 'var(--clr-gold)' }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--clr-ink)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--clr-gold)'}>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div>
+          <h1 className="text-lg font-bold" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>Quiz: {entity.name}</h1>
+          <p className="text-xs" style={{ color: 'var(--clr-gold)' }}>
+            {showResult
+              ? `Kết quả: ${score}/${questions.length}`
+              : loading
+                ? 'Đang tạo câu hỏi...'
+                : `Câu ${currentQuestion + 1}/${questions.length}`
+            }
+          </p>
         </div>
       </header>
 
-      {/* Content */}
-      <main className="max-w-3xl mx-auto px-4 py-8">
+      {/* ===== MAIN CONTENT ===== */}
+      <main className="relative z-10 max-w-3xl mx-auto px-4 py-8">
+
         {genError && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-xl text-yellow-700 text-sm">
+          <div className="mb-4 p-3 text-sm" style={{ background: 'rgba(184,134,11,0.15)', border: '1px solid rgba(184,134,11,0.3)', borderRadius: '2px', color: 'var(--clr-gold)' }}>
             {genError}
           </div>
         )}
 
         {loading ? (
-          <div className="bg-white rounded-2xl shadow-sm p-8 text-center">
+          <div className="card-ancient p-8 text-center">
             <div className="animate-pulse">
               <div className="text-4xl mb-4">🤖</div>
-              <p className="text-gray-500 mb-4">AI đang tạo câu hỏi về {entity.name}...</p>
-              <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+              <p className="mb-4" style={{ color: 'var(--clr-ink-soft)' }}>AI đang tạo câu hỏi về {entity.name}...</p>
               <div className="space-y-3">
-                <div className="h-12 bg-gray-200 rounded"></div>
-                <div className="h-12 bg-gray-200 rounded"></div>
-                <div className="h-12 bg-gray-200 rounded"></div>
-                <div className="h-12 bg-gray-200 rounded"></div>
+                <div className="h-12 rounded" style={{ background: 'rgba(184,134,11,0.1)' }}></div>
+                <div className="h-12 rounded" style={{ background: 'rgba(184,134,11,0.1)' }}></div>
+                <div className="h-12 rounded" style={{ background: 'rgba(184,134,11,0.1)' }}></div>
+                <div className="h-12 rounded" style={{ background: 'rgba(184,134,11,0.1)' }}></div>
               </div>
             </div>
           </div>
         ) : showResult ? (
           <div className="space-y-6">
-            {/* Score Card */}
-            <div className={`bg-white rounded-2xl shadow-sm p-8 text-center ${score >= questions.length * 0.8 ? 'border-2 border-green-500' :
-                score >= questions.length * 0.5 ? 'border-2 border-yellow-500' :
-                  'border-2 border-red-500'
-              }`}>
-              <div className="text-6xl mb-4">
-                {score >= questions.length * 0.8 ? '🎉' : score >= questions.length * 0.5 ? '👍' : '📚'}
-              </div>
-              <div className="text-4xl font-bold text-gray-900 mb-2">
-                {score}/{questions.length}
-              </div>
-              <div className="text-gray-600">
-                {score >= questions.length * 0.8
-                  ? 'Xuất sắc! Bạn nắm vững kiến thức!'
-                  : score >= questions.length * 0.5
-                    ? 'Khá tốt! Cần ôn tập thêm.'
-                    : 'Cần học thêm về ' + entity.name}
+            {/* Character + Score */}
+            <div className="flex items-center justify-center gap-6">
+              <img
+                src={getCharacterUrl(entityId)}
+                alt=""
+                className="h-32 object-contain"
+                style={{
+                  filter: score >= questions.length * 0.8
+                    ? 'drop-shadow(0 0 12px rgba(45,106,79,0.6))'
+                    : 'drop-shadow(0 4px 8px rgba(26,15,10,0.3))',
+                }}
+                onError={(e) => { e.target.style.display = 'none' }}
+              />
+              <div className="card-ancient dong-son-border p-6 text-center flex-1">
+                <div className="text-5xl mb-3">
+                  {score >= questions.length * 0.8 ? '🎉' : score >= questions.length * 0.5 ? '👍' : '📚'}
+                </div>
+                <div className="text-4xl font-bold" style={{ fontFamily: 'var(--font-display)', color: 'var(--clr-ink)' }}>
+                  {score}/{questions.length}
+                </div>
+                <div className="mt-2" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
+                  {score >= questions.length * 0.8
+                    ? 'Xuất sắc! Bạn nắm vững kiến thức!'
+                    : score >= questions.length * 0.5
+                      ? 'Khá tốt! Cần ôn tập thêm.'
+                      : `Cần học thêm về ${entity.name}`}
+                </div>
               </div>
             </div>
 
             {/* Review Answers */}
-            <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h3 className="font-semibold text-gray-900 mb-4">Đáp án</h3>
+            <div className="card-ancient p-6">
+              <h3 className="font-semibold mb-4" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>Đáp án</h3>
               <div className="space-y-4">
                 {answers.map((answer, i) => (
-                  <div key={i} className="p-4 bg-gray-50 rounded-xl">
-                    <div className="font-medium text-gray-900 mb-3">Câu {i + 1}: {questions[i].question}</div>
+                  <div key={i} className="p-4" style={{ background: 'rgba(232,220,200,0.4)', borderRadius: '2px', border: '1px solid rgba(184,134,11,0.15)' }}>
+                    <div className="font-medium mb-3" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
+                      Câu {i + 1}: {questions[i].question}
+                    </div>
                     <div className="space-y-1 mb-2">
                       {questions[i].options.map((opt, j) => (
                         <div
                           key={j}
-                          className={`px-3 py-2 rounded-lg text-sm ${j === questions[i].correct
-                              ? 'bg-green-50 text-green-800 border border-green-300 font-medium'
+                          className="px-3 py-2 text-sm"
+                          style={{
+                            background: j === questions[i].correct
+                              ? 'rgba(45,106,79,0.15)'
                               : j === answer && answer !== questions[i].correct
-                                ? 'bg-red-50 text-red-800 border border-red-300'
-                                : 'bg-gray-50 text-gray-600'
-                            }`}
+                                ? 'rgba(192,57,43,0.15)'
+                                : 'rgba(245,239,224,0.5)',
+                            color: j === questions[i].correct
+                              ? 'var(--clr-jade)'
+                              : j === answer && answer !== questions[i].correct
+                                ? 'var(--clr-vermillion)'
+                                : 'var(--clr-ink-soft)',
+                            borderRadius: '2px',
+                            border: `1px solid ${j === questions[i].correct ? 'rgba(45,106,79,0.3)' : j === answer ? 'rgba(192,57,43,0.3)' : 'transparent'}`,
+                          }}
                         >
                           {String.fromCharCode(65 + j)}. {opt}
                           {j === questions[i].correct && ' ✓'}
@@ -252,7 +290,7 @@ export default function Quiz() {
                         </div>
                       ))}
                     </div>
-                    <div className="text-sm text-gray-600 mt-2 italic">{questions[i].explanation}</div>
+                    <div className="text-sm mt-2 italic" style={{ color: 'var(--clr-gold)' }}>{questions[i].explanation}</div>
                   </div>
                 ))}
               </div>
@@ -260,69 +298,116 @@ export default function Quiz() {
 
             {/* Actions */}
             <div className="flex gap-4 justify-center">
-              <button
-                onClick={handleRestart}
-                className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700"
-              >
+              <button onClick={handleRestart} className="btn-primary">
                 Làm lại
               </button>
-              <button
-                onClick={() => navigate(`/chat/${entityId}`)}
-                className="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200"
-              >
+              <button onClick={() => navigate(`/chat/${entityId}`)} className="btn-ghost">
                 Chat thêm
               </button>
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm p-6">
+          <div className="card-ancient p-6">
             {/* Progress */}
             <div className="mb-6">
-              <div className="flex justify-between text-sm text-gray-500 mb-2">
+              <div className="flex justify-between text-xs mb-2" style={{ color: 'var(--clr-ink-soft)' }}>
                 <span>Câu {currentQuestion + 1}/{questions.length}</span>
                 <span>Điểm: {score}</span>
               </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(184,134,11,0.15)' }}>
                 <div
-                  className="h-full bg-blue-600 transition-all"
-                  style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
+                  className="h-full transition-all"
+                  style={{ width: `${((currentQuestion) / questions.length) * 100}%`, background: 'var(--clr-gold)' }}
                 />
               </div>
             </div>
 
-            {/* Question */}
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">
-              {questions[currentQuestion]?.question}
-            </h2>
+            {/* Question + Character */}
+            <div className="flex gap-4 mb-6">
+              {/* Character reaction */}
+              <div className="relative flex-shrink-0">
+                <img
+                  src={getCharacterUrl(entityId)}
+                  alt=""
+                  className="h-32 object-contain transition-all duration-500"
+                  style={{
+                    filter: characterMood === 'correct'
+                      ? 'drop-shadow(0 0 12px rgba(45,106,79,0.6))'
+                      : characterMood === 'wrong'
+                        ? 'drop-shadow(0 0 12px rgba(192,57,43,0.6))'
+                        : 'drop-shadow(0 8px 16px rgba(26,15,10,0.3))',
+                    transform: characterMood === 'correct' ? 'translateY(-8px)' : characterMood === 'wrong' ? 'rotate(-3deg)' : 'none',
+                  }}
+                  onError={(e) => { e.target.style.display = 'none' }}
+                />
+                {characterMood === 'correct' && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-2xl animate-bounce">✨</div>
+                )}
+                {characterMood === 'wrong' && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-2xl animate-pulse">💭</div>
+                )}
+              </div>
 
-            {/* Options */}
-            <div className="space-y-3">
-              {questions[currentQuestion]?.options.map((option, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleSelect(i)}
-                  className={`w-full p-4 rounded-xl text-left transition ${selectedAnswer === i
-                      ? 'bg-blue-50 border-2 border-blue-500 text-blue-700'
-                      : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
-                    }`}
-                >
-                  <span className="font-medium mr-3">{String.fromCharCode(65 + i)}.</span>
-                  {option}
-                </button>
-              ))}
+              {/* Question */}
+              <div className="flex-1">
+                <h2 className="text-lg font-semibold mb-4" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
+                  {questions[currentQuestion]?.question}
+                </h2>
+
+                {/* Options */}
+                <div className="space-y-2">
+                  {questions[currentQuestion]?.options.map((option, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleSelect(i)}
+                      className="w-full text-left px-4 py-3 text-sm transition"
+                      style={{
+                        background: selectedAnswer === i
+                          ? 'rgba(192,57,43,0.1)'
+                          : 'rgba(245,239,224,0.9)',
+                        border: `1px solid ${selectedAnswer === i ? 'var(--clr-vermillion)' : 'rgba(184,134,11,0.3)'}`,
+                        borderRadius: '2px',
+                        fontFamily: 'var(--font-serif)',
+                        color: 'var(--clr-ink)',
+                      }}
+                      onMouseEnter={e => {
+                        if (selectedAnswer !== i) {
+                          e.currentTarget.style.background = 'rgba(184,134,11,0.1)'
+                          e.currentTarget.style.borderColor = 'var(--clr-gold)'
+                        }
+                      }}
+                      onMouseLeave={e => {
+                        if (selectedAnswer !== i) {
+                          e.currentTarget.style.background = 'rgba(245,239,224,0.9)'
+                          e.currentTarget.style.borderColor = 'rgba(184,134,11,0.3)'
+                        }
+                      }}
+                    >
+                      <span style={{ color: 'var(--clr-gold)', marginRight: '10px' }}>
+                        {String.fromCharCode(65 + i)}.
+                      </span>
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Next Button */}
             <button
-              onClick={handleNext}
+              onClick={handleAnswer}
               disabled={selectedAnswer === null}
-              className="w-full mt-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="btn-primary w-full mt-4"
+              style={{ opacity: selectedAnswer === null ? 0.5 : 1, cursor: selectedAnswer === null ? 'not-allowed' : 'pointer' }}
             >
               {currentQuestion < questions.length - 1 ? 'Tiếp theo' : 'Xem kết quả'}
             </button>
           </div>
         )}
       </main>
+
+      {/* Bottom band */}
+      <div className="h-1 w-full mt-8" style={{ background: 'linear-gradient(90deg, var(--clr-jade), var(--clr-gold), var(--clr-vermillion))' }} />
     </div>
   )
 }
