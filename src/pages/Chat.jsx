@@ -20,6 +20,20 @@ function getPerspectiveLabel(key, entity) {
   return entity?.perspectives?.[key]?.persona || key
 }
 
+function getSpeakerName(entity, perspective) {
+  if (!entity) return 'AI'
+  const config = entity.perspectives?.[perspective]
+  if (!config) return entity.name
+
+  // Với góc nhìn tự thuật: hiện tên nhân vật
+  if (perspective === 'self') return entity.name
+
+  // Với các góc nhìn khác: hiện persona label
+  // Ví dụ: "Lê Lợi — chúa công", "Sử gia hiện đại"
+  const persona = config.persona || ''
+  return persona || entity.name
+}
+
 function getQuickSuggestions(entity, perspective) {
   if (!entity) return []
   if (perspective === 'historian') {
@@ -275,7 +289,7 @@ export default function Chat() {
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm opacity-60">
-                    {msg.role === 'user' ? 'Bạn' : entity.name}
+                    {msg.role === 'user' ? 'Bạn' : getSpeakerName(entity, perspective)}
                   </span>
                   {msg.role === 'assistant' && msg.content && (
                     <button
