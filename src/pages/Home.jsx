@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { searchEntities, getIndex } from '../services/retrieval'
 import { getCharacterUrl } from '../services/assetService'
+import AnimatedBackground from '../components/AnimatedBackground'
 
 const FEATURED = [
   { id: 'nguyen-trai',    label: 'Nguyễn Trãi',     era: 'Hậu Lê sơ' },
@@ -35,6 +36,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ background: 'var(--clr-paper)' }}>
+
+      {/* ===== HOẠT ẢNH NỀN ===== */}
+      <AnimatedBackground entityId="default" />
 
       {/* ===== DECORATIVE TOP BAND ===== */}
       <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, var(--clr-vermillion), var(--clr-gold), var(--clr-jade), var(--clr-gold), var(--clr-vermillion))' }} />

@@ -185,3 +185,205 @@ h1, h2, h3 { font-family: var(--font-serif); }
   to   { opacity: 1; transform: scale(1); }
 }
 .animate-ink { animation: inkDrop 0.3s ease forwards; }
+
+/* ============================================
+   PARTICLE & ANIMATION SYSTEM
+   ============================================ */
+
+/* ===== CANVAS LAYER (dùng cho particles JS) ===== */
+.particle-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ===== MÂY TRÔI ===== */
+@keyframes cloudDrift1 {
+  0%   { transform: translateX(-15%) translateY(0) scaleX(1); opacity: 0; }
+  10%  { opacity: 0.18; }
+  90%  { opacity: 0.18; }
+  100% { transform: translateX(110%) translateY(-3%) scaleX(1.1); opacity: 0; }
+}
+@keyframes cloudDrift2 {
+  0%   { transform: translateX(110%) translateY(0); opacity: 0; }
+  10%  { opacity: 0.12; }
+  90%  { opacity: 0.12; }
+  100% { transform: translateX(-15%) translateY(2%); opacity: 0; }
+}
+@keyframes cloudDrift3 {
+  0%   { transform: translateX(-20%) translateY(0); opacity: 0; }
+  15%  { opacity: 0.10; }
+  85%  { opacity: 0.10; }
+  100% { transform: translateX(105%) translateY(1%); opacity: 0; }
+}
+
+.cloud-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cloud {
+  position: absolute;
+  background: radial-gradient(ellipse, rgba(255,255,240,0.9) 0%, rgba(245,239,224,0.4) 50%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(18px);
+}
+.cloud-1 {
+  width: 40vw; height: 120px;
+  top: 8%; left: 0;
+  animation: cloudDrift1 28s ease-in-out infinite;
+}
+.cloud-2 {
+  width: 30vw; height: 80px;
+  top: 25%; left: 0;
+  animation: cloudDrift2 36s ease-in-out infinite 8s;
+}
+.cloud-3 {
+  width: 50vw; height: 100px;
+  top: 55%; left: 0;
+  animation: cloudDrift3 44s ease-in-out infinite 16s;
+}
+
+/* ===== HOA ĐÀO / HOA MAI RƠI ===== */
+@keyframes petalFall {
+  0%   { transform: translateY(-60px) translateX(0) rotate(0deg); opacity: 0; }
+  5%   { opacity: 0.85; }
+  95%  { opacity: 0.6; }
+  100% { transform: translateY(105vh) translateX(var(--drift)) rotate(var(--spin)); opacity: 0; }
+}
+@keyframes petalSway {
+  0%, 100% { margin-left: 0; }
+  25%       { margin-left: 12px; }
+  75%       { margin-left: -12px; }
+}
+
+.petal-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+.petal {
+  position: absolute;
+  top: -60px;
+  width: 10px; height: 12px;
+  border-radius: 50% 0 50% 0;
+  animation: petalFall var(--duration) linear infinite var(--delay);
+}
+/* Màu hoa đào nhạt */
+.petal-pink  { background: rgba(255, 182, 193, 0.75); }
+.petal-white { background: rgba(255, 248, 220, 0.80); }
+.petal-gold  { background: rgba(212, 168, 67,  0.55); }
+
+/* ===== HẠT BỤI VÀNG ===== */
+@keyframes dustFloat {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  20%  { opacity: var(--max-opacity); }
+  80%  { opacity: var(--max-opacity); }
+  100% { transform: translateY(var(--rise)) translateX(var(--drift)) scale(0.5); opacity: 0; }
+}
+
+.dust-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+.dust-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,168,67,0.9), rgba(184,134,11,0.3));
+  animation: dustFloat var(--duration) ease-in-out infinite var(--delay);
+  --max-opacity: 0.6;
+}
+
+/* ===== HOA VĂN TRỐNG ĐỒNG PULSE ===== */
+@keyframes dongsonPulse {
+  0%, 100% { opacity: 0.04; transform: scale(1); }
+  50%       { opacity: 0.10; transform: scale(1.015); }
+}
+@keyframes dongsonRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.dongson-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.dongson-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--clr-gold);
+  animation: dongsonPulse var(--pulse-dur) ease-in-out infinite var(--pulse-delay);
+}
+.dongson-ring-rotate {
+  position: absolute;
+  border-radius: 50%;
+  border: 0.5px dashed rgba(184,134,11,0.25);
+  animation: dongsonRotate var(--rotate-dur) linear infinite;
+}
+
+/* ===== NHÂN VẬT FLOAT ===== */
+@keyframes characterFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes characterEntrance {
+  from { opacity: 0; transform: translateX(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes characterEntranceLeft {
+  from { opacity: 0; transform: translateX(-40px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.character-hero {
+  animation:
+    characterEntrance 0.6s ease forwards,
+    characterFloat 5s ease-in-out infinite 0.6s;
+  filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
+  mix-blend-mode: multiply;
+}
+.character-hero-left {
+  animation:
+    characterEntranceLeft 0.6s ease forwards,
+    characterFloat 5s ease-in-out infinite 0.6s;
+  filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
+  mix-blend-mode: multiply;
+}
+
+/* ===== CONTENT FADE IN ===== */
+@keyframes contentSlideIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.content-slide-in {
+  animation: contentSlideIn 0.5s ease 0.3s both;
+}
+
+/* ===== PERFORMANCE: REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .petal, .dust-particle, .cloud,
+  .character-hero, .character-hero-left,
+  .dongson-ring, .dongson-ring-rotate {
+    animation: none !important;
+  }
+}
+
+/* Tắt bớt animation trên mobile để tiết kiệm pin */
+@media (max-width: 768px) {
+  .petal { animation-duration: calc(var(--duration) * 1.5) !important; }
+  .dust-particle { display: none; }
+  .dongson-ring-rotate { animation: none; }
+}

@@ -5,6 +5,7 @@ import { getEntity } from '../services/retrieval'
 import { useTTS } from '../hooks/useTTS'
 import { getBackgroundUrl, getCharacterUrl, getBgStyle } from '../services/assetService'
 import ReactMarkdown from 'react-markdown'
+import AnimatedBackground from '../components/AnimatedBackground'
 
 const lengthLabels = {
   short: 'Ngắn',
@@ -148,9 +149,14 @@ export default function Chat() {
   return (
     <div className="h-screen flex flex-col relative overflow-hidden" style={{ background: 'var(--clr-paper)' }}>
 
-      {/* Background mờ */}
-      <div className="absolute inset-0 opacity-20 bg-scene" style={getBgStyle(entityId)} />
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(245,239,224,0.92) 0%, rgba(232,220,200,0.88) 100%)' }} />
+      {/* ===== HOẠT ẢNH NỀN ===== */}
+      <AnimatedBackground entityId={entityId} />
+
+      {/* Ảnh nền mờ phía sau */}
+      <div className="fixed inset-0 z-0 opacity-10"
+        style={{ ...getBgStyle(entityId), filter: 'blur(3px) saturate(0.6)' }} />
+      <div className="fixed inset-0 z-0"
+        style={{ background: 'linear-gradient(135deg, rgba(245,239,224,0.93) 0%, rgba(232,220,200,0.90) 100%)' }} />
 
       {/* Decorative top band */}
       <div className="h-0.5 w-full relative z-10" style={{ background: 'linear-gradient(90deg, var(--clr-vermillion), var(--clr-gold), var(--clr-jade))' }} />
@@ -272,6 +278,7 @@ export default function Chat() {
             src={getCharacterUrl(entityId)}
             alt={entity.name}
             className="character-float w-full max-h-80 object-contain"
+            style={{ objectPosition: 'top center' }}
             onError={(e) => { e.target.style.display = 'none' }}
           />
           <div className="mt-2 text-center">
