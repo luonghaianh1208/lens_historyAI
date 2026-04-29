@@ -25,8 +25,8 @@ export default async (req) => {
       })
     }
 
-    // Truncate text to prevent timeout (Netlify free tier = 10s, ~900 chars is safe margin)
-    const MAX_TTS_CHARS = 900
+    // Truncate text to prevent timeout (Netlify free tier = 10s, ~450 chars per chunk is safe)
+    const MAX_TTS_CHARS = 450
     let ttsText = text
     if (ttsText.length > MAX_TTS_CHARS) {
       // Tìm điểm cắt tự nhiên: ưu tiên cuối đoạn văn, rồi cuối câu
@@ -116,13 +116,19 @@ export default async (req) => {
     const byteRate = sampleRate * numChannels * (bitsPerSample / 8);
     const blockAlign = numChannels * (bitsPerSample / 8);
 
+    // Add 80ms silence padding at the start to prevent browser clipping first syllable
+    const SILENCE_PADDING_MS = 80;
+    const silenceByteCount = Math.floor((SILENCE_PADDING_MS / 1000) * sampleRate * numChannels * (bitsPerSample / 8));
+    const silenceBuffer = new Uint8Array(silenceByteCount); // zero-filled = silence
+    const totalPCMLength = silenceByteCount + pcmBuffer.length;
+
     // Create WAV Header using TypedArray to be safe in all JS environments (Node, Deno, Edge)
     const header = new ArrayBuffer(44);
     const view = new DataView(header);
 
     // "RIFF"
     view.setUint8(0, 82); view.setUint8(1, 73); view.setUint8(2, 70); view.setUint8(3, 70);
-    view.setUint32(4, 36 + pcmBuffer.length, true);
+    view.setUint32(4, 36 + totalPCMLength, true);
     // "WAVE"
     view.setUint8(8, 87); view.setUint8(9, 65); view.setUint8(10, 86); view.setUint8(11, 69);
     // "fmt "
@@ -136,11 +142,12 @@ export default async (req) => {
     view.setUint16(34, bitsPerSample, true);
     // "data"
     view.setUint8(36, 100); view.setUint8(37, 97); view.setUint8(38, 116); view.setUint8(39, 97);
-    view.setUint32(40, pcmBuffer.length, true);
+    view.setUint32(40, totalPCMLength, true);
 
-    const wavBytes = new Uint8Array(44 + pcmBuffer.length);
+    const wavBytes = new Uint8Array(44 + totalPCMLength);
     wavBytes.set(new Uint8Array(header), 0);
-    wavBytes.set(pcmBuffer, 44);
+    wavBytes.set(silenceBuffer, 44);              // silence đầu
+    wavBytes.set(pcmBuffer, 44 + silenceByteCount); // PCM sau silence
 
     let base64Audio = '';
     if (typeof Buffer !== 'undefined') {

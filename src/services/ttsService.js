@@ -93,3 +93,70 @@ export function audioBufferToUrl(buffer) {
   const blob = new Blob([buffer], { type: 'audio/wav' }) // Gemini WAV conversion
   return URL.createObjectURL(blob)
 }
+
+/**
+ * Chia text thành các chunk nhỏ để TTS xử lý tuần tự.
+ * Ưu tiên cắt tại: cuối đoạn văn (\n\n) → cuối câu (. ! ?) → giữa câu (,)
+ */
+export function splitIntoChunks(text, maxChunkSize = 400) {
+  if (text.length <= maxChunkSize) return [text]
+
+  const chunks = []
+  let remaining = text.trim()
+
+  while (remaining.length > 0) {
+    if (remaining.length <= maxChunkSize) {
+      chunks.push(remaining.trim())
+      break
+    }
+
+    const slice = remaining.substring(0, maxChunkSize)
+
+    // Ưu tiên 1: cắt tại cuối đoạn văn
+    const paraBreak = slice.lastIndexOf('\n\n')
+    if (paraBreak > maxChunkSize * 0.4) {
+      chunks.push(remaining.substring(0, paraBreak).trim())
+      remaining = remaining.substring(paraBreak + 2).trim()
+      continue
+    }
+
+    // Ưu tiên 2: cắt tại cuối câu (. ! ?)
+    const sentenceEnd = Math.max(
+      slice.lastIndexOf('.'),
+      slice.lastIndexOf('!'),
+      slice.lastIndexOf('?'),
+      slice.lastIndexOf('。'),
+      slice.lastIndexOf('…')
+    )
+    if (sentenceEnd > maxChunkSize * 0.35) {
+      chunks.push(remaining.substring(0, sentenceEnd + 1).trim())
+      remaining = remaining.substring(sentenceEnd + 1).trim()
+      continue
+    }
+
+    // Ưu tiên 3: cắt tại dấu phẩy hoặc dấu chấm phẩy
+    const commaBreak = Math.max(
+      slice.lastIndexOf(','),
+      slice.lastIndexOf(';'),
+      slice.lastIndexOf(':')
+    )
+    if (commaBreak > maxChunkSize * 0.3) {
+      chunks.push(remaining.substring(0, commaBreak + 1).trim())
+      remaining = remaining.substring(commaBreak + 1).trim()
+      continue
+    }
+
+    // Fallback: cắt tại khoảng trắng gần nhất
+    const spaceBreak = slice.lastIndexOf(' ')
+    if (spaceBreak > maxChunkSize * 0.5) {
+      chunks.push(remaining.substring(0, spaceBreak).trim())
+      remaining = remaining.substring(spaceBreak + 1).trim()
+    } else {
+      // Không tìm được điểm cắt tự nhiên → cắt cứng
+      chunks.push(remaining.substring(0, maxChunkSize).trim())
+      remaining = remaining.substring(maxChunkSize).trim()
+    }
+  }
+
+  return chunks.filter(c => c.length > 0)
+}
