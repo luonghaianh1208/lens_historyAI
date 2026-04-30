@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-04-30] Session 5c — Hand-crafted Suggestion Catalog
+### Đã thêm
+- `suggestionCatalog` trong Chat.jsx: ~33 bộ câu hỏi viết tay riêng cho 11 entity × 3 perspectives
+- Logic nhận diện "phe thua" (De Castries, Tôn Sĩ Nghị, Tướng nhà Tống...) → câu hỏi phù hợp góc nhìn thất bại
+- Fallback thông minh: nếu entity/perspective không có trong catalog → dùng template động
+### File bị ảnh hưởng
+- `src/pages/Chat.jsx` (thêm ~190 dòng suggestion data + defeated-side logic)
+
+---
+
 ## [2026-04-30] Session 5b — CSS Refactor + Lazy Loading
 ### Đã cải thiện
 - **Code-splitting**: `App.jsx` dùng `React.lazy` + `Suspense` cho tất cả pages → mỗi page là chunk JS riêng
