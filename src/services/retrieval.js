@@ -10,7 +10,7 @@ import hoChiMinh from '../data/entities/ho-chi-minh.json'
 import tranDongDa from '../data/events/tran-dong-da.json'
 import dienBienPhu from '../data/events/dien-bien-phu.json'
 
-const entities = {
+const rawEntities = {
   'nguyen-trai': nguyenTrai,
   'le-loi': leLoi,
   'tran-hung-dao': tranHungDao,
@@ -21,8 +21,81 @@ const entities = {
   'nguyen-hue': nguyenHue,
   'ho-chi-minh': hoChiMinh,
   'tran-dong-da': tranDongDa,
-  'dien-bien-phu': dienBienPhu
+  'dien-bien-phu': dienBienPhu,
 }
+
+const mojibakePattern = /[ÃÂâð][\u0080-\u00ff]?/
+
+function repairMojibakeText(value = '') {
+  if (!value || !mojibakePattern.test(value)) return value
+
+  try {
+    const bytes = Uint8Array.from(Array.from(value, (char) => char.charCodeAt(0) & 0xff))
+    const repaired = new TextDecoder('utf-8').decode(bytes)
+    return repaired.includes('�') ? value : repaired
+  } catch {
+    return value
+  }
+}
+
+function deepRepair(value) {
+  if (typeof value === 'string') {
+    return repairMojibakeText(value)
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(deepRepair)
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, deepRepair(entry)]))
+  }
+
+  return value
+}
+
+function normalizePerspectives(perspectives = {}) {
+  return Object.fromEntries(
+    Object.entries(perspectives).map(([key, value]) => [
+      key,
+      {
+        ...value,
+        system_prompt: value.system_prompt || value.instruction || '',
+      },
+    ]),
+  )
+}
+
+function normalizeChunks(chunks = []) {
+  return chunks.map((chunk, index) => ({
+    id: chunk.id || `${chunk.source || chunk.metadata || 'chunk'}-${index}`,
+    content: chunk.content || '',
+    source: chunk.source || chunk.metadata || 'Tư liệu tổng hợp',
+    reliability: chunk.reliability ?? 88,
+    tags: chunk.tags || [],
+  }))
+}
+
+function normalizeEntity(entity) {
+  const repaired = deepRepair(entity)
+
+  return {
+    ...repaired,
+    period: repaired.period || repaired.dynasty || repaired.dates || '',
+    short_desc: repaired.short_desc || repaired.shortDescription || repaired.description || '',
+    perspectives: normalizePerspectives(repaired.perspectives || {}),
+    timeline: repaired.timeline || [],
+    chunks: normalizeChunks(repaired.chunks || []),
+    tags: repaired.tags || [],
+    aliases: repaired.aliases || [],
+    roles: repaired.roles || [],
+    related_people: repaired.related_people || [],
+  }
+}
+
+const entities = Object.fromEntries(
+  Object.entries(rawEntities).map(([id, entity]) => [id, normalizeEntity(entity)]),
+)
 
 function normalizeText(value = '') {
   return value
@@ -44,27 +117,21 @@ export function searchEntities(query) {
   const q = normalizeText(query)
   if (!q) return []
 
-  return Object.values(entities).filter(entity => {
+  return Object.values(entities).filter((entity) => {
     const nameMatch = normalizeText(entity.name).includes(q)
-    const aliasMatch = entity.aliases?.some(a => normalizeText(a).includes(q))
-    const tagMatch = entity.tags?.some(t => normalizeText(t).includes(q))
+    const aliasMatch = entity.aliases?.some((alias) => normalizeText(alias).includes(q))
+    const tagMatch = entity.tags?.some((tag) => normalizeText(tag).includes(q))
     const periodMatch = normalizeText(entity.period).includes(q)
     return nameMatch || aliasMatch || tagMatch || periodMatch
   })
 }
 
 export function getIndex() {
-  return [
-    { id: 'nguyen-trai', type: 'person', name: 'Nguyễn Trãi', period: 'Hậu Lê sơ', tags: ['quân sư', 'nhà thơ'] },
-    { id: 'le-loi', type: 'person', name: 'Lê Lợi', period: 'Hậu Lê sơ', tags: ['vua', 'khởi nghĩa'] },
-    { id: 'tran-hung-dao', type: 'person', name: 'Trần Hưng Đạo', period: 'Nhà Trần', tags: ['tướng quân'] },
-    { id: 'ly-thuong-kiet', type: 'person', name: 'Lý Thường Kiệt', period: 'Nhà Lý', tags: ['tướng quân', 'chống Tống'] },
-    { id: 'khoi-nghia-lam-son', type: 'event', name: 'Khởi nghĩa Lam Sơn', period: '1418-1427', tags: ['kháng chiến'] },
-    { id: 'chien-thang-bach-dang', type: 'event', name: 'Chiến thắng Bạch Đằng', period: '1288', tags: ['trận đánh'] },
-    { id: 'chien-tranh-ly-tong', type: 'event', name: 'Chiến tranh Lý–Tống', period: '1075-1077', tags: ['kháng chiến', 'nhà Lý'] },
-    { id: 'nguyen-hue', type: 'person', name: 'Nguyễn Huệ (Quang Trung)', period: 'Nhà Tây Sơn', tags: ['hoàng đế', 'quân sự'] },
-    { id: 'ho-chi-minh', type: 'person', name: 'Hồ Chí Minh', period: 'Việt Nam Dân chủ Cộng hòa', tags: ['chủ tịch', 'cách mạng'] },
-    { id: 'tran-dong-da', type: 'event', name: 'Trận Ngọc Hồi Đống Đa', period: '1789', tags: ['kháng chiến', 'nhà Tây Sơn'] },
-    { id: 'dien-bien-phu', type: 'event', name: 'Chiến thắng Điện Biên Phủ', period: '1954', tags: ['kháng chiến', 'thắng lợi'] }
-  ]
+  return getAllEntities().map((entity) => ({
+    id: entity.id,
+    type: entity.type,
+    name: entity.name,
+    period: entity.period,
+    tags: entity.tags,
+  }))
 }

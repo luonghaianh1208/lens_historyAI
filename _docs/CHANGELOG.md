@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026-04-30] Session 5e — Data Normalization Layer
+### Đã thêm
+- `normalizeEntity()`: chuẩn hóa tất cả entity (fill defaults: period, short_desc, perspectives, chunks, tags...)
+- `deepRepair()` + `repairMojibakeText()`: tự sửa lỗi mojibake UTF-8 trong JSON data
+- `normalizePerspectives()`: đảm bảo mọi perspective có `system_prompt`
+- `normalizeChunks()`: đảm bảo chunk có id, source, reliability
+- `getIndex()` DRY: tạo từ normalized entities thay vì hardcode
+### File bị ảnh hưởng
+- `src/services/retrieval.js` (refactor ~70 dòng mới)
+
+---
+
 ## [2026-04-30] Session 5d — Perspective-aware Character Avatars
 ### Đã thêm
 - 8 ảnh nhân vật phụ (perspective characters): De Castries, Võ Nguyên Giáp, Tôn Sĩ Nghị, Tướng nhà Tống, Quân sĩ nhà Trần, Ngô Thì Nhậm, Người dân VN, Sử gia hiện đại
