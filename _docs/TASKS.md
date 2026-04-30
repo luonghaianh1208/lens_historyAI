@@ -7,8 +7,16 @@
 - [ ] Tính năng: Share conversation — độ ưu tiên: thấp
 - [ ] Tính năng: Export quiz results — độ ưu tiên: thấp
 - [ ] Tính năng: Flashcard mode từ chunks của entity — độ ưu tiên: tb
+- [ ] Tính năng: Mobile responsive polish cho Chat page — độ ưu tiên: tb
+- [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-16: Câu hỏi gợi ý Chat linh hoạt theo entity + perspective — 2026-04-30
+- [x] TASK-15: Tách nền trắng 7 ảnh nhân vật bằng rembg AI (U2-Net) — 2026-04-30
+- [x] TASK-14: Xóa mix-blend-mode: multiply, dùng ảnh transparent thực sự — 2026-04-30
+- [x] TASK-13: Immersive Entity Page redesign (hero + scroll paper + wax seal buttons) — 2026-04-29
+- [x] TASK-12: Hệ thống hoạt ảnh nền AnimatedBackground (4 lớp CSS) — 2026-04-29
+- [x] TASK-11: Redesign toàn bộ UI theo phong cách Cổ phong Á Đông — 2026-04-29
 - [x] Thêm nhân vật: Nguyễn Huệ/Quang Trung — 2026-04-28
 - [x] Thêm nhân vật: Hồ Chí Minh — 2026-04-28
 - [x] Thêm sự kiện: Trận Đống Đa 1789 — 2026-04-28

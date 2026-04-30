@@ -1,5 +1,44 @@
 # Changelog
 
+## [2026-04-30] Session 5 — Context-aware Chat Suggestions
+### Đã sửa
+- Câu hỏi gợi ý trong Chat giờ linh hoạt theo từng entity + perspective
+- Không còn hỏi nhân vật về chính mình ở ngôi thứ 3 (ví dụ: "Lý Thường Kiệt là người thế nào trong mắt ngài?" khi đang là Quan lại triều Lý)
+- Hồ Chí Minh + "Người dân VN": câu hỏi phù hợp ngữ cảnh dân gian
+- Sự kiện: câu hỏi khớp persona cụ thể (Võ Nguyên Giáp, De Castries...)
+### File bị ảnh hưởng
+- `src/pages/Chat.jsx` (hàm `getQuickSuggestions` viết lại hoàn toàn)
+
+---
+
+## [2026-04-30] Session 4 — Immersive UI Redesign + Tách nền ảnh nhân vật
+### Đã thêm
+- **Hệ thống hoạt ảnh nền** (`AnimatedBackground.jsx`): 4 lớp CSS — hạt bụi vàng, cánh hoa rơi, mây trôi, hoa văn trống đồng pulse
+- **Entity Page redesign**: Hero section toàn màn hình với cảnh nền + nhân vật đứng giữa, cuộn thư cổ animation, khung viền cổ điển + họa tiết góc
+- **CSS Design Tokens**: `--clr-paper`, `--clr-vermillion`, `--clr-gold`, `--clr-jade`, `--clr-ink` cho phong cách Cổ phong Á Đông
+- **Nút wax-seal**: `.btn-seal` (đỏ son) và `.btn-seal-ghost` (viền vàng)
+- **Title glow animation**: tên nhân vật phát sáng nhẹ
+- **Tách nền ảnh nhân vật**: Dùng rembg (U2-Net AI) tách trắng → transparent cho 7 ảnh character
+- **Ảnh nền bối cảnh**: 6 ảnh `bg_*.webp` cho các nhân vật/sự kiện
+- **Ảnh nhân vật**: 7 ảnh `char_*.webp` phong cách tranh Á Đông
+### Đã sửa
+- BUG-011: TTS lỗi 400 do `systemInstruction` không hỗ trợ bởi `gemini-3.1-flash-tts-preview`
+- Xóa `mix-blend-mode: multiply` sau khi ảnh đã transparent thực sự
+- Fix nhân vật bị crop mất đầu trên Entity page
+- Card content nền trắng → giấy ố vàng
+### File bị ảnh hưởng
+- `src/index.css` (thêm ~200 dòng CSS mới: animation, scroll paper, blend mode, seal buttons)
+- `src/pages/Entity.jsx` (viết lại hoàn toàn)
+- `src/pages/Chat.jsx` (sidebar character upgrade)
+- `src/pages/Home.jsx` (tích hợp design tokens + animated background)
+- `src/components/AnimatedBackground.jsx` (NEW)
+- `src/services/assetService.js` (NEW — quản lý URL ảnh nền + nhân vật)
+- `netlify/functions/tts.js` (fix systemInstruction → text prefix)
+- `public/assets/characters/*.webp` (7 ảnh đã tách nền)
+- `public/assets/backgrounds/*.webp` (6 ảnh nền bối cảnh)
+
+---
+
 ## [2026-04-28] Session 3 — Mở rộng dữ liệu ưu tiên cao
 ### Đã thêm
 - Entity: **Nguyễn Huệ (Quang Trung)** (`nguyen-hue.json`)

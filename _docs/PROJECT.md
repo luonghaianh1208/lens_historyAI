@@ -4,14 +4,17 @@
 - **Tên dự án**: historylens-ai (Lens HistoryAI)
 - **Mục tiêu**: Nền tảng học hỏi lịch sử Việt Nam thông qua lăng kính tương tác AI, cho phép người dùng trò chuyện dưới nhiều góc nhìn của các nhân vật/sự kiện lịch sử.
 - **Đối tượng sử dụng**: Tất cả mọi người — học sinh, sinh viên và những người yêu thích tìm hiểu lịch sử. Không cần đăng nhập.
+- **Phong cách UI**: Cổ phong Á Đông — giấy cũ, mực tàu, hoa văn trống đồng, cuộn thư cổ.
 
 ## Tech Stack
 - **Framework**: React `^19.2.5`
 - **Build Tool**: Vite `^8.0.10`
-- **Styling**: Tailwind CSS `^4.2.4` + PostCSS
+- **Styling**: Tailwind CSS `^4.2.4` + PostCSS + Custom CSS Design Tokens
 - **Routing**: React Router DOM `^7.14.2`
+- **Markdown**: react-markdown
 - **Serverless/Deployment**: Netlify Functions (Node.js)
-- **AI Integration**: Gemini 2.5 Flash API (qua Google GenerativeLanguage REST endpoint)
+- **AI Chat**: Gemini 2.5 Flash API (qua Google GenerativeLanguage REST endpoint)
+- **AI TTS**: gemini-3.1-flash-tts-preview (audio modality, prebuilt voices)
 
 ## Cấu trúc thư mục
 
@@ -29,26 +32,36 @@ Lens_HistoryAI/
 +---netlify/
 |   \---functions/         (Serverless endpoints)
 |           chat.js
+|           tts.js
 +---public/
+|   \---assets/
+|       +---backgrounds/   (Ảnh nền cảnh WebP 1920x1080)
+|       \---characters/    (Ảnh nhân vật WebP transparent)
+|           \---_backup_originals/
 \---src/
     |   App.jsx
-    |   index.css
+    |   index.css           (Design tokens + animation system)
     |   main.jsx
-    +---components/        (Các react component dùng chung)
+    +---components/
+    |       AnimatedBackground.jsx
     +---data/              (Kho lưu trữ dữ liệu tĩnh dạng JSON)
     |   +---entities/
-    |   |       le-loi.json, nguyen-trai.json, tran-hung-dao.json
+    |   |       le-loi.json, nguyen-trai.json, tran-hung-dao.json,
+    |   |       ly-thuong-kiet.json, nguyen-hue.json, ho-chi-minh.json
     |   \---events/
-    |           chien-thang-bach-dang.json, khoi-nghia-lam-son.json
-    +---hooks/             (Custom hooks: useChat)
-    +---pages/             (Các màn hình chính)
+    |           chien-thang-bach-dang.json, khoi-nghia-lam-son.json,
+    |           chien-tranh-ly-tong.json, tran-dong-da.json, dien-bien-phu.json
+    +---hooks/
+    |       useChat.js, useTTS.js
+    +---pages/
     |       Chat.jsx, Entity.jsx, Home.jsx, Quiz.jsx
-    \---services/          (API logic)
-            geminiApi.js, quizService.js, retrieval.js
+    \---services/
+            assetService.js, geminiApi.js, quizService.js,
+            retrieval.js, ttsService.js
 ```
 
 ## Biến môi trường (.env)
-- `GEMINI_API_KEY`: API Key dành cho Netlify Function kết nối với Gemini (server-side only, không cần prefix `VITE_`).
+- `GEMINI_API_KEY`: API Key dành cho Netlify Function kết nối với Gemini (server-side only).
 
 ## Lệnh chạy
 - Khởi chạy môi trường Dev: `npm run dev`

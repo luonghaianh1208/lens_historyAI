@@ -58,3 +58,22 @@ Trạng thái: open | in-progress | fixed | wont-fix
 - **Trạng thái**: fixed
 - **Fix**: Chuyển API hoàn toàn sang `gemini-3.1-flash-tts-preview` Audio Modality. Xử lý mimeType `audio/l16` thay vì `audio/pcm` và parse PCM base64 sang `.WAV`. Thay map voice thành Charon/Fenrir/Puck.
 - **File**: `netlify/functions/tts.js`, `src/services/ttsService.js`, `src/hooks/useTTS.js`
+
+## [BUG-011] TTS lỗi 400 — systemInstruction không hỗ trợ
+- **Mô tả**: Model `gemini-3.1-flash-tts-preview` trả lỗi 400: "Developer instruction is not enabled for this model" khi payload chứa `systemInstruction`.
+- **Nguyên nhân**: Model TTS không hỗ trợ `systemInstruction`, chỉ nhận `contents`.
+- **Trạng thái**: fixed — Session 2026-04-29
+- **Fix**: Xóa `systemInstruction`, đưa hướng dẫn tone/giọng trực tiếp vào text prefix trong `contents`.
+- **File**: `netlify/functions/tts.js`
+
+## [BUG-012] Ảnh nhân vật có nền trắng vuông — không hòa vào cảnh
+- **Mô tả**: Ảnh AI-generated có nền trắng, dùng CSS `object-fit` không thể bỏ nền. `mix-blend-mode: multiply` chỉ là workaround làm tối ảnh.
+- **Trạng thái**: fixed — Session 2026-04-30
+- **Fix**: Dùng `rembg` (U2-Net AI model) tách nền trắng → WebP transparent thực sự cho 7 ảnh. Xóa `mix-blend-mode: multiply` khỏi CSS.
+- **File**: `public/assets/characters/*.webp`, `src/index.css`
+
+## [BUG-013] Câu hỏi gợi ý Chat không phù hợp ngữ cảnh
+- **Mô tả**: Khi chọn perspective "Quan lại triều Lý" cho Lý Thường Kiệt, câu hỏi gợi ý hiện "Lý Thường Kiệt là người như thế nào trong mắt ngài?" — vô nghĩa vì LTK CHÍNH LÀ nhân vật đang được hỏi. Tương tự, HCM + "Người dân VN" cũng không phù hợp.
+- **Trạng thái**: fixed — Session 2026-04-30
+- **Fix**: Viết lại `getQuickSuggestions()` phân nhánh theo: entity type (person/event), perspective key (self/contemporary/historian/custom), persona name, và entityId đặc biệt (ho-chi-minh).
+- **File**: `src/pages/Chat.jsx`
