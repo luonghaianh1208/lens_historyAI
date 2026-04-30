@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-04-30] Session 5f — Font fix + Event character mapping
+### Đã sửa
+- **BUG-014**: Font `Cinzel` không hỗ trợ tiếng Việt → thay bằng `Playfair Display` (hỗ trợ đầy đủ Unicode/Vietnamese)
+- **BUG-015**: Events (Điện Biên Phủ, Đống Đa...) hiện nhân vật default thay vì nhân vật chính của sự kiện
+### Đã thêm
+- Map event → nhân vật chính: ĐBP→Giáp, Đống Đa→Nguyễn Huệ, Bạch Đằng→Trần Hưng Đạo, Lý-Tống→LTK, Lam Sơn→Lê Lợi
+- Google Fonts: thêm `Playfair Display` + `Playfair Display SC`
+### File bị ảnh hưởng
+- `index.html` (Google Fonts link)
+- `src/index.css` (--font-display)
+- `src/services/assetService.js` (ENTITY_CHARACTER_PATHS)
+
+---
+
 ## [2026-04-30] Session 5e — Data Normalization Layer
 ### Đã thêm
 - `normalizeEntity()`: chuẩn hóa tất cả entity (fill defaults: period, short_desc, perspectives, chunks, tags...)

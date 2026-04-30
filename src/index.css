@@ -11,7 +11,7 @@
   --clr-jade: #2d6a4f;
   --clr-jade-light: #3a8a65;
   --clr-smoke: rgba(26, 15, 10, 0.06);
-  --font-display: 'Cinzel', 'Noto Serif', serif;
+  --font-display: 'Playfair Display', 'Noto Serif', serif;
   --font-serif: 'Noto Serif', 'Times New Roman', serif;
   --font-sans: 'Be Vietnam Pro', sans-serif;
   --texture-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");

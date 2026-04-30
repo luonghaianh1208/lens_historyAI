@@ -5,6 +5,11 @@ const ENTITY_CHARACTER_PATHS = {
   'ly-thuong-kiet': '/assets/characters/char_ly_thuong_kiet.webp',
   'nguyen-hue': '/assets/characters/char_nguyen_hue.webp',
   'ho-chi-minh': '/assets/characters/char_ho_chi_minh.webp',
+  'dien-bien-phu': '/assets/characters/char_vo_nguyen_giap.png',
+  'tran-dong-da': '/assets/characters/char_nguyen_hue.webp',
+  'chien-thang-bach-dang': '/assets/characters/char_tran_hung_dao.webp',
+  'chien-tranh-ly-tong': '/assets/characters/char_ly_thuong_kiet.webp',
+  'khoi-nghia-lam-son': '/assets/characters/char_le_loi.webp',
   default: '/assets/characters/char_default.webp',
 }
 
