@@ -34,24 +34,81 @@ function getSpeakerName(entity, perspective) {
 function getQuickSuggestions(entity, perspective) {
   if (!entity) return []
   const name = entity.name
+  const perspectiveConfig = entity.perspectives?.[perspective]
+  const persona = perspectiveConfig?.persona || ''
+  const isEvent = entity.type === 'event'
+
+  // ===== SỬ GIA =====
   if (perspective === 'historian') {
+    if (isEvent) {
+      return [
+        `Phân tích ý nghĩa lịch sử của ${name}?`,
+        `${name} ảnh hưởng đến tiến trình lịch sử Việt Nam ra sao?`,
+        `Các nguồn sử liệu khác nhau đánh giá ${name} thế nào?`,
+      ]
+    }
     return [
-      `Đánh giá vai trò của ${name} theo sử học hiện đại?`,
+      `Đánh giá vai trò của ${name} trong lịch sử Việt Nam?`,
       `Các sử gia có quan điểm khác nhau thế nào về ${name}?`,
-      `Tầm quan trọng của ${name} trong lịch sử Việt Nam?`,
+      `Di sản mà ${name} để lại cho hậu thế là gì?`,
     ]
   }
+
+  // ===== TỰ THUẬT (chính nhân vật kể) =====
   if (perspective === 'self') {
+    if (isEvent) {
+      // Sự kiện không có "self" thông thường, nhưng phòng hờ
+      return [
+        `Kể lại diễn biến chính của sự kiện này?`,
+        `Bước ngoặt quyết định nhất là gì?`,
+        `Bài học lớn nhất rút ra từ sự kiện này?`,
+      ]
+    }
+    // Nhân vật kể về chính mình
+    const entityId = entity.id || ''
+    if (entityId === 'ho-chi-minh') {
+      return [
+        `Thưa Bác, hành trình tìm đường cứu nước đã bắt đầu ra sao?`,
+        `Bác có nhắn nhủ gì cho thế hệ trẻ hôm nay?`,
+        `Khoảnh khắc nào trong cuộc đời khiến Bác xúc động nhất?`,
+      ]
+    }
     return [
-      `Kể về cuộc đời của ngài?`,
-      `Chiến công hay đóng góp lớn nhất của ngài là gì?`,
-      `Điều gì khiến ngài tự hào nhất trong cuộc đời?`,
+      `Ngài hãy kể về cuộc đời và sự nghiệp của mình?`,
+      `Chiến công hay đóng góp lớn nhất mà ngài tự hào là gì?`,
+      `Điều gì đã thôi thúc ngài dấn thân vì đất nước?`,
     ]
   }
+
+  // ===== SỰ KIỆN — perspective đặc biệt (viet-minh, french, le-loi, ...) =====
+  if (isEvent) {
+    // Ví dụ: Điện Biên Phủ → Võ Nguyên Giáp, De Castries
+    // Ví dụ: Trận Bạch Đằng → Trần Hưng Đạo
+    return [
+      `${persona}, ngài đã trải qua ${name} như thế nào?`,
+      `Quyết định khó khăn nhất của ngài trong ${name} là gì?`,
+      `Khoảnh khắc nào trong ${name} khiến ngài nhớ nhất?`,
+    ]
+  }
+
+  // ===== NHÂN VẬT — perspective "contemporary" (người cùng thời) =====
+  // persona ví dụ: "Nguyễn Trãi — quân sư", "Quan lại triều Lý", "Người dân Việt Nam"
+  const entityId = entity.id || ''
+
+  // Trường hợp đặc biệt: Hồ Chí Minh + Người dân VN
+  if (entityId === 'ho-chi-minh' && perspective === 'contemporary') {
+    return [
+      `Cuộc sống của người dân thay đổi thế nào nhờ Bác Hồ?`,
+      `Khoảnh khắc nào khiến bạn xúc động nhất khi nhớ về Bác?`,
+      `Người dân đã nghe tin Bác mất năm 1969 ra sao?`,
+    ]
+  }
+
+  // Trường hợp chung: người đương thời kể về nhân vật
   return [
-    `Ngài nhận xét thế nào về ${name}?`,
-    `${name} là người như thế nào trong mắt ngài?`,
-    `Kỷ niệm đáng nhớ nhất của ngài với ${name} là gì?`,
+    `${persona}, ngài đánh giá ${name} là người thế nào?`,
+    `Ngài có kỷ niệm nào đáng nhớ với ${name}?`,
+    `Trong vai trò của mình, ngài đã hợp tác với ${name} ra sao?`,
   ]
 }
 
