@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:preset-audio": "node scripts/generate-preset-audio.mjs",
+    "test": "vitest run"
   },
   "dependencies": {
     "react": "^19.2.5",
@@ -19,6 +21,7 @@
     "autoprefixer": "^10.5.0",
     "postcss": "^8.5.12",
     "tailwindcss": "^4.2.4",
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
   }
 }

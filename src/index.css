@@ -888,3 +888,129 @@ a:focus-visible {
     animation: none !important;
   }
 }
+
+/* === NEW: Micro-interactions === */
+.btn-primary:active,
+.btn-ghost:active,
+.btn-seal:active,
+.btn-seal-ghost:active {
+  transform: scale(0.97);
+  box-shadow: 0 1px 3px rgba(26,15,10,0.2);
+}
+
+/* === NEW: Page transitions === */
+.page-enter {
+  animation: pageEnter 0.3s ease forwards;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === NEW: Quiz timer === */
+.quiz-timer { transition: stroke-dashoffset 1s linear; }
+.quiz-timer.warning { stroke: var(--clr-gold); }
+.quiz-timer.danger {
+  stroke: var(--clr-vermillion);
+  animation: timerPulse 0.5s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* === NEW: Streak animation === */
+.streak-fire {
+  animation: streakGlow 0.6s ease-in-out;
+}
+@keyframes streakGlow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); filter: drop-shadow(0 0 8px rgba(192,57,43,0.6)); }
+  100% { transform: scale(1); }
+}
+
+/* === NEW: Related entities horizontal scroll === */
+.related-entities-scroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+.related-entities-scroll > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 180px;
+}
+.related-entities-scroll::-webkit-scrollbar { height: 4px; }
+.related-entities-scroll::-webkit-scrollbar-track { background: rgba(184,134,11,0.1); border-radius: 2px; }
+.related-entities-scroll::-webkit-scrollbar-thumb { background: var(--clr-gold); border-radius: 2px; }
+
+/* === NEW: Message timestamp === */
+.message-time {
+  font-size: 0.65rem;
+  opacity: 0.5;
+  font-family: var(--font-sans);
+}
+
+/* === NEW: Copy button === */
+.copy-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.bubble-ai:hover .copy-btn,
+.bubble-user:hover .copy-btn {
+  opacity: 1;
+}
+
+/* === NEW: Perspective tooltip === */
+.perspective-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+  background: var(--clr-ink);
+  color: var(--clr-paper);
+  font-family: var(--font-serif);
+}
+.perspective-btn:hover .perspective-tooltip {
+  opacity: 1;
+}
+
+/* === NEW: Mobile responsive fixes === */
+@media (max-width: 768px) {
+  .hero-summary-grid { grid-template-columns: 1fr !important; }
+  .home-journey-grid { grid-template-columns: 1fr !important; }
+  .chat-layout { grid-template-columns: 1fr !important; }
+  .character-hero { height: min(40vh, 300px) !important; }
+}
+
+/* === NEW: Focus improvements === */
+*:focus-visible {
+  outline: 2px solid var(--clr-gold);
+  outline-offset: 2px;
+}
+
+/* === NEW: Skip to content === */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--clr-vermillion);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 100;
+  font-family: var(--font-serif);
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 0; }

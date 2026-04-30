@@ -24,7 +24,7 @@ const rawEntities = {
   'dien-bien-phu': dienBienPhu,
 }
 
-const mojibakePattern = /[ÃÂâð][\u0080-\u00ff]?/
+const mojibakePattern = /[����][\u0080-\u00ff]?/
 
 function repairMojibakeText(value = '') {
   if (!value || !mojibakePattern.test(value)) return value
@@ -90,6 +90,7 @@ function normalizeEntity(entity) {
     aliases: repaired.aliases || [],
     roles: repaired.roles || [],
     related_people: repaired.related_people || [],
+    related_events: repaired.related_events || [],
   }
 }
 

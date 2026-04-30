@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getEntity, getAllEntities } from '../services/retrieval'
 import { getBackgroundUrl, getCharacterUrl } from '../services/assetService'
@@ -64,7 +64,8 @@ export default function Entity({ onOpenSearch }) {
   const relatedEntities = useMemo(() => entity ? getRelatedEntities(entity, allEntities) : [], [entity, allEntities])
   const highlights = useMemo(() => (entity ? buildLearningHighlights(entity) : []), [entity])
 
-  useMemo(() => {
+  useEffect(() => {
+    setLoading(true)
     const timer = setTimeout(() => setLoading(false), 400)
     return () => clearTimeout(timer)
   }, [id])

@@ -83,6 +83,38 @@ function getQuizCacheKey(entityId) {
   return `historylens-quiz-${entityId}`
 }
 
+function sanitizeQuizQuestions(rawQuestions) {
+  if (!Array.isArray(rawQuestions)) return []
+
+  return rawQuestions
+    .map((item, index) => {
+      const question = typeof item?.question === 'string' ? item.question.trim() : ''
+      const options = Array.isArray(item?.options)
+        ? item.options
+            .filter((option) => typeof option === 'string' || typeof option === 'number')
+            .map((option) => String(option).trim())
+            .filter(Boolean)
+            .slice(0, 4)
+        : []
+      const explanation = typeof item?.explanation === 'string' ? item.explanation.trim() : ''
+      const correct = Number.isInteger(item?.correct) ? item.correct : -1
+
+      if (!question || options.length !== 4 || correct < 0 || correct >= options.length) {
+        return null
+      }
+
+      return {
+        question,
+        options,
+        correct,
+        explanation: explanation || `Đáp án đúng là ${String.fromCharCode(65 + correct)}.`,
+        id: item.id || `${index}-${question}`,
+      }
+    })
+    .filter(Boolean)
+    .slice(0, 5)
+}
+
 export default function Quiz() {
   const { entityId } = useParams()
   const navigate = useNavigate()
@@ -97,6 +129,10 @@ export default function Quiz() {
   const [loading, setLoading] = useState(true)
   const [genError, setGenError] = useState(null)
   const [characterMood, setCharacterMood] = useState('neutral')
+  const [timeLeft, setTimeLeft] = useState(30)
+  const [streak, setStreak] = useState(0)
+  const [bestStreak, setBestStreak] = useState(0)
+  const [timerActive, setTimerActive] = useState(false)
 
   const completionRate = useMemo(() => (
     questions.length ? Math.round(((currentQuestion + (showResult ? 1 : 0)) / questions.length) * 100) : 0
@@ -109,6 +145,10 @@ export default function Quiz() {
     setScore(0)
     setAnswers([])
     setCharacterMood('neutral')
+    setStreak(0)
+    setBestStreak(0)
+    setTimeLeft(30)
+    setTimerActive(false)
     generateQuestions()
   }, [entityId])
 
@@ -133,10 +173,11 @@ export default function Quiz() {
       try {
         const cachedValue = sessionStorage.getItem(cacheKey)
         if (cachedValue) {
-          const parsed = JSON.parse(cachedValue)
-          if (Array.isArray(parsed) && parsed.length > 0) {
+          const parsed = sanitizeQuizQuestions(JSON.parse(cachedValue))
+          if (parsed.length > 0) {
             setQuestions(parsed)
             setLoading(false)
+            setTimerActive(true)
             return
           }
         }
@@ -164,11 +205,12 @@ export default function Quiz() {
       const jsonMatch = text.match(/\[[\s\S]*\]/)
 
       if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[0])
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        const parsed = sanitizeQuizQuestions(JSON.parse(jsonMatch[0]))
+        if (parsed.length > 0) {
           setQuestions(parsed)
           sessionStorage.setItem(cacheKey, JSON.stringify(parsed))
           setLoading(false)
+          setTimerActive(true)
           return
         }
       }
@@ -177,16 +219,17 @@ export default function Quiz() {
     } catch (error) {
       console.error('Quiz generation error:', error)
       setGenError('Không thể tạo quiz từ AI. Đã chuyển sang bộ câu hỏi dự phòng theo đúng hồ sơ hiện tại.')
-      setQuestions(buildFallbackQuestions(entity))
+      setQuestions(sanitizeQuizQuestions(buildFallbackQuestions(entity)))
     } finally {
       setLoading(false)
+      setTimerActive(true)
     }
   }
 
   const handleTimeout = () => {
-    setCharacterMood("wrong")
+    setCharacterMood('wrong')
     setStreak(0)
-    setTimeout(() => setCharacterMood("neutral"), 1500)
+    setTimeout(() => setCharacterMood('neutral'), 1500)
     const nextAnswers = [...answers, -1]
     setAnswers(nextAnswers)
     if (currentQuestion < questions.length - 1) {
@@ -210,6 +253,10 @@ export default function Quiz() {
     setCharacterMood(isCorrect ? 'correct' : 'wrong')
     setTimeout(() => setCharacterMood('neutral'), 1500)
 
+    const nextStreak = isCorrect ? streak + 1 : 0
+    setStreak(nextStreak)
+    if (nextStreak > bestStreak) setBestStreak(nextStreak)
+
     const nextAnswers = [...answers, selectedAnswer]
     setAnswers(nextAnswers)
     if (isCorrect) setScore((prev) => prev + 1)
@@ -217,8 +264,10 @@ export default function Quiz() {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1)
       setSelectedAnswer(null)
+      setTimeLeft(30)
     } else {
       setShowResult(true)
+      setTimerActive(false)
     }
   }
 
@@ -229,6 +278,10 @@ export default function Quiz() {
     setScore(0)
     setAnswers([])
     setCharacterMood('neutral')
+    setStreak(0)
+    setBestStreak(0)
+    setTimeLeft(30)
+    setTimerActive(false)
     generateQuestions(forceRefresh)
   }
 
@@ -258,7 +311,8 @@ export default function Quiz() {
             </button>
             <div>
               <h1 className="text-lg font-bold" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>Quiz: {entity.name}</h1>
-              <p className="text-xs" style={{ color: 'var(--clr-gold)' }}>
+              {streak >= 3 && <span className="streak-fire text-xs mr-2" style={{ color: 'var(--clr-vermillion)' }}>🔥 {streak}</span>}
+            <p className="text-xs" style={{ color: 'var(--clr-gold)' }}>
                 {showResult
                   ? `Kết quả: ${score}/${questions.length}`
                   : loading
@@ -442,17 +496,16 @@ export default function Quiz() {
                 onClick={handleAnswer}
                 disabled={selectedAnswer === null}
                 className="btn-primary w-full mt-4"
-                style={{ opacity: selectedAnswer === null ? 0.5 : 1, cursor: selectedAnswer === null ? "not-allowed" : "pointer" }}
-              >
-                {currentQuestion < questions.length - 1 ? "Tiep theo" : "Xem ket qua"}
-              </button>
-              <button
-                type="button"
-                onClick={() => { handleTimeout() }}
-                className="btn-ghost w-full mt-2 text-sm"
                 style={{ opacity: selectedAnswer === null ? 0.5 : 1, cursor: selectedAnswer === null ? 'not-allowed' : 'pointer' }}
               >
                 {currentQuestion < questions.length - 1 ? 'Tiếp theo' : 'Xem kết quả'}
+              </button>
+              <button
+                type="button"
+                onClick={handleTimeout}
+                className="btn-ghost w-full mt-2 text-sm"
+              >
+                Bỏ qua
               </button>
             </div>
           )}

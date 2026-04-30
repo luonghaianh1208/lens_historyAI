@@ -1,4 +1,4 @@
-﻿export function SkeletonCard() {
+export function SkeletonCard() {
   return (
     <div className="card-ancient p-4 animate-pulse">
       <div className="h-5 w-5 mb-3 rounded" style={{ background: 'rgba(184,134,11,0.15)' }} />
@@ -65,7 +65,7 @@ export function SkeletonChat() {
 export function SkeletonQuiz() {
   return (
     <div className="card-ancient p-8 text-center animate-pulse">
-      <div className="text-4xl mb-4">🤖</div>
+      <div className="text-4xl mb-4">\ud83e\udd16</div>
       <div className="h-5 w-48 mx-auto mb-6 rounded" style={{ background: 'rgba(184,134,11,0.15)' }} />
       <div className="space-y-3">
         {Array.from({ length: 4 }).map((_, i) => (

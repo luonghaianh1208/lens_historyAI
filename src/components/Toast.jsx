@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 const TOAST_DURATION = 4000
 let toastId = 0
@@ -20,20 +20,16 @@ const toastStore = {
   },
 }
 
-export function toast(message, type = 'info') {
+export function toast(message, type = "info") {
   toastStore.addToast({ message, type })
 }
 
 export function toastSuccess(message) {
-  toast(message, 'success')
+  toast(message, "success")
 }
 
 export function toastError(message) {
-  toast(message, 'error')
-}
-
-export function toastWarning(message) {
-  toast(message, 'warning')
+  toast(message, "error")
 }
 
 export function useToast() {
@@ -62,7 +58,6 @@ export function useToast() {
         timersRef.current.set(t.id, timer)
       }
     })
-
     return () => {
       timersRef.current.forEach((timer) => clearTimeout(timer))
       timersRef.current.clear()
@@ -74,14 +69,13 @@ export function useToast() {
 
 export default function ToastContainer() {
   const { toasts, dismiss } = useToast()
-
   if (toasts.length === 0) return null
 
   const typeStyles = {
-    success: { background: 'rgba(45,106,79,0.15)', border: 'rgba(45,106,79,0.4)', color: 'var(--clr-jade)', icon: '✓' },
-    error: { background: 'rgba(192,57,43,0.15)', border: 'rgba(192,57,43,0.4)', color: 'var(--clr-vermillion)', icon: '✕' },
-    warning: { background: 'rgba(184,134,11,0.15)', border: 'rgba(184,134,11,0.4)', color: 'var(--clr-gold)', icon: '⚠' },
-    info: { background: 'rgba(26,15,10,0.1)', border: 'rgba(26,15,10,0.3)', color: 'var(--clr-ink)', icon: 'ℹ' },
+    success: { background: "rgba(45,106,79,0.15)", border: "rgba(45,106,79,0.4)", color: "var(--clr-jade)", icon: "\u2713" },
+    error: { background: "rgba(192,57,43,0.15)", border: "rgba(192,57,43,0.4)", color: "var(--clr-vermillion)", icon: "\u2715" },
+    warning: { background: "rgba(184,134,11,0.15)", border: "rgba(184,134,11,0.4)", color: "var(--clr-gold)", icon: "\u26a0" },
+    info: { background: "rgba(26,15,10,0.1)", border: "rgba(26,15,10,0.3)", color: "var(--clr-ink)", icon: "\u2139" },
   }
 
   return (
@@ -94,10 +88,10 @@ export default function ToastContainer() {
             className="pointer-events-auto p-4 rounded-sm animate-in flex items-start gap-3"
             style={{
               background: style.background,
-              border: '1px solid ' + style.border,
+              border: "1px solid " + style.border,
               color: style.color,
-              fontFamily: 'var(--font-serif)',
-              fontSize: '0.875rem',
+              fontFamily: "var(--font-serif)",
+              fontSize: "0.875rem",
             }}
           >
             <span className="font-bold flex-shrink-0">{style.icon}</span>
@@ -106,9 +100,9 @@ export default function ToastContainer() {
               type="button"
               onClick={() => dismiss(t.id)}
               className="flex-shrink-0 opacity-60 hover:opacity-100 transition-opacity"
-              aria-label="Đóng thông báo"
+              aria-label="\u0110\u00f3ng th\u00f4ng b\u00e1o"
             >
-              ×
+              \u00d7
             </button>
           </div>
         )

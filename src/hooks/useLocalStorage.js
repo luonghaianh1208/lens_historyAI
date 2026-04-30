@@ -1,4 +1,4 @@
-﻿import { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
 export function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
@@ -11,44 +11,23 @@ export function useLocalStorage(key, initialValue) {
   })
 
   const setValue = useCallback((value) => {
+    let nextValue
+
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value
-      setStoredValue(valueToStore)
-      localStorage.setItem(key, JSON.stringify(valueToStore))
+      nextValue = value instanceof Function ? value(storedValue) : value
+      setStoredValue(nextValue)
+      localStorage.setItem(key, JSON.stringify(nextValue))
     } catch (error) {
-      if (error.name === 'QuotaExceededError') {
-        console.warn('localStorage quota exceeded, clearing oldest data')
+      if (error.name === "QuotaExceededError") {
+        console.warn("localStorage quota exceeded")
         try {
           localStorage.removeItem(key)
-          localStorage.setItem(key, JSON.stringify(value))
-          setStoredValue(value)
+          localStorage.setItem(key, JSON.stringify(nextValue))
+          setStoredValue(nextValue)
         } catch {
-          console.error('Failed to write to localStorage')
+          console.error("Failed to write to localStorage")
         }
       }
-    }
-  }, [key, storedValue])
-
-  return [storedValue, setValue]
-}
-
-export function useSessionStorage(key, initialValue) {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const item = sessionStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch {
-      return initialValue
-    }
-  })
-
-  const setValue = useCallback((value) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value
-      setStoredValue(valueToStore)
-      sessionStorage.setItem(key, JSON.stringify(valueToStore))
-    } catch (error) {
-      console.error('Failed to write to sessionStorage:', error)
     }
   }, [key, storedValue])
 
