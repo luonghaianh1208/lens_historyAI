@@ -19,6 +19,57 @@ function tokenize(value = '') {
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token))
 }
 
+// Vietnamese synonym groups for paraphrase matching
+const SYNONYM_GROUPS = [
+  ['vi sao', 'tai sao', 'nguyen nhan', 'ly do'],
+  ['bat dau', 'khoi dau', 'mo dau', 'khoi nguon'],
+  ['ket thuc', 'cham dut', 'hoan thanh', 'ket cuc'],
+  ['quan trong', 'y nghia', 'trong yeu', 'then chot'],
+  ['anh huong', 'tac dong', 'chi phoi'],
+  ['danh gia', 'nhan dinh', 'nhan xet', 'binh luan'],
+  ['chien thang', 'thang loi', 'chien cong'],
+  ['that bai', 'thua', 'that thu'],
+  ['gian nan', 'kho khan', 'gian kho', 'cam go'],
+  ['lanh dao', 'chi huy', 'cam dau', 'dung dau'],
+  ['di san', 'cong lao', 'dong gop', 'de lai'],
+  ['doi moi', 'cai cach', 'doi thay', 'thay doi'],
+  ['y chi', 'quyet tam', 'tinh than', 'khi phach'],
+  ['noi bat', 'dac sac', 'dac biet', 'khac biet'],
+  ['nhan vat', 'con nguoi'],
+  ['su kien', 'bien co', 'tran danh', 'chien dich'],
+  ['cuoc doi', 'su nghiep', 'hanh trinh', 'doi minh'],
+  ['doc lap', 'tu do', 'giai phong', 'chu quyen'],
+  ['doi thu', 'ke thu', 'doi phuong', 'dich'],
+  ['muu luoc', 'chien luoc', 'ke sach', 'sach luoc'],
+  ['long dan', 'nhan tam', 'long nguoi'],
+  ['the nao', 'nhu the nao', 'ra sao'],
+]
+
+const SYNONYM_MAP = new Map()
+for (const group of SYNONYM_GROUPS) {
+  for (const term of group) {
+    SYNONYM_MAP.set(term, group)
+  }
+}
+
+// Expand tokens with synonyms for paraphrase matching
+function expandWithSynonyms(tokens) {
+  const expanded = new Set(tokens)
+  const normalized = tokens.join(' ')
+
+  for (const [term, group] of SYNONYM_MAP) {
+    if (normalized.includes(term)) {
+      for (const syn of group) {
+        for (const synToken of syn.split(' ')) {
+          if (synToken.length > 1) expanded.add(synToken)
+        }
+      }
+    }
+  }
+
+  return Array.from(expanded)
+}
+
 function diceCoefficient(left, right) {
   if (!left || !right) return 0
   if (left === right) return 1
@@ -632,8 +683,9 @@ export function findPresetResponse({ entityId, perspective, input }) {
     return { ...exact, matchType: 'exact', confidence: 1 }
   }
 
-  const inputTokens = Array.from(new Set(tokenize(input)))
-  if (inputTokens.length < 2) return null
+  const rawInputTokens = Array.from(new Set(tokenize(input)))
+  if (rawInputTokens.length < 2) return null
+  const inputTokens = expandWithSynonyms(rawInputTokens)
 
   let bestMatch = null
 

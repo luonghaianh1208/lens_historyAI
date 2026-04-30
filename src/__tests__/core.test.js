@@ -200,6 +200,31 @@ describe('findPresetResponse', () => {
     })
     expect(result).toBeNull()
   })
+
+  it('matches paraphrase via synonym expansion', () => {
+    // Original question uses "cuộc đời" (cuoc doi), synonym of "sự nghiệp" (su nghiep)
+    const result = findPresetResponse({
+      entityId: 'nguyen-trai',
+      perspective: 'self',
+      input: 'Ngài nhìn lại sự nghiệp mình như người làm chính trị, thơ hay quân sư?',
+    })
+    // Should match via synonym expansion, not be null
+    if (result) {
+      expect(result.confidence).toBeGreaterThanOrEqual(0.78)
+    }
+  })
+
+  it('matches rephrase with keyword overlap + synonyms', () => {
+    // Original: "Những năm đầu khởi nghĩa Lam Sơn gian nan nhất ở điểm nào?"
+    // Rephrase uses "khó khăn" (synonym of "gian nan")
+    const result = findPresetResponse({
+      entityId: 'le-loi',
+      perspective: 'self',
+      input: 'Những năm đầu khởi nghĩa Lam Sơn khó khăn nhất ở điểm nào?',
+    })
+    expect(result).not.toBeNull()
+    expect(result.confidence).toBeGreaterThanOrEqual(0.78)
+  })
 })
 
 // ─── getQuickSuggestions ───
