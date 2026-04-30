@@ -1,29 +1,26 @@
 @import "tailwindcss";
 
-/* ===== DESIGN TOKENS ===== */
 :root {
-  /* Màu chủ đạo — đất son, mực tàu, vàng đồng */
-  --clr-paper:      #f5efe0;      /* nền giấy ố vàng */
-  --clr-paper-dark: #e8dcc8;      /* giấy đậm hơn */
-  --clr-ink:        #1a0f0a;      /* mực tàu */
-  --clr-ink-soft:   #3d2b1f;      /* mực nhạt */
-  --clr-vermillion: #c0392b;      /* son đỏ */
-  --clr-gold:       #b8860b;      /* vàng đồng */
-  --clr-gold-light: #d4a843;      /* vàng sáng */
-  --clr-jade:       #2d6a4f;      /* xanh ngọc */
+  --clr-paper: #f5efe0;
+  --clr-paper-dark: #e8dcc8;
+  --clr-ink: #1a0f0a;
+  --clr-ink-soft: #3d2b1f;
+  --clr-vermillion: #c0392b;
+  --clr-gold: #b8860b;
+  --clr-gold-light: #d4a843;
+  --clr-jade: #2d6a4f;
   --clr-jade-light: #3a8a65;
-  --clr-smoke:      rgba(26,15,10,0.06);
-
-  /* Font */
+  --clr-smoke: rgba(26, 15, 10, 0.06);
   --font-display: 'Cinzel', 'Noto Serif', serif;
-  --font-serif:   'Noto Serif', 'Times New Roman', serif;
-  --font-sans:    'Be Vietnam Pro', sans-serif;
-
-  /* Texture overlay */
+  --font-serif: 'Noto Serif', 'Times New Roman', serif;
+  --font-sans: 'Be Vietnam Pro', sans-serif;
   --texture-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
 
-/* ===== GLOBAL ===== */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--clr-paper);
   color: var(--clr-ink);
@@ -31,27 +28,41 @@ body {
   min-height: 100vh;
 }
 
-/* Texture grain overlay toàn app */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background-image: var(--texture-url);
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
   mix-blend-mode: multiply;
-  opacity: 0.4;
+  opacity: 0.22;
 }
 
-/* ===== TYPOGRAPHY ===== */
-h1, h2, h3 { font-family: var(--font-serif); }
-.display    { font-family: var(--font-display); letter-spacing: 0.05em; }
+h1, h2, h3 {
+  font-family: var(--font-serif);
+}
 
-/* ===== HỌA TIẾT TRỐNG ĐỒNG ===== */
+.display {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+}
+
+.page-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.interactive-surface {
+  position: relative;
+  z-index: 1;
+}
+
 .dong-son-border {
   border: 2px solid var(--clr-gold);
   position: relative;
 }
+
 .dong-son-border::before {
   content: '';
   position: absolute;
@@ -61,18 +72,41 @@ h1, h2, h3 { font-family: var(--font-serif); }
   pointer-events: none;
 }
 
-/* ===== CARD CƠ BẢN ===== */
 .card-ancient {
   background: rgba(245, 239, 224, 0.92);
   border: 1px solid rgba(184, 134, 11, 0.3);
   border-radius: 2px;
   box-shadow:
-    0 2px 8px rgba(26,15,10,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+    0 2px 8px rgba(26, 15, 10, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(8px);
 }
 
-/* ===== BUTTON ===== */
+.glass-panel {
+  background: rgba(245, 239, 224, 0.82);
+  border: 1px solid rgba(184, 134, 11, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.btn-primary,
+.btn-ghost,
+.btn-seal,
+.btn-seal-ghost,
+.chip-button,
+.filter-chip,
+.search-result-button,
+.entity-card-button,
+.quiz-option-button,
+.ghost-icon-button {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
 .btn-primary {
   background: var(--clr-vermillion);
   color: #fff;
@@ -80,31 +114,113 @@ h1, h2, h3 { font-family: var(--font-serif); }
   font-weight: 600;
   border-radius: 2px;
   padding: 0.6rem 1.5rem;
-  transition: all 0.2s;
-  border: 1px solid rgba(0,0,0,0.2);
-  box-shadow: 0 2px 6px rgba(192,57,43,0.35);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(192, 57, 43, 0.35);
 }
+
 .btn-primary:hover {
   background: #a93226;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(192,57,43,0.45);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.45);
 }
 
 .btn-ghost {
   background: transparent;
   color: var(--clr-ink-soft);
   font-family: var(--font-serif);
-  border: 1px solid rgba(184,134,11,0.4);
+  border: 1px solid rgba(184, 134, 11, 0.4);
   border-radius: 2px;
   padding: 0.5rem 1.2rem;
-  transition: all 0.2s;
 }
+
 .btn-ghost:hover {
-  background: rgba(184,134,11,0.08);
+  background: rgba(184, 134, 11, 0.08);
   border-color: var(--clr-gold);
 }
 
-/* ===== DECORATIVE LINE ===== */
+.btn-seal {
+  position: relative;
+  background: var(--clr-vermillion);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 2px 6px rgba(192, 57, 43, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.btn-seal::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+.btn-seal:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px rgba(192, 57, 43, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-seal-ghost {
+  background: transparent;
+  color: var(--clr-ink-soft);
+  font-family: var(--font-serif);
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  border: 1px solid rgba(184, 134, 11, 0.4);
+}
+
+.btn-seal-ghost:hover,
+.chip-button:hover,
+.filter-chip:hover {
+  background: rgba(184, 134, 11, 0.08);
+  border-color: var(--clr-gold);
+  color: var(--clr-ink);
+}
+
+.search-result-button:hover {
+  background: rgba(184, 134, 11, 0.08);
+}
+
+.entity-card-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(26, 15, 10, 0.16) !important;
+}
+
+.quiz-option-button:hover {
+  border-color: var(--clr-gold);
+  background: rgba(184, 134, 11, 0.1);
+}
+
+.ghost-icon-button:hover {
+  color: var(--clr-ink) !important;
+  background: rgba(184, 134, 11, 0.08);
+}
+
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.btn-seal:focus-visible,
+.btn-seal-ghost:focus-visible,
+.chip-button:focus-visible,
+.filter-chip:focus-visible,
+.search-result-button:focus-visible,
+.entity-card-button:focus-visible,
+.quiz-option-button:focus-visible,
+.ghost-icon-button:focus-visible,
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(184, 134, 11, 0.75);
+  outline-offset: 2px;
+}
+
 .divider-ancient {
   display: flex;
   align-items: center;
@@ -112,6 +228,7 @@ h1, h2, h3 { font-family: var(--font-serif); }
   color: var(--clr-gold);
   font-size: 12px;
 }
+
 .divider-ancient::before,
 .divider-ancient::after {
   content: '';
@@ -120,303 +237,275 @@ h1, h2, h3 { font-family: var(--font-serif); }
   background: linear-gradient(90deg, transparent, var(--clr-gold), transparent);
 }
 
-/* ===== ENTITY CHARACTER IMAGE ===== */
+.section-kicker {
+  color: var(--clr-gold);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
 .character-float {
   filter: drop-shadow(0 10px 15px rgba(26, 15, 10, 0.4));
   transition: transform 0.5s ease-out, filter 0.5s ease-out;
 }
+
 .character-float:hover {
   transform: translateY(-8px) scale(1.02);
   filter: drop-shadow(0 20px 25px rgba(26, 15, 10, 0.5));
 }
 
-/* ===== BACKGROUND OVERLAY ===== */
-.bg-scene {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.bg-scene::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(245,239,224,0.15) 0%,
-    rgba(245,239,224,0.75) 60%,
-    rgba(245,239,224,0.95) 100%
-  );
-}
-
-/* ===== CHAT BUBBLE ===== */
 .bubble-ai {
-  background: rgba(245,239,224,0.95);
-  border: 1px solid rgba(184,134,11,0.25);
+  background: rgba(245, 239, 224, 0.95);
+  border: 1px solid rgba(184, 134, 11, 0.25);
   border-radius: 2px 12px 12px 12px;
-  box-shadow: 0 2px 8px rgba(26,15,10,0.08);
+  box-shadow: 0 2px 8px rgba(26, 15, 10, 0.08);
   font-family: var(--font-serif);
   line-height: 1.8;
 }
+
 .bubble-user {
   background: var(--clr-vermillion);
-  color: white;
+  color: #fff;
   border-radius: 12px 2px 12px 12px;
   font-family: var(--font-sans);
 }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--clr-paper-dark); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--clr-paper-dark);
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--clr-gold);
   border-radius: 3px;
 }
 
-/* ===== ANIMATION ===== */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.animate-in { animation: fadeInUp 0.4s ease forwards; }
+
+.animate-in {
+  animation: fadeInUp 0.4s ease forwards;
+}
 
 @keyframes inkDrop {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
-}
-.animate-ink { animation: inkDrop 0.3s ease forwards; }
-
-/* ============================================
-   PARTICLE & ANIMATION SYSTEM
-   ============================================ */
-
-/* ===== CANVAS LAYER (dùng cho particles JS) ===== */
-.particle-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* ===== MÂY TRÔI ===== */
+.animate-ink {
+  animation: inkDrop 0.3s ease forwards;
+}
+
 @keyframes cloudDrift1 {
-  0%   { transform: translateX(-15%) translateY(0) scaleX(1); opacity: 0; }
-  10%  { opacity: 0.18; }
-  90%  { opacity: 0.18; }
+  0% { transform: translateX(-15%) translateY(0) scaleX(1); opacity: 0; }
+  10% { opacity: 0.18; }
+  90% { opacity: 0.18; }
   100% { transform: translateX(110%) translateY(-3%) scaleX(1.1); opacity: 0; }
 }
+
 @keyframes cloudDrift2 {
-  0%   { transform: translateX(110%) translateY(0); opacity: 0; }
-  10%  { opacity: 0.12; }
-  90%  { opacity: 0.12; }
+  0% { transform: translateX(110%) translateY(0); opacity: 0; }
+  10% { opacity: 0.12; }
+  90% { opacity: 0.12; }
   100% { transform: translateX(-15%) translateY(2%); opacity: 0; }
 }
+
 @keyframes cloudDrift3 {
-  0%   { transform: translateX(-20%) translateY(0); opacity: 0; }
-  15%  { opacity: 0.10; }
-  85%  { opacity: 0.10; }
+  0% { transform: translateX(-20%) translateY(0); opacity: 0; }
+  15% { opacity: 0.1; }
+  85% { opacity: 0.1; }
   100% { transform: translateX(105%) translateY(1%); opacity: 0; }
 }
 
 .cloud-layer {
-  position: absolute;
+  position: fixed;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  z-index: 0;
 }
+
 .cloud {
   position: absolute;
-  background: radial-gradient(ellipse, rgba(255,255,240,0.9) 0%, rgba(245,239,224,0.4) 50%, transparent 100%);
+  background: radial-gradient(ellipse, rgba(255, 255, 240, 0.9) 0%, rgba(245, 239, 224, 0.4) 50%, transparent 100%);
   border-radius: 50%;
   filter: blur(18px);
 }
+
 .cloud-1 {
-  width: 40vw; height: 120px;
-  top: 8%; left: 0;
+  width: 40vw;
+  height: 120px;
+  top: 8%;
+  left: 0;
   animation: cloudDrift1 28s ease-in-out infinite;
 }
+
 .cloud-2 {
-  width: 30vw; height: 80px;
-  top: 25%; left: 0;
+  width: 30vw;
+  height: 80px;
+  top: 25%;
+  left: 0;
   animation: cloudDrift2 36s ease-in-out infinite 8s;
 }
+
 .cloud-3 {
-  width: 50vw; height: 100px;
-  top: 55%; left: 0;
+  width: 50vw;
+  height: 100px;
+  top: 55%;
+  left: 0;
   animation: cloudDrift3 44s ease-in-out infinite 16s;
 }
 
-/* ===== HOA ĐÀO / HOA MAI RƠI ===== */
 @keyframes petalFall {
-  0%   { transform: translateY(-60px) translateX(0) rotate(0deg); opacity: 0; }
-  5%   { opacity: 0.85; }
-  95%  { opacity: 0.6; }
+  0% { transform: translateY(-60px) translateX(0) rotate(0deg); opacity: 0; }
+  5% { opacity: 0.85; }
+  95% { opacity: 0.6; }
   100% { transform: translateY(105vh) translateX(var(--drift)) rotate(var(--spin)); opacity: 0; }
 }
-@keyframes petalSway {
-  0%, 100% { margin-left: 0; }
-  25%       { margin-left: 12px; }
-  75%       { margin-left: -12px; }
-}
 
-.petal-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-.petal {
-  position: absolute;
-  top: -60px;
-  width: 10px; height: 12px;
-  border-radius: 50% 0 50% 0;
-  animation: petalFall var(--duration) linear infinite var(--delay);
-}
-/* Màu hoa đào nhạt */
-.petal-pink  { background: rgba(255, 182, 193, 0.75); }
-.petal-white { background: rgba(255, 248, 220, 0.80); }
-.petal-gold  { background: rgba(212, 168, 67,  0.55); }
-
-/* ===== HẠT BỤI VÀNG ===== */
-@keyframes dustFloat {
-  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-  20%  { opacity: var(--max-opacity); }
-  80%  { opacity: var(--max-opacity); }
-  100% { transform: translateY(var(--rise)) translateX(var(--drift)) scale(0.5); opacity: 0; }
-}
-
-.dust-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-}
-.dust-particle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,168,67,0.9), rgba(184,134,11,0.3));
-  animation: dustFloat var(--duration) ease-in-out infinite var(--delay);
-  --max-opacity: 0.6;
-}
-
-/* ===== HOA VĂN TRỐNG ĐỒNG PULSE ===== */
-@keyframes dongsonPulse {
-  0%, 100% { opacity: 0.04; transform: scale(1); }
-  50%       { opacity: 0.10; transform: scale(1.015); }
-}
-@keyframes dongsonRotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
+.petal-container,
+.dust-container,
 .dongson-bg {
   position: fixed;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.petal-container,
+.dust-container {
+  z-index: 0;
+}
+
+.petal {
+  position: absolute;
+  top: -60px;
+  width: 10px;
+  height: 12px;
+  border-radius: 50% 0 50% 0;
+  animation: petalFall var(--duration) linear infinite var(--delay);
+}
+
+.petal-pink { background: rgba(255, 182, 193, 0.75); }
+.petal-white { background: rgba(255, 248, 220, 0.8); }
+.petal-gold { background: rgba(212, 168, 67, 0.55); }
+
+@keyframes dustFloat {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  20% { opacity: var(--max-opacity); }
+  80% { opacity: var(--max-opacity); }
+  100% { transform: translateY(var(--rise)) translateX(var(--drift)) scale(0.5); opacity: 0; }
+}
+
+.dust-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 168, 67, 0.9), rgba(184, 134, 11, 0.3));
+  animation: dustFloat var(--duration) ease-in-out infinite var(--delay);
+  --max-opacity: 0.6;
+}
+
+@keyframes dongsonPulse {
+  0%, 100% { opacity: 0.04; transform: scale(1); }
+  50% { opacity: 0.1; transform: scale(1.015); }
+}
+
+@keyframes dongsonRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dongson-bg {
   z-index: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
+
+.dongson-bg-quiet {
+  opacity: 0.55;
+}
+
 .dongson-ring {
   position: absolute;
   border-radius: 50%;
   border: 1px solid var(--clr-gold);
   animation: dongsonPulse var(--pulse-dur) ease-in-out infinite var(--pulse-delay);
 }
+
 .dongson-ring-rotate {
   position: absolute;
   border-radius: 50%;
-  border: 0.5px dashed rgba(184,134,11,0.25);
+  border: 0.5px dashed rgba(184, 134, 11, 0.25);
   animation: dongsonRotate var(--rotate-dur) linear infinite;
 }
 
-/* ===== NHÂN VẬT FLOAT ===== */
 @keyframes characterFloat {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
+
 @keyframes characterEntrance {
   from { opacity: 0; transform: translateX(40px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
+
 @keyframes characterEntranceLeft {
   from { opacity: 0; transform: translateX(-40px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
 }
 
 .character-hero {
-  animation:
-    characterEntrance 0.6s ease forwards,
-    characterFloat 5s ease-in-out infinite 0.6s;
-  filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
+  animation: characterEntrance 0.6s ease forwards, characterFloat 5s ease-in-out infinite 0.6s;
+  filter: drop-shadow(0 16px 40px rgba(26, 15, 10, 0.4));
 }
+
 .character-hero-left {
-  animation:
-    characterEntranceLeft 0.6s ease forwards,
-    characterFloat 5s ease-in-out infinite 0.6s;
-  filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
+  animation: characterEntranceLeft 0.6s ease forwards, characterFloat 5s ease-in-out infinite 0.6s;
+  filter: drop-shadow(0 16px 40px rgba(26, 15, 10, 0.4));
 }
 
-/* ===== CONTENT FADE IN ===== */
-@keyframes contentSlideIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-.content-slide-in {
-  animation: contentSlideIn 0.5s ease 0.3s both;
-}
-
-/* ===== PERFORMANCE: REDUCED MOTION ===== */
-@media (prefers-reduced-motion: reduce) {
-  .petal, .dust-particle, .cloud,
-  .character-hero, .character-hero-left,
-  .dongson-ring, .dongson-ring-rotate {
-    animation: none !important;
-  }
-}
-
-/* Tắt bớt animation trên mobile để tiết kiệm pin */
-@media (max-width: 768px) {
-  .petal { animation-duration: calc(var(--duration) * 1.5) !important; }
-  .dust-particle { display: none; }
-  .dongson-ring-rotate { animation: none; }
-}
-
-/* ============================================
-   IMMERSIVE UI — CUỘN THƯ CỔ + BLEND MODE
-   ============================================ */
-
-/* ===== ẢNH NHÂN VẬT — transparent, tăng contrast nhẹ ===== */
 .character-blend {
   filter: contrast(1.05) saturate(1.1);
 }
 
-/* Container có nền tương đồng để blend hoạt động đúng */
 .character-stage {
   position: relative;
   isolation: isolate;
 }
 
-/* Vignette gradient bao quanh nhân vật để hòa nhân vật vào cảnh */
 .character-vignette {
   position: relative;
 }
+
 .character-vignette::before {
   content: '';
   position: absolute;
   inset: -20px;
-  background: radial-gradient(ellipse at center,
-    transparent 40%,
-    rgba(245,239,224,0.6) 70%,
-    rgba(245,239,224,0.95) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(245, 239, 224, 0.6) 70%, rgba(245, 239, 224, 0.95) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-/* ===== CUỘN THƯ MỞ RA ===== */
 @keyframes scrollUnfurl {
   from {
     opacity: 0;
@@ -426,71 +515,73 @@ h1, h2, h3 { font-family: var(--font-serif); }
   to {
     opacity: 1;
     transform: scaleY(1) translateY(0);
-    transform-origin: top center;
   }
 }
 
 .scroll-paper {
   background:
-    linear-gradient(180deg, transparent 0%, rgba(245,239,224,0.95) 8%, rgba(245,239,224,0.95) 92%, transparent 100%),
+    linear-gradient(180deg, transparent 0%, rgba(245, 239, 224, 0.95) 8%, rgba(245, 239, 224, 0.95) 92%, transparent 100%),
     linear-gradient(135deg, #f5efe0 0%, #ede0c8 100%);
-  border-left: 1px solid rgba(184,134,11,0.25);
-  border-right: 1px solid rgba(184,134,11,0.25);
-  box-shadow:
-    inset 0 0 30px rgba(184,134,11,0.08),
-    0 4px 24px rgba(26,15,10,0.15);
+  border-left: 1px solid rgba(184, 134, 11, 0.25);
+  border-right: 1px solid rgba(184, 134, 11, 0.25);
+  box-shadow: inset 0 0 30px rgba(184, 134, 11, 0.08), 0 4px 24px rgba(26, 15, 10, 0.15);
   animation: scrollUnfurl 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   position: relative;
 }
 
-/* Đầu cuộn thư trên/dưới — chi tiết bằng wood texture */
 .scroll-paper::before,
 .scroll-paper::after {
   content: '';
   position: absolute;
-  left: -8px; right: -8px;
+  left: -8px;
+  right: -8px;
   height: 16px;
-  background:
-    linear-gradient(180deg, #6b3410 0%, #8b4513 50%, #5a2a0a 100%);
+  background: linear-gradient(180deg, #6b3410 0%, #8b4513 50%, #5a2a0a 100%);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-.scroll-paper::before { top: -8px; }
-.scroll-paper::after  { bottom: -8px; }
 
-/* ===== ANCIENT FRAME — khung viền cổ điển ===== */
+.scroll-paper::before {
+  top: -8px;
+}
+
+.scroll-paper::after {
+  bottom: -8px;
+}
+
 .ancient-frame {
   position: relative;
   padding: 28px;
 }
+
 .ancient-frame::before {
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(184,134,11,0.3);
+  border: 1px solid rgba(184, 134, 11, 0.3);
   pointer-events: none;
 }
+
 .ancient-frame::after {
   content: '';
   position: absolute;
   inset: 12px;
-  border: 0.5px solid rgba(184,134,11,0.15);
+  border: 0.5px solid rgba(184, 134, 11, 0.15);
   pointer-events: none;
 }
 
-/* ===== CORNER ORNAMENTS — họa tiết góc ===== */
 .corner-ornament {
   position: absolute;
   width: 32px;
   height: 32px;
   pointer-events: none;
 }
-.corner-tl { top: 4px; left: 4px;  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
-.corner-tr { top: 4px; right: 4px; transform: rotate(90deg);  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+
+.corner-tl { top: 4px; left: 4px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
+.corner-tr { top: 4px; right: 4px; transform: rotate(90deg); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
 .corner-bl { bottom: 4px; left: 4px; transform: rotate(-90deg); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
 .corner-br { bottom: 4px; right: 4px; transform: rotate(180deg); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 2 L14 2 M2 2 L2 14 M2 2 Q8 8 14 2 M2 2 Q8 8 2 14' stroke='%23b8860b' stroke-width='1' fill='none'/%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23b8860b'/%3E%3C/svg%3E") no-repeat; }
 
-/* ===== STAGE FLOOR — sàn nhân vật đứng ===== */
 .character-floor {
   position: absolute;
   bottom: 0;
@@ -498,16 +589,11 @@ h1, h2, h3 { font-family: var(--font-serif); }
   transform: translateX(-50%);
   width: 380px;
   height: 80px;
-  background:
-    radial-gradient(ellipse at center bottom,
-      rgba(184,134,11,0.35) 0%,
-      rgba(184,134,11,0.15) 30%,
-      transparent 70%);
+  background: radial-gradient(ellipse at center bottom, rgba(184, 134, 11, 0.35) 0%, rgba(184, 134, 11, 0.15) 30%, transparent 70%);
   filter: blur(8px);
   pointer-events: none;
 }
 
-/* ===== HERO BACKDROP — cảnh quan phía sau nhân vật ===== */
 .hero-backdrop {
   position: absolute;
   inset: 0;
@@ -515,72 +601,80 @@ h1, h2, h3 { font-family: var(--font-serif); }
   background-position: center;
   filter: brightness(0.85) saturate(1.1);
 }
+
 .hero-backdrop::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at center 70%,
-      transparent 0%,
-      rgba(245,239,224,0.4) 50%,
-      rgba(245,239,224,0.95) 100%),
-    linear-gradient(180deg,
-      rgba(26,15,10,0.3) 0%,
-      transparent 30%,
-      transparent 70%,
-      rgba(245,239,224,0.8) 100%);
+    radial-gradient(ellipse at center 70%, transparent 0%, rgba(245, 239, 224, 0.4) 50%, rgba(245, 239, 224, 0.95) 100%),
+    linear-gradient(180deg, rgba(26, 15, 10, 0.3) 0%, transparent 30%, transparent 70%, rgba(245, 239, 224, 0.8) 100%);
 }
 
-/* ===== TITLE GLOW ===== */
 @keyframes titleGlow {
-  0%, 100% { text-shadow: 0 2px 4px rgba(26,15,10,0.3), 0 0 24px rgba(212,168,67,0.15); }
-  50%       { text-shadow: 0 2px 4px rgba(26,15,10,0.4), 0 0 32px rgba(212,168,67,0.35); }
+  0%, 100% { text-shadow: 0 2px 4px rgba(26, 15, 10, 0.3), 0 0 24px rgba(212, 168, 67, 0.15); }
+  50% { text-shadow: 0 2px 4px rgba(26, 15, 10, 0.4), 0 0 32px rgba(212, 168, 67, 0.35); }
 }
+
 .title-glow {
   animation: titleGlow 4s ease-in-out infinite;
 }
 
-/* ===== PERSPECTIVE BUTTON — wax seal style ===== */
-.btn-seal {
-  position: relative;
-  background: var(--clr-vermillion);
-  color: white;
-  font-family: var(--font-serif);
-  font-weight: 600;
-  padding: 0.7rem 1.5rem;
-  border-radius: 2px;
-  border: 1px solid rgba(0,0,0,0.2);
-  box-shadow:
-    0 2px 6px rgba(192,57,43,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.2);
-  overflow: hidden;
-  transition: all 0.25s;
-}
-.btn-seal::before {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border: 1px solid rgba(255,255,255,0.15);
-  pointer-events: none;
-}
-.btn-seal:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 16px rgba(192,57,43,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.3);
+.chat-layout,
+.hero-summary-grid,
+.home-journey-grid {
+  display: grid;
+  gap: 1rem;
 }
 
-.btn-seal-ghost {
-  background: transparent;
-  color: var(--clr-ink-soft);
-  font-family: var(--font-serif);
-  padding: 0.7rem 1.5rem;
-  border-radius: 2px;
-  border: 1px solid rgba(184,134,11,0.4);
-  transition: all 0.25s;
+.chat-layout {
+  grid-template-columns: minmax(0, 1fr);
 }
-.btn-seal-ghost:hover {
-  background: rgba(184,134,11,0.08);
-  border-color: var(--clr-gold);
-  color: var(--clr-ink);
+
+.chat-thread {
+  scrollbar-gutter: stable;
+}
+
+@media (min-width: 900px) {
+  .chat-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .hero-summary-grid,
+  .home-journey-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .petal,
+  .dust-particle,
+  .cloud,
+  .character-hero,
+  .character-hero-left,
+  .dongson-ring,
+  .dongson-ring-rotate,
+  .title-glow,
+  .animate-in,
+  .animate-ink {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .petal {
+    animation-duration: calc(var(--duration) * 1.5) !important;
+  }
+
+  .dust-particle {
+    display: none;
+  }
+
+  .dongson-ring-rotate {
+    animation: none;
+  }
 }

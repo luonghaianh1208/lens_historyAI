@@ -1,5 +1,22 @@
 # Changelog
 
+## [2026-04-30] Session 5b — CSS Refactor + Lazy Loading
+### Đã cải thiện
+- **Code-splitting**: `App.jsx` dùng `React.lazy` + `Suspense` cho tất cả pages → mỗi page là chunk JS riêng
+- **CSS cleanup**: Xóa toàn bộ comment thừa, format spacing nhất quán
+- **Accessibility**: Thêm `focus-visible` outline vàng đồng cho tất cả interactive elements
+- **Consolidated transitions**: Gom transition rules cho 10+ button/interactive class vào 1 block
+- **Grid layouts**: Thêm `.chat-layout`, `.hero-summary-grid`, `.home-journey-grid` cho responsive grid
+- **Texture overlay**: z-index 9999→0, opacity 0.4→0.22 (nhẹ nhàng hơn, không chặn interactions)
+- **Thêm utilities**: `.page-shell`, `.interactive-surface`, `.glass-panel`, `.section-kicker`, `.dongson-bg-quiet`
+- **Xóa unused**: `.bg-scene`, `.content-slide-in`
+- **Reduced motion**: Mở rộng danh sách animation bị disable (thêm `.title-glow`, `.animate-in`, `.animate-ink`)
+### File bị ảnh hưởng
+- `src/App.jsx` (lazy loading + Suspense fallback)
+- `src/index.css` (refactor toàn bộ ~680 dòng)
+
+---
+
 ## [2026-04-30] Session 5 — Context-aware Chat Suggestions
 ### Đã sửa
 - Câu hỏi gợi ý trong Chat giờ linh hoạt theo từng entity + perspective

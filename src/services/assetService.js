@@ -10,6 +10,14 @@ export function getBackgroundUrl(entityId) {
   return `/assets/backgrounds/bg_${fileName}.webp`
 }
 
+export function getBackgroundSet(entityId) {
+  const url = getBackgroundUrl(entityId)
+  return {
+    src: url,
+    imageSet: `image-set(url("${url}") type("image/webp") 1x)`,
+  }
+}
+
 export function getCharacterUrl(entityId) {
   const known = [
     'nguyen-trai', 'le-loi', 'tran-hung-dao',
@@ -21,9 +29,9 @@ export function getCharacterUrl(entityId) {
 }
 
 export function getBgStyle(entityId) {
-  const url = getBackgroundUrl(entityId)
+  const { src, imageSet } = getBackgroundSet(entityId)
   return {
-    backgroundImage: `url(${url})`,
+    backgroundImage: imageSet || `url(${src})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   }

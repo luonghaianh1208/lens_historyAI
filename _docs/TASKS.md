@@ -11,6 +11,8 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-18: CSS refactor — cleanup, consolidated transitions, focus-visible, grid layouts — 2026-04-30
+- [x] TASK-17: React.lazy + Suspense code-splitting cho tất cả pages — 2026-04-30
 - [x] TASK-16: Câu hỏi gợi ý Chat linh hoạt theo entity + perspective — 2026-04-30
 - [x] TASK-15: Tách nền trắng 7 ảnh nhân vật bằng rembg AI (U2-Net) — 2026-04-30
 - [x] TASK-14: Xóa mix-blend-mode: multiply, dùng ảnh transparent thực sự — 2026-04-30

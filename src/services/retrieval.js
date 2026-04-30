@@ -24,6 +24,14 @@ const entities = {
   'dien-bien-phu': dienBienPhu
 }
 
+function normalizeText(value = '') {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .trim()
+}
+
 export function getEntity(id) {
   return entities[id] || null
 }
@@ -33,14 +41,14 @@ export function getAllEntities() {
 }
 
 export function searchEntities(query) {
-  const q = query.toLowerCase().trim()
+  const q = normalizeText(query)
   if (!q) return []
 
   return Object.values(entities).filter(entity => {
-    const nameMatch = entity.name.toLowerCase().includes(q)
-    const aliasMatch = entity.aliases?.some(a => a.toLowerCase().includes(q))
-    const tagMatch = entity.tags?.some(t => t.toLowerCase().includes(q))
-    const periodMatch = entity.period?.toLowerCase().includes(q)
+    const nameMatch = normalizeText(entity.name).includes(q)
+    const aliasMatch = entity.aliases?.some(a => normalizeText(a).includes(q))
+    const tagMatch = entity.tags?.some(t => normalizeText(t).includes(q))
+    const periodMatch = normalizeText(entity.period).includes(q)
     return nameMatch || aliasMatch || tagMatch || periodMatch
   })
 }
