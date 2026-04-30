@@ -124,7 +124,6 @@ h1, h2, h3 { font-family: var(--font-serif); }
 .character-float {
   filter: drop-shadow(0 10px 15px rgba(26, 15, 10, 0.4));
   transition: transform 0.5s ease-out, filter 0.5s ease-out;
-  mix-blend-mode: multiply;
 }
 .character-float:hover {
   transform: translateY(-8px) scale(1.02);
@@ -353,14 +352,12 @@ h1, h2, h3 { font-family: var(--font-serif); }
     characterEntrance 0.6s ease forwards,
     characterFloat 5s ease-in-out infinite 0.6s;
   filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
-  mix-blend-mode: multiply;
 }
 .character-hero-left {
   animation:
     characterEntranceLeft 0.6s ease forwards,
     characterFloat 5s ease-in-out infinite 0.6s;
   filter: drop-shadow(0 16px 40px rgba(26,15,10,0.4));
-  mix-blend-mode: multiply;
 }
 
 /* ===== CONTENT FADE IN ===== */
@@ -392,9 +389,8 @@ h1, h2, h3 { font-family: var(--font-serif); }
    IMMERSIVE UI — CUỘN THƯ CỔ + BLEND MODE
    ============================================ */
 
-/* ===== ẢNH NHÂN VẬT — kỹ thuật bỏ nền trắng bằng blend mode ===== */
+/* ===== ẢNH NHÂN VẬT — transparent, tăng contrast nhẹ ===== */
 .character-blend {
-  mix-blend-mode: multiply;
   filter: contrast(1.05) saturate(1.1);
 }
 
