@@ -1,3 +1,43 @@
+const ENTITY_CHARACTER_PATHS = {
+  'nguyen-trai': '/assets/characters/char_nguyen_trai.webp',
+  'le-loi': '/assets/characters/char_le_loi.webp',
+  'tran-hung-dao': '/assets/characters/char_tran_hung_dao.webp',
+  'ly-thuong-kiet': '/assets/characters/char_ly_thuong_kiet.webp',
+  'nguyen-hue': '/assets/characters/char_nguyen_hue.webp',
+  'ho-chi-minh': '/assets/characters/char_ho_chi_minh.webp',
+  default: '/assets/characters/char_default.webp',
+}
+
+const PERSPECTIVE_CHARACTER_PATHS = {
+  'ho-chi-minh:contemporary': '/assets/characters/char_nguoi_dan_viet_nam.png',
+  'ho-chi-minh:historian': '/assets/characters/char_historian_modern.png',
+  'le-loi:contemporary': '/assets/characters/char_nguyen_trai.webp',
+  'le-loi:historian': '/assets/characters/char_historian_modern.png',
+  'nguyen-trai:contemporary': '/assets/characters/char_le_loi.webp',
+  'nguyen-trai:historian': '/assets/characters/char_historian_modern.png',
+  'ly-thuong-kiet:contemporary': '/assets/characters/char_default.webp',
+  'ly-thuong-kiet:historian': '/assets/characters/char_historian_modern.png',
+  'nguyen-hue:contemporary': '/assets/characters/char_ngo_thi_nham.png',
+  'nguyen-hue:historian': '/assets/characters/char_historian_modern.png',
+  'tran-hung-dao:contemporary': '/assets/characters/char_default.webp',
+  'tran-hung-dao:historian': '/assets/characters/char_historian_modern.png',
+  'chien-thang-bach-dang:tran-hung-dao': '/assets/characters/char_tran_hung_dao.webp',
+  'chien-thang-bach-dang:contemporary': '/assets/characters/char_quan_si_nha_tran.png',
+  'chien-thang-bach-dang:historian': '/assets/characters/char_historian_modern.png',
+  'chien-tranh-ly-tong:ly-thuong-kiet': '/assets/characters/char_ly_thuong_kiet.webp',
+  'chien-tranh-ly-tong:tong-quan': '/assets/characters/char_tuong_nha_tong.png',
+  'chien-tranh-ly-tong:historian': '/assets/characters/char_historian_modern.png',
+  'dien-bien-phu:viet-minh': '/assets/characters/char_vo_nguyen_giap.png',
+  'dien-bien-phu:french': '/assets/characters/char_de_castries.png',
+  'dien-bien-phu:historian': '/assets/characters/char_historian_modern.png',
+  'khoi-nghia-lam-son:le-loi': '/assets/characters/char_le_loi.webp',
+  'khoi-nghia-lam-son:nguyen-trai': '/assets/characters/char_nguyen_trai.webp',
+  'khoi-nghia-lam-son:historian': '/assets/characters/char_historian_modern.png',
+  'tran-dong-da:nguyen-hue': '/assets/characters/char_nguyen_hue.webp',
+  'tran-dong-da:tong-doc-hu-binh': '/assets/characters/char_ton_si_nghi.png',
+  'tran-dong-da:historian': '/assets/characters/char_historian_modern.png',
+}
+
 export function getBackgroundUrl(entityId) {
   const known = [
     'nguyen-trai', 'le-loi', 'tran-hung-dao', 'ly-thuong-kiet',
@@ -19,13 +59,12 @@ export function getBackgroundSet(entityId) {
 }
 
 export function getCharacterUrl(entityId) {
-  const known = [
-    'nguyen-trai', 'le-loi', 'tran-hung-dao',
-    'ly-thuong-kiet', 'nguyen-hue', 'ho-chi-minh'
-  ]
-  const id = known.includes(entityId) ? entityId : 'default'
-  const fileName = id.replace(/-/g, '_')
-  return `/assets/characters/char_${fileName}.webp`
+  return ENTITY_CHARACTER_PATHS[entityId] || ENTITY_CHARACTER_PATHS.default
+}
+
+export function getPerspectiveCharacterUrl(entityId, perspective) {
+  const key = `${entityId}:${perspective}`
+  return PERSPECTIVE_CHARACTER_PATHS[key] || getCharacterUrl(entityId)
 }
 
 export function getBgStyle(entityId) {

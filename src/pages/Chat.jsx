@@ -5,7 +5,7 @@ import AnimatedBackground from '../components/AnimatedBackground'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
 import { useTTS } from '../hooks/useTTS'
-import { getCharacterUrl, getBgStyle } from '../services/assetService'
+import { getPerspectiveCharacterUrl, getBgStyle } from '../services/assetService'
 
 const lengthLabels = {
   short: 'Ngắn',
@@ -553,7 +553,7 @@ export default function Chat() {
             <div className="character-vignette character-stage relative">
               <div className="character-floor" />
               <img
-                src={getCharacterUrl(entityId)}
+                src={getPerspectiveCharacterUrl(entityId, perspective)}
                 alt={entity.name}
                 className="character-blend character-hero relative z-10"
                 style={{ height: 'min(54vh, 420px)', width: 'auto', objectFit: 'contain', objectPosition: 'bottom center', display: 'block' }}

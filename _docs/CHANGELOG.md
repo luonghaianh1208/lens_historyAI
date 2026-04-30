@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-04-30] Session 5d — Perspective-aware Character Avatars
+### Đã thêm
+- 8 ảnh nhân vật phụ (perspective characters): De Castries, Võ Nguyên Giáp, Tôn Sĩ Nghị, Tướng nhà Tống, Quân sĩ nhà Trần, Ngô Thì Nhậm, Người dân VN, Sử gia hiện đại
+- `getPerspectiveCharacterUrl()` trong assetService.js — sidebar Chat đổi ảnh theo perspective
+- `ENTITY_CHARACTER_PATHS` + `PERSPECTIVE_CHARACTER_PATHS` lookup maps
+### Đã sửa
+- Chat sidebar giờ hiện đúng nhân vật theo góc nhìn (VD: Điện Biên Phủ + "Pháp" → De Castries)
+### File bị ảnh hưởng
+- `src/services/assetService.js` (refactor + thêm perspective lookup)
+- `src/pages/Chat.jsx` (đổi import → `getPerspectiveCharacterUrl`)
+- `public/assets/characters/` (8 ảnh PNG mới)
+
+---
+
 ## [2026-04-30] Session 5c — Hand-crafted Suggestion Catalog
 ### Đã thêm
 - `suggestionCatalog` trong Chat.jsx: ~33 bộ câu hỏi viết tay riêng cho 11 entity × 3 perspectives
