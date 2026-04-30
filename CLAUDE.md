@@ -1,216 +1,74 @@
-# HistoryLens AI — Claude Code System Prompt
+# HistoryLens AI - Developer Context & Architecture Guide
 
----
+## 📌 Project Overview
+**HistoryLens AI** là một ứng dụng web giáo dục lịch sử Việt Nam, cho phép người dùng tìm hiểu lịch sử thông qua hồ sơ nhân vật/sự kiện, trò chuyện nhập vai với AI đa góc nhìn (Multi-perspective AI Chat), và ôn tập bằng các bài Quiz động.
 
-## MỤC TIÊU
+**Mục tiêu thiết kế (Vibe):** "Cuộn thư cổ mở ra giữa cảnh quan lịch sử" – Giao diện mang đậm chất Á Đông, sang trọng, chiều sâu không gian (depth), màu sắc cổ kính, tạo cảm giác nhập vai (immersive).
 
-**HistoryLens AI** — webapp AI nhập vai nhân vật lịch sử Việt Nam.
-Mục tiêu: **chạy được trên Netlify**, dùng cho thi Tin học trẻ.
+## 🛠 Tech Stack
+- **Frontend:** React 19, Vite (v8), Tailwind CSS (kết hợp với Vanilla CSS để quản lý CSS variables & animation).
+- **Routing:** React Router v6.
+- **Backend / Serverless:** Netlify Functions (`netlify/functions/chat.js`).
+- **AI / LLM:** Google Gemini 2.5 Flash API.
+- **Font chữ:** `Playfair Display` (Serif/Display - hỗ trợ tiếng Việt hoàn chỉnh), `Be Vietnam Pro` (Sans-serif).
 
----
+## 📂 Codebase Structure & Key Files
 
-## STACK
+### 1. Dữ liệu & Chuẩn hóa (Retrieval & Data Layer)
+- **Data files:** `src/data/entities/*.json` và `src/data/events/*.json`. Chứa thông tin về nhân vật, sự kiện, timeline, và các `chunks` (trích đoạn sử liệu phục vụ RAG).
+- **`src/services/retrieval.js`:** Trái tim của việc lấy dữ liệu.
+  - Cung cấp hàm `normalizeEntity()` để tự động điền các trường mặc định (fallback) cho entity.
+  - Chứa thuật toán `repairMojibakeText()` để tự động sửa lỗi font UTF-8 (mojibake) từ file JSON.
+  - Sinh index động (`getIndex`) cho trang chủ và thanh tìm kiếm.
 
-```
-Frontend : React 19 + Vite + TailwindCSS v4
-Hosting  : Netlify (deploy tự động qua GitHub)
-AI API   : Gemini 2.5 Flash (server-side, key never exposed)
-Data     : JSON tĩnh trong src/data/ (entities + events)
-TTS      : Google Cloud TTS (vi-VN voices, per-character configs)
-```
+### 2. Quản lý Tài nguyên (Assets Layer)
+- **`src/services/assetService.js`:** Quản lý hình ảnh nền và nhân vật.
+  - Sử dụng `ENTITY_CHARACTER_PATHS` để map sự kiện/nhân vật với ảnh đại diện mặc định.
+  - Sử dụng `PERSPECTIVE_CHARACTER_PATHS` và `getPerspectiveCharacterUrl()` để render ảnh nhân vật thay đổi linh hoạt theo **góc nhìn (perspective)** trong Chat (VD: Trận Điện Biên Phủ + phe Pháp -> Ảnh Tướng De Castries).
 
-> KHÔNG Firebase, KHÔNG Teacher page, KHÔNG login.
-> App công khai cho mọi người dùng.
+### 3. Giao diện chính (Pages)
+- **`Home.jsx`:** Trang chủ, thanh tìm kiếm, danh sách nhân vật nổi bật.
+- **`Entity.jsx`:** Trang chi tiết (Hồ sơ). Hiển thị bối cảnh (background), nhân vật đứng trên sàn (character-stage), tổng quan, niên biểu (timeline), và nguồn tài liệu (sources).
+- **`Chat.jsx`:** Giao diện trò chuyện AI.
+  - Tích hợp `suggestionCatalog` chứa các câu hỏi mồi (prompts) tĩnh, cực kỳ linh hoạt tùy thuộc vào entity và perspective.
+  - Quản lý scroll tự động thông minh bằng `isPinnedToBottom`.
+  - Sử dụng `React.memo` cho `MessageBubble` để tối ưu hiệu năng.
+- **`Quiz.jsx`:** Giao diện tạo và làm bài tập trắc nghiệm dựa trên nội dung entity.
 
----
+### 4. Custom Hooks & Trạng thái
+- **`useChat.js`:** Quản lý state của tin nhắn, lịch sử chat, gọi API đến Netlify Function `/api/chat`.
+- **`useTTS.js`:** Text-to-Speech (Đọc văn bản) tự động tách câu dài thành các chunk nhỏ để phát âm thanh mà không bị ngắt quãng.
+- **`useLocalStorage.js`:** Quản lý lưu trữ cục bộ.
+- **`useKeyboardShortcut.js`:** Quản lý phím tắt (VD: Ctrl+K để mở Search).
 
-## CẤU TRÚC THƯ MỤC
+## 🧩 Architectural Patterns & Conventions
 
-```
-historylens-ai/
-├── src/
-│   ├── pages/           # Home, Entity, Chat, Quiz
-│   ├── hooks/
-│   │   ├── useChat.js   # Chat state + streaming
-│   │   └── useTTS.js    # TTS playback (speak, stop, playing, loading, chunkInfo)
-│   ├── services/
-│   │   ├── geminiApi.js      # buildSystemPrompt() + API helpers
-│   │   ├── retrieval.js      # getEntity(), searchEntities() from JSON
-│   │   ├── quizService.js    # Quiz generation helpers
-│   │   └── ttsService.js    # Voice configs per entity (VOICE_CONFIGS)
-│   ├── data/
-│   │   ├── entities/         # nguyen-trai.json, le-loi.json, tran-hung-dao.json
-│   │   └── events/           # khoi-nghia-lam-son.json, chien-thang-bach-dang.json
-│   └── index.css            # Tailwind imports only (@import "tailwindcss")
-├── netlify/
-│   └── functions/
-│       ├── chat.js          # Gemini API proxy
-│       └── tts.js           # Google Cloud TTS proxy
-├── netlify.toml
-├── package.json
-└── CLAUDE.md
-```
+### 1. Multi-Perspective System (Hệ thống Đa góc nhìn)
+Mỗi sự kiện hoặc nhân vật có thể được kể qua nhiều lăng kính khác nhau:
+- **Nhân vật (`type: 'person'`):** Thường có `self` (tự thuật), `contemporary` (người cùng thời / quần chúng), `historian` (sử gia hiện đại).
+- **Sự kiện (`type: 'event'`):** Thường có góc nhìn của các phe đối lập (VD: `viet-minh` vs `french`, `nguyen-hue` vs `tong-doc-hu-binh`) và `historian`.
+*(Giao diện và ảnh nhân vật sẽ tự động thay đổi theo perspective đang chọn).*
 
----
+### 2. RAG & System Prompt
+Trong `netlify/functions/chat.js`:
+- Backend nhận `entityId`, `perspective`, `lengthLevel`, và lịch sử `messages`.
+- Backend tự động đọc dữ liệu JSON của entity đó, trích xuất thông tin nhân vật, config của perspective, và toàn bộ `chunks` (sử liệu) để chèn vào `system_prompt` gửi cho Gemini. LLM không bao giờ phải "bịa" thông tin vì đã có sẵn chunk sử liệu ép buộc.
 
-## DATA SCHEMA
+### 3. Design System & CSS (Vibe Coding)
+- **CSS Variables:** Quản lý màu sắc tập trung tại `src/index.css`.
+  - Màu nền giấy: `--clr-paper`, `--clr-paper-dark`
+  - Màu mực/văn bản: `--clr-ink`, `--clr-ink-soft`
+  - Màu nhấn (Accent): `--clr-vermillion` (đỏ chu sa), `--clr-gold` (vàng kim), `--clr-jade` (ngọc bích).
+- **Blend Mode:** Các file ảnh nhân vật (PNG/WEBP có nền sáng/trắng) được CSS xử lý thông qua class `.character-blend` (`mix-blend-mode: multiply` hoặc `darken`) để hòa trộn một cách mượt mà vào phong cảnh đằng sau, loại bỏ cảm giác "ảnh cắt dán".
+- **Glassmorphism:** Các panel, header sử dụng class `.glass-panel` với `backdrop-filter: blur()`.
 
-### Entity (person)
+## 🚀 Các tập lệnh (Scripts)
+- Phát triển: `npm run dev`
+- Build production: `npm run build`
+- Khởi chạy Netlify Functions cục bộ: `netlify dev` (nếu có cài netlify-cli)
 
-```json
-{
-  "id": "nguyen-trai",
-  "type": "person",
-  "name": "Nguyễn Trãi",
-  "period": "Hậu Lê sơ",
-  "roles": ["Quân sư", "Nhà thơ"],
-  "tags": ["quân sư", "nhà thơ"],
-  "short_desc": "...",
-  "timeline": [{ "year": 1380, "event": "..." }],
-  "perspectives": {
-    "self": { "persona": "Nguyễn Trãi tự thuật", "system_prompt": "..." },
-    "contemporary": { "persona": "...", "system_prompt": "..." },
-    "historian": { "persona": "...", "system_prompt": "..." }
-  },
-  "chunks": [{ "id": "nt-001", "content": "...", "source": "...", "reliability": 95 }]
-}
-```
-
-### Event
-
-Event perspectives dùng key bất kỳ (ví d: `le-loi`, `nguyen-trai`, `historian`).
-Chat page đọc perspectives từ entity data — KHÔNG hardcode keys.
-
-```json
-{
-  "id": "khoi-nghia-lam-son",
-  "type": "event",
-  "period": "1418-1427",
-  "perspectives": {
-    "le-loi": { "persona": "Lê Lợi — người lãnh đạo", "system_prompt": "..." },
-    "nguyen-trai": { "persona": "Nguyễn Trãi — quân sư", "system_prompt": "..." },
-    "historian": { "persona": "Sử gia hiện đại", "system_prompt": "..." }
-  }
-}
-```
-
----
-
-## LỆNH THƯỜNG DÙNG
-
-```bash
-npm run dev      # Local dev: http://localhost:5173
-npm run build    # Production build → dist/
-npm run preview  # Preview production build
-```
-
----
-
-## TEXT-TO-SPEECH (TTS)
-
-### Voice Configurations (src/services/ttsService.js)
-
-Mỗi nhân vật có voice riêng (Standard voices vi-VN):
-
-| Entity | Voice | Đặc điểm |
-|--------|-------|-----------|
-| nguyen-trai | vi-VN-Standard-C | Giọng trầm ấm, văn chương (scholar tone) |
-| le-loi | vi-VN-Standard-D | Giọng mạnh mẽ, quyết đoán (leader tone) |
-| tran-hung-dao | vi-VN-Standard-B | Giọng oai vệ, uy nghiêm (military) |
-| ly-thuong-kiet | vi-VN-Standard-A | Giọng rắn rỏi, tự tin |
-
-Fallback: `vi-VN-Standard-A` cho nhân vật chưa config.
-
-### useTTS Hook
-
-```javascript
-const { speak, stop, playing, loading, chunkInfo } = useTTS()
-// speak(text, entityId) — phát audio từ text
-// stop() — dừng audio đang phát
-// playing — boolean, đang phát audio
-// loading — boolean, đang tổng hợp giọng nói
-// chunkInfo — { current, total } khi text bị chia nhỏ
-```
-
-### TTS Auto-play
-
-Chat page tự động phát TTS khi có assistant message (nếu `autoPlayTTS=true`).
-Text tự động clean markdown trước khi gửi: `replace(/[#*_`~\[\]]/g, '')`.
-
-### Long Text Chunking
-
-Nếu text > 200 chars, tự động chia thành chunks nhỏ để tránh timeout.
-`chunkInfo` hiển thị tiến trình: "Đoạn 1/3..."
-
----
-
-## NETLIFY FUNCTION
-
-### `netlify/functions/chat.js`
-
-- Netlify Functions v2 format: `export default async (req) => new Response(...)`
-- Model: `gemini-2.5-flash`
-- Streaming (SSE) và non-streaming đều hỗ trợ
-- API key: `GEMINI_API_KEY` trong Netlify Environment Variables
-
-### Build System Prompt
-
-```javascript
-// src/services/geminiApi.js
-buildSystemPrompt(entity, perspective, lengthLevel)
-// → Combines perspective config + length guide
-// → No citation requirements
-```
-
-AI trả lời tự do dựa trên kiến thức model, KHÔNG bắt buộc dùng chunks.
-
----
-
-## CẤU HÌNH DEPLOY
-
-### `netlify.toml`
-```toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-  functions = "netlify/functions"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[dev]
-  command = "npm run dev"
-  port = 5173
-```
-
-### Environment Variables (Netlify Dashboard)
-
-| Variable | Giá trị |
-|---|---|
-| `GEMINI_API_KEY` | Key từ aistudio.google.com |
-| `GOOGLE_CLOUD_TTS_KEY` | Key từ Google Cloud Console → Text-to-Speech API |
-
----
-
-## RÀNG BUỘC
-
-1. **API key KHÔNG expose ra frontend** — phải qua Netlify Function
-2. **Không vector DB** — tìm kiếm bằng keyword match trên JSON
-3. **AI trả lời tự do** — không citation, dùng kiến thức model
-4. **Mobile-friendly** — TailwindCSS responsive
-5. **Guest mode** — không login, không Teacher page
-6. **maxTokens theo lengthLevel**: short=800, medium=2000, long=3500
-7. **AI response phải dùng markdown** — in đậm, đoạn văn rõ ràng
-8. **Chat page phải render ReactMarkdown** cho assistant messages
-
----
-
-## GHI CHÚ
-
-- Search: `retrieval.js:searchEntities()` match theo name, aliases, tags, period
-- Perspectives dynamic: Entity page đọc `Object.entries(entity.perspectives)` để render buttons
-- Quiz: gọi Gemini tạo câu hỏi, fallback hardcoded nếu API lỗi
-- Local dev: nếu `VITE_NETLIFY` không set, useChat sẽ trả mock response
-- System prompt inject `entity.chunks[]` làm tài liệu tham khảo ưu tiên
+## 📌 Các lưu ý quan trọng cho phiên làm việc sau
+1. **Không sửa Font bừa bãi:** Không sử dụng font `Cinzel` vì font này KHÔNG hỗ trợ dấu Tiếng Việt, dẫn đến vỡ chữ. Luôn dùng `Playfair Display` cho tiêu đề và thẻ `.display`.
+2. **Không tự gọi trực tiếp API Gemini ở Frontend:** Toàn bộ logic LLM phải đi qua thư mục `netlify/functions` để bảo mật API Key.
+3. **Mỗi khi thêm Event mới:** Phải cập nhật `ENTITY_CHARACTER_PATHS` trong `assetService.js` để trỏ event đó tới nhân vật chính đại diện (nếu không nó sẽ render ảnh default).
+4. **Luôn sử dụng `normalizeEntity()`:** Khi đọc entity từ cục bộ hay data, hãy luôn dùng dữ liệu đã đi qua hàm chuẩn hóa này để tránh lỗi properties `undefined`.
