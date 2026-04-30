@@ -112,6 +112,16 @@ export default function Quiz() {
     generateQuestions()
   }, [entityId])
 
+  useEffect(() => {
+    if (!timerActive || showResult || loading) return
+    if (timeLeft <= 0) {
+      handleTimeout()
+      return
+    }
+    const timer = setTimeout(() => setTimeLeft((t) => t - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [timeLeft, timerActive, showResult, loading])
+
   async function generateQuestions(forceRefresh = false) {
     if (!entity) return
 
@@ -170,6 +180,22 @@ export default function Quiz() {
       setQuestions(buildFallbackQuestions(entity))
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleTimeout = () => {
+    setCharacterMood("wrong")
+    setStreak(0)
+    setTimeout(() => setCharacterMood("neutral"), 1500)
+    const nextAnswers = [...answers, -1]
+    setAnswers(nextAnswers)
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1)
+      setSelectedAnswer(null)
+      setTimeLeft(30)
+    } else {
+      setShowResult(true)
+      setTimerActive(false)
     }
   }
 
@@ -416,6 +442,14 @@ export default function Quiz() {
                 onClick={handleAnswer}
                 disabled={selectedAnswer === null}
                 className="btn-primary w-full mt-4"
+                style={{ opacity: selectedAnswer === null ? 0.5 : 1, cursor: selectedAnswer === null ? "not-allowed" : "pointer" }}
+              >
+                {currentQuestion < questions.length - 1 ? "Tiep theo" : "Xem ket qua"}
+              </button>
+              <button
+                type="button"
+                onClick={() => { handleTimeout() }}
+                className="btn-ghost w-full mt-2 text-sm"
                 style={{ opacity: selectedAnswer === null ? 0.5 : 1, cursor: selectedAnswer === null ? 'not-allowed' : 'pointer' }}
               >
                 {currentQuestion < questions.length - 1 ? 'Tiếp theo' : 'Xem kết quả'}

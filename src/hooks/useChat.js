@@ -20,7 +20,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
 
     const userMsg = { role: 'user', content: userMessage }
     messagesRef.current = [...messagesRef.current, userMsg]
-    setMessages((prev) => [...prev, userMsg])
+    setMessages((prev) => { const next = [...prev, userMsg]; try { localStorage.setItem("historylens-chat-" + entityId, JSON.stringify(next.slice(-50))) } catch(e) {} return next })
     setLoading(true)
     setError(null)
 
@@ -163,5 +163,5 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
     setError(null)
   }, [])
 
-  return { messages, loading, error, sendMessage, changePerspective, entity }
+  return { messages, loading, error, sendMessage, changePerspective, entity, setMessages }
 }

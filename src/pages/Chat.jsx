@@ -5,13 +5,19 @@ import AnimatedBackground from '../components/AnimatedBackground'
 import { useChat } from '../hooks/useChat'
 import { getEntity } from '../services/retrieval'
 import { useTTS } from '../hooks/useTTS'
+import { useLocalStorage } from "../hooks/useLocalStorage"
+import { toastSuccess } from "../components/Toast"
 import { getPerspectiveCharacterUrl, getBgStyle } from '../services/assetService'
+
+const TTS_SPEEDS = [{ value: 0.75, label: "0.75x" }, { value: 1, label: "1x" }, { value: 1.25, label: "1.25x" }, { value: 1.5, label: "1.5x" }]
 
 const lengthLabels = {
   short: 'Ngắn',
   medium: 'Vừa',
   long: 'Dài',
 }
+
+function formatTime(ts){if(!ts)return"";const d=new Date(ts);return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0")}
 
 function getPerspectiveEntries(entity) {
   if (!entity?.perspectives) return []
@@ -360,7 +366,8 @@ export default function Chat() {
   const [lengthLevel, setLengthLevel] = useState('medium')
   const [input, setInput] = useState('')
   const [showScrollBtn, setShowScrollBtn] = useState(false)
-  const [autoPlayTTS, setAutoPlayTTS] = useState(true)
+  const [autoPlayTTS, setAutoPlayTTS] = useLocalStorage("historylens-tts-autoplay-" + entityId, true)
+  const [ttsSpeed, setTtsSpeed] = useLocalStorage("historylens-tts-speed", 1)
   const [isPinnedToBottom, setIsPinnedToBottom] = useState(true)
 
   const messagesEndRef = useRef(null)
@@ -368,7 +375,8 @@ export default function Chat() {
   const lastSpokenIndexRef = useRef(-1)
 
   const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
-  const { speak, stop, playing: ttsPlaying, loading: ttsLoading, chunkInfo } = useTTS()
+  const { speak, stop, playing: ttsPlaying, loading: ttsLoading, chunkInfo, setSpeed } = useTTS()
+  useEffect(() => { setSpeed(ttsSpeed) }, [ttsSpeed, setSpeed])
   const suggestions = useMemo(() => getQuickSuggestions(entity, perspective), [entity, perspective])
 
   useEffect(() => {
@@ -424,6 +432,8 @@ export default function Chat() {
     await sendMessage(text)
   }
 
+  const handleClearChat = () => { changePerspective(perspective); lastSpokenIndexRef.current = -1; toastSuccess("Da xoa cuoc tro chuyen") }
+
   const handlePlayAudio = (content) => {
     if (ttsPlaying || ttsLoading) {
       stop()
@@ -473,6 +483,25 @@ export default function Chat() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1">
+              {TTS_SPEEDS.map((s) => (
+                <button
+                  key={s.value}
+                  type="button"
+                  onClick={() => setTtsSpeed(s.value)}
+                  className="px-2 py-1 text-xs rounded-sm"
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    background: ttsSpeed === s.value ? "rgba(45,106,79,0.15)" : "transparent",
+                    border: "1px solid " + (ttsSpeed === s.value ? "rgba(45,106,79,0.4)" : "rgba(184,134,11,0.2)"),
+                    color: ttsSpeed === s.value ? "var(--clr-jade)" : "var(--clr-ink-soft)",
+                  }}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
             {(ttsPlaying || ttsLoading) && (
               <button
                 type="button"

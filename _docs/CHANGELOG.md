@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-04-30] Session 5g — Chat Interface UI/UX Polish
+### Đã sửa & Tối ưu
+- **Chat.jsx**: Refactor toàn diện giao diện Chat. Tách `MessageBubble` thành component riêng biệt với `React.memo` để tối ưu performance.
+- Tối ưu cuộn trang: Thêm logic `isPinnedToBottom` để chỉ tự động cuộn xuống khi người dùng đang ở cuối trang.
+- Refactor `getQuickSuggestions`: Chuyển logic gợi ý linh hoạt hơn theo từng `perspective` (Sử gia, Tự thuật, Nhân vật cùng thời, hoặc phe đối lập trong sự kiện) bằng cách sử dụng `suggestionCatalog`.
+- Bổ sung `useMemo` để tránh re-render không cần thiết cho `perspectiveEntries` và `suggestions`.
+### File bị ảnh hưởng
+- `src/pages/Chat.jsx`
 ## [2026-04-30] Session 5f — Font fix + Event character mapping
 ### Đã sửa
 - **BUG-014**: Font `Cinzel` không hỗ trợ tiếng Việt → thay bằng `Playfair Display` (hỗ trợ đầy đủ Unicode/Vietnamese)

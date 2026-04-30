@@ -1,5 +1,9 @@
-import { Suspense, lazy } from 'react'
+﻿import { Suspense, lazy, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import ErrorBoundary from './components/ErrorBoundary'
+import ToastContainer from './components/Toast'
+import SearchModal from './components/SearchModal'
+import { useKeyboardShortcut } from './hooks/useKeyboardShortcut'
 
 const Home = lazy(() => import('./pages/Home'))
 const Entity = lazy(() => import('./pages/Entity'))
@@ -25,17 +29,27 @@ function AppShellFallback() {
 }
 
 function App() {
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useKeyboardShortcut('k', () => {
+    setSearchOpen((prev) => !prev)
+  }, { ctrl: true })
+
   return (
-    <div className="min-h-screen">
-      <Suspense fallback={<AppShellFallback />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/entity/:id" element={<Entity />} />
-          <Route path="/chat/:entityId" element={<Chat />} />
-          <Route path="/quiz/:entityId" element={<Quiz />} />
-        </Routes>
-      </Suspense>
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen">
+        <Suspense fallback={<AppShellFallback />}>
+          <Routes>
+            <Route path="/" element={<Home onOpenSearch={() => setSearchOpen(true)} />} />
+            <Route path="/entity/:id" element={<Entity onOpenSearch={() => setSearchOpen(true)} />} />
+            <Route path="/chat/:entityId" element={<Chat />} />
+            <Route path="/quiz/:entityId" element={<Quiz />} />
+          </Routes>
+        </Suspense>
+        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+        <ToastContainer />
+      </div>
+    </ErrorBoundary>
   )
 }
 

@@ -1,31 +1,31 @@
-import { useMemo, useState } from 'react'
+﻿import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getIndex, searchEntities } from '../services/retrieval'
 import { getCharacterUrl } from '../services/assetService'
 import AnimatedBackground from '../components/AnimatedBackground'
 
 const FEATURED = [
-  { id: 'nguyen-trai', label: 'Nguyễn Trãi', era: 'Hậu Lê sơ' },
-  { id: 'tran-hung-dao', label: 'Trần Hưng Đạo', era: 'Nhà Trần' },
-  { id: 'ly-thuong-kiet', label: 'Lý Thường Kiệt', era: 'Nhà Lý' },
+  { id: 'nguyen-trai', label: 'Nguyá»…n TrÃ£i', era: 'Háº­u LÃª sÆ¡' },
+  { id: 'tran-hung-dao', label: 'Tráº§n HÆ°ng Äáº¡o', era: 'NhÃ  Tráº§n' },
+  { id: 'ly-thuong-kiet', label: 'LÃ½ ThÆ°á»ng Kiá»‡t', era: 'NhÃ  LÃ½' },
 ]
 
 const START_STEPS = [
   {
-    title: 'Chọn một nhân vật',
-    body: 'Bắt đầu từ một chân dung lịch sử, xem mốc chính và bối cảnh trước khi trò chuyện.',
+    title: 'Chá»n má»™t nhÃ¢n váº­t',
+    body: 'Báº¯t Ä‘áº§u tá»« má»™t chÃ¢n dung lá»‹ch sá»­, xem má»‘c chÃ­nh vÃ  bá»‘i cáº£nh trÆ°á»›c khi trÃ² chuyá»‡n.',
   },
   {
-    title: 'Đặt câu hỏi theo góc nhìn',
-    body: 'So sánh tự thuật, người cùng thời và sử gia để thấy lịch sử không chỉ có một giọng kể.',
+    title: 'Äáº·t cÃ¢u há»i theo gÃ³c nhÃ¬n',
+    body: 'So sÃ¡nh tá»± thuáº­t, ngÆ°á»i cÃ¹ng thá»i vÃ  sá»­ gia Ä‘á»ƒ tháº¥y lá»‹ch sá»­ khÃ´ng chá»‰ cÃ³ má»™t giá»ng ká»ƒ.',
   },
   {
-    title: 'Ôn tập bằng quiz',
-    body: 'Chuyển từ đọc sang nhớ bằng bộ câu hỏi sinh theo đúng nhân vật hoặc sự kiện bạn vừa học.',
+    title: 'Ã”n táº­p báº±ng quiz',
+    body: 'Chuyá»ƒn tá»« Ä‘á»c sang nhá»› báº±ng bá»™ cÃ¢u há»i sinh theo Ä‘Ãºng nhÃ¢n váº­t hoáº·c sá»± kiá»‡n báº¡n vá»«a há»c.',
   },
 ]
 
-export default function Home() {
+export default function Home({ onOpenSearch }) {
   const [query, setQuery] = useState('')
   const [showResults, setShowResults] = useState(false)
   const [hoveredChar, setHoveredChar] = useState(FEATURED[0].id)
@@ -63,22 +63,22 @@ export default function Home() {
                 className="w-9 h-9 rounded-full border-2 flex items-center justify-center text-lg"
                 style={{ borderColor: 'var(--clr-gold)', color: 'var(--clr-gold)' }}
               >
-                ☯
+                â˜¯
               </div>
               <div>
                 <h1 className="display text-lg font-bold leading-none" style={{ color: 'var(--clr-ink)' }}>
                   HistoryLens
                 </h1>
                 <p className="text-xs" style={{ color: 'var(--clr-gold)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-                  Lịch sử Việt Nam · AI
+                  Lá»‹ch sá»­ Viá»‡t Nam Â· AI
                 </p>
               </div>
             </div>
 
             <nav className="hidden md:flex items-center gap-6 text-sm" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink-soft)' }}>
-              <Link to="/" className="transition hover:text-amber-700">Trang chủ</Link>
-              <span style={{ color: 'var(--clr-gold)' }}>·</span>
-              <span className="text-xs" style={{ color: 'var(--clr-gold)' }}>Nhập vai · Hỏi đáp · Quiz</span>
+              <Link to="/" className="transition hover:text-amber-700">Trang chá»§</Link>
+              <span style={{ color: 'var(--clr-gold)' }}>Â·</span>
+              <span className="text-xs" style={{ color: 'var(--clr-gold)' }}>Nháº­p vai Â· Há»i Ä‘Ã¡p Â· Quiz</span>
             </nav>
           </div>
         </header>
@@ -98,25 +98,25 @@ export default function Home() {
                 className="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-sm text-xs"
                 style={{ background: 'rgba(184,134,11,0.12)', border: '1px solid rgba(184,134,11,0.3)', color: 'var(--clr-gold)', fontFamily: 'var(--font-serif)' }}
               >
-                <span>⚔</span> Khám phá lịch sử qua đối thoại AI
+                <span>âš”</span> KhÃ¡m phÃ¡ lá»‹ch sá»­ qua Ä‘á»‘i thoáº¡i AI
               </div>
 
               <h2 className="display text-4xl md:text-5xl font-bold leading-tight mb-3" style={{ color: 'var(--clr-ink)' }}>
-                Học lịch sử
+                Há»c lá»‹ch sá»­
                 <br />
-                qua góc nhìn nhân vật
+                qua gÃ³c nhÃ¬n nhÃ¢n váº­t
               </h2>
 
               <div className="divider-ancient mb-6 max-w-xs">
-                <span>❋</span>
+                <span>â‹</span>
               </div>
 
               <p className="mb-8 text-base leading-relaxed max-w-xl" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink-soft)' }}>
-                Bắt đầu từ một nhân vật hoặc sự kiện, xem mốc quan trọng, rồi chuyển sang trò chuyện và quiz trong cùng một hành trình học tập ngắn gọn.
+                Báº¯t Ä‘áº§u tá»« má»™t nhÃ¢n váº­t hoáº·c sá»± kiá»‡n, xem má»‘c quan trá»ng, rá»“i chuyá»ƒn sang trÃ² chuyá»‡n vÃ  quiz trong cÃ¹ng má»™t hÃ nh trÃ¬nh há»c táº­p ngáº¯n gá»n.
               </p>
 
               <div className="relative max-w-xl">
-                <label className="section-kicker block mb-2">Tìm nhân vật hoặc sự kiện</label>
+                <label className="section-kicker block mb-2">TÃ¬m nhÃ¢n váº­t hoáº·c sá»± kiá»‡n</label>
                 <input
                   type="text"
                   value={query}
@@ -125,7 +125,7 @@ export default function Home() {
                     setShowResults(Boolean(e.target.value.trim()))
                   }}
                   onFocus={openResultList}
-                  placeholder="Ví dụ: Nguyễn Trãi, Điện Biên Phủ..."
+                  placeholder="VÃ­ dá»¥: Nguyá»…n TrÃ£i, Äiá»‡n BiÃªn Phá»§..."
                   className="w-full px-5 py-3.5 text-base outline-none"
                   style={{
                     background: 'rgba(245,239,224,0.95)',
@@ -140,7 +140,7 @@ export default function Home() {
                   type="button"
                   className="ghost-icon-button absolute right-3 top-[2.55rem] -translate-y-1/2 p-1"
                   style={{ color: 'var(--clr-gold)' }}
-                  aria-label="Mở tìm kiếm"
+                  aria-label="Má»Ÿ tÃ¬m kiáº¿m"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -161,7 +161,7 @@ export default function Home() {
                           className="search-result-button w-full px-4 py-3 text-left flex items-center gap-3 border-b last:border-b-0"
                           style={{ borderColor: 'rgba(184,134,11,0.1)' }}
                         >
-                          <span style={{ color: 'var(--clr-gold)' }}>{entity.type === 'person' ? '👤' : '⚔'}</span>
+                          <span style={{ color: 'var(--clr-gold)' }}>{entity.type === 'person' ? 'ðŸ‘¤' : 'âš”'}</span>
                           <div>
                             <p className="text-sm font-medium" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
                               {entity.name}
@@ -172,7 +172,7 @@ export default function Home() {
                       ))
                     ) : (
                       <div className="px-4 py-4 text-sm" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
-                        Không có kết quả khớp. Thử tìm theo tên nhân vật, triều đại hoặc sự kiện lớn.
+                        KhÃ´ng cÃ³ káº¿t quáº£ khá»›p. Thá»­ tÃ¬m theo tÃªn nhÃ¢n váº­t, triá»u Ä‘áº¡i hoáº·c sá»± kiá»‡n lá»›n.
                       </div>
                     )}
                   </div>
@@ -180,7 +180,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-wrap gap-2 mt-4">
-                {['Nguyễn Trãi', 'Trần Hưng Đạo', 'Lê Lợi', 'Điện Biên Phủ'].map((name) => (
+                {['Nguyá»…n TrÃ£i', 'Tráº§n HÆ°ng Äáº¡o', 'LÃª Lá»£i', 'Äiá»‡n BiÃªn Phá»§'].map((name) => (
                   <button
                     key={name}
                     type="button"
@@ -195,13 +195,13 @@ export default function Home() {
 
               <div className="grid sm:grid-cols-3 gap-3 mt-8">
                 <button type="button" onClick={() => handleSelect('nguyen-trai')} className="btn-primary text-sm">
-                  Bắt đầu với Nguyễn Trãi
+                  Báº¯t Ä‘áº§u vá»›i Nguyá»…n TrÃ£i
                 </button>
                 <button type="button" onClick={() => handleSelect('tran-hung-dao')} className="btn-ghost text-sm">
-                  Xem Trần Hưng Đạo
+                  Xem Tráº§n HÆ°ng Äáº¡o
                 </button>
                 <button type="button" onClick={() => handleSelect('dien-bien-phu')} className="btn-ghost text-sm">
-                  Học qua sự kiện
+                  Há»c qua sá»± kiá»‡n
                 </button>
               </div>
             </div>
@@ -245,12 +245,12 @@ export default function Home() {
 
           <section className="max-w-6xl mx-auto px-6 py-6">
             <div className="divider-ancient mb-8">
-              <span className="display text-sm px-4" style={{ color: 'var(--clr-gold)' }}>Hành trình học</span>
+              <span className="display text-sm px-4" style={{ color: 'var(--clr-gold)' }}>HÃ nh trÃ¬nh há»c</span>
             </div>
             <div className="home-journey-grid">
               {START_STEPS.map((step, index) => (
                 <article key={step.title} className="card-ancient p-5">
-                  <p className="section-kicker mb-3">Bước {index + 1}</p>
+                  <p className="section-kicker mb-3">BÆ°á»›c {index + 1}</p>
                   <h3 className="text-lg mb-2" style={{ color: 'var(--clr-ink)' }}>{step.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
                     {step.body}
@@ -263,11 +263,11 @@ export default function Home() {
           <section className="max-w-6xl mx-auto px-6 py-10">
             <div className="flex items-end justify-between gap-6 mb-8">
               <div>
-                <p className="section-kicker mb-2">Thư mục nhân vật và sự kiện</p>
-                <h3 className="display text-2xl" style={{ color: 'var(--clr-ink)' }}>Khám phá theo chủ đề</h3>
+                <p className="section-kicker mb-2">ThÆ° má»¥c nhÃ¢n váº­t vÃ  sá»± kiá»‡n</p>
+                <h3 className="display text-2xl" style={{ color: 'var(--clr-ink)' }}>KhÃ¡m phÃ¡ theo chá»§ Ä‘á»</h3>
               </div>
               <p className="hidden md:block text-sm max-w-lg text-right" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
-                Mỗi thẻ dẫn tới một hồ sơ có tóm tắt, mốc thời gian, nguồn tham khảo và các góc nhìn sẵn sàng để hỏi đáp.
+                Má»—i tháº» dáº«n tá»›i má»™t há»“ sÆ¡ cÃ³ tÃ³m táº¯t, má»‘c thá»i gian, nguá»“n tham kháº£o vÃ  cÃ¡c gÃ³c nhÃ¬n sáºµn sÃ ng Ä‘á»ƒ há»i Ä‘Ã¡p.
               </p>
             </div>
             <EntityGrid entities={entities} navigate={navigate} />
@@ -293,13 +293,13 @@ function EntityGrid({ entities, navigate }) {
         >
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-xl mb-2">{entity.type === 'person' ? '👤' : '⚔️'}</div>
+              <div className="text-xl mb-2">{entity.type === 'person' ? 'ðŸ‘¤' : 'âš”ï¸'}</div>
               <p className="font-semibold text-sm" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
                 {entity.name}
               </p>
               <p className="text-xs mt-1" style={{ color: 'var(--clr-gold)' }}>{entity.period}</p>
             </div>
-            <span className="text-xs opacity-70" style={{ color: 'var(--clr-gold)' }}>Mở</span>
+            <span className="text-xs opacity-70" style={{ color: 'var(--clr-gold)' }}>Má»Ÿ</span>
           </div>
 
           <div className="mt-3 flex flex-wrap gap-1">
@@ -314,3 +314,4 @@ function EntityGrid({ entities, navigate }) {
     </div>
   )
 }
+

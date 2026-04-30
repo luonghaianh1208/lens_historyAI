@@ -25,7 +25,8 @@ function cleanMarkdown(text) {
 export function useTTS() {
   const [playing, setPlaying] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [chunkInfo, setChunkInfo] = useState(null) // { current, total, phase }
+  const [chunkInfo, setChunkInfo] = useState(null)
+  const [speed, setSpeed] = useState(1) // { current, total, phase }
   const currentAudioRef = useRef(null)
   const abortControllerRef = useRef(null)
   const isStoppedRef = useRef(false)
@@ -108,6 +109,7 @@ export function useTTS() {
 
       // 60ms delay — đủ để không mất chữ đầu, ngắn hơn để liền mạch hơn
       setTimeout(() => {
+        audio.playbackRate = speed
         audio.play().then(() => setPlaying(true)).catch(reject)
       }, 60)
     })
@@ -190,5 +192,5 @@ export function useTTS() {
     setChunkInfo(null)
   }, [])
 
-  return { speak, stop, playing, loading, chunkInfo }
+  return { speak, stop, playing, loading, chunkInfo, speed, setSpeed }
 }
