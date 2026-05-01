@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { buildSystemPrompt } from '../services/geminiApi'
 import { getEntity } from '../services/retrieval'
-import { findPresetResponse, getNextPresetSuggestion } from '../services/chatPresetService'
+import { findPresetResponse, getNextPresetSuggestion, getUnusedPresetSuggestions } from '../services/chatPresetService'
 import { parseSuggestions } from '../utils/parseSuggestions'
 
 export function useChat(entityId, perspective = 'self') {
@@ -48,13 +48,12 @@ export function useChat(entityId, perspective = 'self') {
         messagesRef.current = [...messagesRef.current, assistantMsg]
         setMessages((prev) => [...prev, assistantMsg])
 
-        // Build follow-up suggestions after preset response
+        // Build follow-up suggestions after preset response (lấy tất cả preset chưa hỏi)
         const askedQuestions = messagesRef.current
           .filter(m => m.role === 'user')
           .map(m => m.content)
-        const presetSugg = getNextPresetSuggestion(entityId, perspective, askedQuestions)
-        const presetFollowUps = presetSugg ? [{ text: presetSugg.question, isPreset: true }] : []
-        setFollowUpSuggestions(presetFollowUps)
+        const unusedPresets = getUnusedPresetSuggestions(entityId, perspective, askedQuestions, 3)
+        setFollowUpSuggestions(unusedPresets.map(p => ({ text: p.question, isPreset: true })))
 
         setLoading(false)
         return

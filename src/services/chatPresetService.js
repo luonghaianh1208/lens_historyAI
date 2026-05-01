@@ -739,12 +739,25 @@ export function getPresetCatalog() {
  * @returns {{ question: string, isPreset: true } | null}
  */
 export function getNextPresetSuggestion(entityId, perspective, askedQuestions = []) {
+  const results = getUnusedPresetSuggestions(entityId, perspective, askedQuestions, 1)
+  return results.length > 0 ? results[0] : null
+}
+
+/**
+ * Lấy nhiều câu hỏi preset chưa được hỏi.
+ * @param {string} entityId
+ * @param {string} perspective
+ * @param {string[]} askedQuestions
+ * @param {number} count - số lượng tối đa cần lấy
+ * @returns {Array<{ question: string, isPreset: true }>}
+ */
+export function getUnusedPresetSuggestions(entityId, perspective, askedQuestions = [], count = 3) {
   const entries = getPresetEntries(entityId, perspective)
-  if (!entries.length) return null
+  if (!entries.length) return []
 
   const normalizedAsked = askedQuestions.map(q => normalizeText(q))
 
-  const unused = entries.find(entry => {
+  const unused = entries.filter(entry => {
     const normalizedQ = normalizeText(entry.question)
     return !normalizedAsked.some(asked =>
       asked === normalizedQ ||
@@ -753,6 +766,5 @@ export function getNextPresetSuggestion(entityId, perspective, askedQuestions = 
     )
   })
 
-  if (!unused) return null
-  return { question: unused.question, isPreset: true }
+  return unused.slice(0, count).map(entry => ({ question: entry.question, isPreset: true }))
 }
