@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { buildSystemPrompt } from '../services/geminiApi'
 import { getEntity } from '../services/retrieval'
-import { findPresetResponse } from '../services/chatPresetService'
+import { findPresetResponse, getNextPresetSuggestion } from '../services/chatPresetService'
 import { parseSuggestions } from '../utils/parseSuggestions'
 
 export function useChat(entityId, perspective = 'self') {
@@ -47,6 +47,15 @@ export function useChat(entityId, perspective = 'self') {
 
         messagesRef.current = [...messagesRef.current, assistantMsg]
         setMessages((prev) => [...prev, assistantMsg])
+
+        // Build follow-up suggestions after preset response
+        const askedQuestions = messagesRef.current
+          .filter(m => m.role === 'user')
+          .map(m => m.content)
+        const presetSugg = getNextPresetSuggestion(entityId, perspective, askedQuestions)
+        const presetFollowUps = presetSugg ? [{ text: presetSugg.question, isPreset: true }] : []
+        setFollowUpSuggestions(presetFollowUps)
+
         setLoading(false)
         return
       }
@@ -169,7 +178,18 @@ export function useChat(entityId, perspective = 'self') {
           return updated
         })
       }
-      setFollowUpSuggestions(aiSuggestions)
+
+      // Mix: 2 AI suggestions + 1 preset suggestion (with audio)
+      const aiItems = aiSuggestions.slice(0, 2).map(text => ({ text, isPreset: false }))
+      const askedQuestions = messagesRef.current
+        .filter(m => m.role === 'user')
+        .map(m => m.content)
+      const presetSugg = getNextPresetSuggestion(entityId, perspective, askedQuestions)
+      const mixedSuggestions = presetSugg
+        ? [...aiItems, { text: presetSugg.question, isPreset: true }]
+        : aiItems
+      setFollowUpSuggestions(mixedSuggestions)
+
       messagesRef.current = [...messagesRef.current, { role: 'assistant', content: cleanContent, timestamp: Date.now(), source: 'ai' }]
     } catch (err) {
       if (frameRef.current) {

@@ -418,22 +418,41 @@ export default function Chat() {
                   Tiếp tục khám phá:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {followUpSuggestions.map((text) => (
-                    <button
-                      key={text}
-                      type="button"
-                      onClick={() => handleSuggestionClick(text)}
-                      className="followup-chip px-3 py-2 text-sm rounded-sm text-left"
-                      style={{
-                        fontFamily: 'var(--font-serif)',
-                        background: 'rgba(245,239,224,0.85)',
-                        border: '1px solid rgba(184,134,11,0.25)',
-                        color: 'var(--clr-ink-soft)',
-                      }}
-                    >
-                      💬 {text}
-                    </button>
-                  ))}
+                  {followUpSuggestions.map((item) => {
+                    const text = typeof item === 'string' ? item : item.text
+                    const isPreset = typeof item === 'object' && item.isPreset
+                    return (
+                      <button
+                        key={text}
+                        type="button"
+                        onClick={() => handleSuggestionClick(text)}
+                        className="followup-chip px-3 py-2 text-sm rounded-sm text-left"
+                        style={{
+                          fontFamily: 'var(--font-serif)',
+                          background: isPreset ? 'rgba(45,106,79,0.08)' : 'rgba(245,239,224,0.85)',
+                          border: `1px solid ${isPreset ? 'rgba(45,106,79,0.3)' : 'rgba(184,134,11,0.25)'}`,
+                          color: 'var(--clr-ink-soft)',
+                        }}
+                      >
+                        <span className="flex items-center gap-1.5 flex-wrap">
+                          <span>{isPreset ? '🔊' : '✨'} {text}</span>
+                          {isPreset && (
+                            <span
+                              className="text-xs px-1.5 py-0.5 rounded-sm"
+                              style={{
+                                background: 'rgba(45,106,79,0.12)',
+                                color: 'var(--clr-jade)',
+                                fontSize: '0.65rem',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              Có giọng đọc mẫu
+                            </span>
+                          )}
+                        </span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )}

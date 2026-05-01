@@ -730,3 +730,29 @@ export function hasPresetAudio(message) {
 export function getPresetCatalog() {
   return presetCatalog
 }
+
+/**
+ * Lấy 1 câu hỏi preset chưa được hỏi để gợi ý tiếp theo.
+ * @param {string} entityId
+ * @param {string} perspective
+ * @param {string[]} askedQuestions - danh sách các câu hỏi đã hỏi (content text)
+ * @returns {{ question: string, isPreset: true } | null}
+ */
+export function getNextPresetSuggestion(entityId, perspective, askedQuestions = []) {
+  const entries = getPresetEntries(entityId, perspective)
+  if (!entries.length) return null
+
+  const normalizedAsked = askedQuestions.map(q => normalizeText(q))
+
+  const unused = entries.find(entry => {
+    const normalizedQ = normalizeText(entry.question)
+    return !normalizedAsked.some(asked =>
+      asked === normalizedQ ||
+      (asked.length > 15 && normalizedQ.includes(asked)) ||
+      (normalizedQ.length > 15 && asked.includes(normalizedQ))
+    )
+  })
+
+  if (!unused) return null
+  return { question: unused.question, isPreset: true }
+}

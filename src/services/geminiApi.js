@@ -40,11 +40,10 @@ QUY TẮC BẮT BUỘC (tuân thủ nghiêm ngặt):
 4. Trả lời hoàn toàn bằng tiếng Việt. Dùng markdown (in đậm tên người, sự kiện).
 5. LUÔN kết thúc trọn vẹn — không bao giờ cắt ngang giữa câu. Nếu sắp hết dung lượng, tóm tắt và kết bằng dấu chấm.
 6. ĐỘ DÀI: Trả lời đầy đủ và toàn diện, không giới hạn. Cấu trúc rõ ràng với tiêu đề **In đậm:** khi cần.
-7. CUỐI MỖI CÂU TRẢ LỜI, LUÔN thêm block gợi ý theo đúng format sau (2-3 câu hỏi tiếp nối liên quan đến nội dung vừa trả lời, dẫn dắt câu chuyện sâu hơn):
+7. CUỐI MỖI CÂU TRẢ LỜI, LUÔN thêm block gợi ý theo đúng format sau (chính xác 2 câu hỏi tiếp nối liên quan đến nội dung vừa trả lời, dẫn dắt câu chuyện sâu hơn):
 [GỢI Ý]
 - Câu hỏi gợi ý 1?
-- Câu hỏi gợi ý 2?
-- Câu hỏi gợi ý 3?`
+- Câu hỏi gợi ý 2?`
 
     return `${basePrompt}\n${behaviorRules}${chunkContext}`.trim()
 }
