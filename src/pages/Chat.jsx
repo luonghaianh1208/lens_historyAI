@@ -139,7 +139,7 @@ export default function Chat() {
   const mainRef = useRef(null)
   const lastSpokenIndexRef = useRef(-1)
 
-  const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective)
+  const { messages, loading, error, sendMessage, changePerspective, followUpSuggestions } = useChat(entityId, perspective)
   const { playUrl, speakLocal, stop, playing: ttsPlaying, loading: ttsLoading, chunkInfo, setSpeed } = useTTS()
   useEffect(() => { setSpeed(ttsSpeed) }, [ttsSpeed, setSpeed])
   const suggestions = useMemo(() => getQuickSuggestions(entity, perspective), [entity, perspective])
@@ -410,6 +410,33 @@ export default function Chat() {
                 />
               ))}
             </div>
+
+            {/* Follow-up suggestion buttons */}
+            {followUpSuggestions.length > 0 && !loading && messages.length > 0 && (
+              <div className="max-w-3xl mx-auto mt-4 animate-in">
+                <p className="text-xs mb-2 font-medium" style={{ color: 'var(--clr-gold)', fontFamily: 'var(--font-serif)' }}>
+                  Tiếp tục khám phá:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {followUpSuggestions.map((text) => (
+                    <button
+                      key={text}
+                      type="button"
+                      onClick={() => handleSuggestionClick(text)}
+                      className="followup-chip px-3 py-2 text-sm rounded-sm text-left"
+                      style={{
+                        fontFamily: 'var(--font-serif)',
+                        background: 'rgba(245,239,224,0.85)',
+                        border: '1px solid rgba(184,134,11,0.25)',
+                        color: 'var(--clr-ink-soft)',
+                      }}
+                    >
+                      💬 {text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div ref={messagesEndRef} />
 

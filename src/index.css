@@ -179,10 +179,22 @@ h1, h2, h3 {
 
 .btn-seal-ghost:hover,
 .chip-button:hover,
-.filter-chip:hover {
+.filter-chip:hover,
+.followup-chip:hover {
   background: rgba(184, 134, 11, 0.08);
   border-color: var(--clr-gold);
   color: var(--clr-ink);
+}
+
+.followup-chip {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  line-height: 1.4;
+}
+.followup-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(184, 134, 11, 0.15);
+  background: rgba(184, 134, 11, 0.1) !important;
 }
 
 .search-result-button:hover {

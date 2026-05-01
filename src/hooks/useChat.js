@@ -2,11 +2,13 @@ import { useState, useRef, useCallback } from 'react'
 import { buildSystemPrompt } from '../services/geminiApi'
 import { getEntity } from '../services/retrieval'
 import { findPresetResponse } from '../services/chatPresetService'
+import { parseSuggestions } from '../utils/parseSuggestions'
 
 export function useChat(entityId, perspective = 'self') {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [followUpSuggestions, setFollowUpSuggestions] = useState([])
   const messagesRef = useRef([])
   const abortControllerRef = useRef(null)
   const frameRef = useRef(null)
@@ -23,6 +25,7 @@ export function useChat(entityId, perspective = 'self') {
     messagesRef.current = [...messagesRef.current, userMsg]
     setMessages((prev) => [...prev, userMsg])
     setLoading(true)
+    setFollowUpSuggestions([])
     setError(null)
 
     try {
@@ -155,7 +158,19 @@ export function useChat(entityId, perspective = 'self') {
         frameRef.current = null
       }
       flushAssistantMessage(true)
-      messagesRef.current = [...messagesRef.current, { role: 'assistant', content: assistantMessage, timestamp: Date.now(), source: 'ai' }]
+
+      // Parse follow-up suggestions from AI response
+      const { content: cleanContent, suggestions: aiSuggestions } = parseSuggestions(assistantMessage)
+      if (cleanContent !== assistantMessage) {
+        // Update the displayed message to remove the [GỢI Ý] block
+        setMessages((prev) => {
+          const updated = [...prev]
+          updated[updated.length - 1] = { role: 'assistant', content: cleanContent, source: 'ai' }
+          return updated
+        })
+      }
+      setFollowUpSuggestions(aiSuggestions)
+      messagesRef.current = [...messagesRef.current, { role: 'assistant', content: cleanContent, timestamp: Date.now(), source: 'ai' }]
     } catch (err) {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current)
@@ -183,7 +198,8 @@ export function useChat(entityId, perspective = 'self') {
     setMessages([])
     messagesRef.current = []
     setError(null)
+    setFollowUpSuggestions([])
   }, [])
 
-  return { messages, loading, error, sendMessage, changePerspective, entity, setMessages }
+  return { messages, loading, error, sendMessage, changePerspective, entity, setMessages, followUpSuggestions }
 }
