@@ -14,6 +14,7 @@ export function useChat(entityId, perspective = 'self') {
 
   const entity = getEntity(entityId)
 
+  // Cleanup on unmount: abort in-flight requests and cancel pending animation frames
   useEffect(() => {
     return () => {
       abortControllerRef.current?.abort()
@@ -24,15 +25,39 @@ export function useChat(entityId, perspective = 'self') {
     }
   }, [])
 
+  // --- Centralized ref+state helpers to prevent mutation inconsistency ---
+  // messagesRef is needed for the streaming fetch body (avoids stale closure).
+  // setMessages drives React renders. Both must always stay in sync.
+  const pushMessage = useCallback((msg) => {
+    messagesRef.current = [...messagesRef.current, msg]
+    setMessages([...messagesRef.current])
+  }, [])
+
+  const replaceLastMessage = useCallback((msg) => {
+    const updated = [...messagesRef.current]
+    updated[updated.length - 1] = msg
+    messagesRef.current = updated
+    setMessages(updated)
+  }, [])
+
+  const resetMessages = useCallback(() => {
+    messagesRef.current = []
+    setMessages([])
+  }, [])
+
+  const rollbackMessages = useCallback((count) => {
+    messagesRef.current = messagesRef.current.slice(0, -count)
+    setMessages([...messagesRef.current])
+  }, [])
+  // --- End helpers ---
+
   const sendMessage = useCallback(async (userMessage) => {
     if (!entity) {
       setError('Không tìm thấy nhân vật này')
       return
     }
 
-    const userMsg = { role: 'user', content: userMessage, timestamp: Date.now() }
-    messagesRef.current = [...messagesRef.current, userMsg]
-    setMessages((prev) => [...prev, userMsg])
+    pushMessage({ role: 'user', content: userMessage, timestamp: Date.now() })
     setLoading(true)
     setFollowUpSuggestions([])
     setError(null)
@@ -43,7 +68,7 @@ export function useChat(entityId, perspective = 'self') {
 
       const presetResponse = findPresetResponse({ entityId, perspective, input: userMessage })
       if (presetResponse) {
-        const assistantMsg = {
+        pushMessage({
           role: 'assistant',
           content: presetResponse.answer,
           timestamp: Date.now(),
@@ -52,10 +77,7 @@ export function useChat(entityId, perspective = 'self') {
           presetId: presetResponse.id,
           matchType: presetResponse.matchType,
           confidence: presetResponse.confidence,
-        }
-
-        messagesRef.current = [...messagesRef.current, assistantMsg]
-        setMessages((prev) => [...prev, assistantMsg])
+        })
 
         // Build follow-up suggestions after preset response (lấy tất cả preset chưa hỏi)
         const askedQuestions = messagesRef.current
@@ -70,13 +92,11 @@ export function useChat(entityId, perspective = 'self') {
 
       if (import.meta.env.DEV && !import.meta.env.VITE_NETLIFY) {
         await new Promise((resolve) => setTimeout(resolve, 1000))
-        const mockResponse = {
+        pushMessage({
           role: 'assistant',
           content: `Đây là phản hồi demo cho: "${userMessage}". Để chat thật, hãy deploy lên Netlify và set GEMINI_API_KEY trong Netlify Environment Variables.`,
           source: 'ai',
-        }
-        messagesRef.current = [...messagesRef.current, mockResponse]
-        setMessages((prev) => [...prev, mockResponse])
+        })
         setLoading(false)
         return
       }
@@ -106,6 +126,7 @@ export function useChat(entityId, perspective = 'self') {
       let sseBuffer = ''
       let pendingText = ''
 
+      // Add placeholder for streaming — only state (ref updated at end)
       setMessages((prev) => [...prev, { role: 'assistant', content: '' }])
 
       const flushAssistantMessage = (force = false) => {
@@ -178,13 +199,14 @@ export function useChat(entityId, perspective = 'self') {
 
       // Parse follow-up suggestions from AI response
       const { content: cleanContent, suggestions: aiSuggestions } = parseSuggestions(assistantMessage)
+
+      // Finalize: sync ref with the clean content (ref was not updated during streaming)
+      const finalMsg = { role: 'assistant', content: cleanContent, timestamp: Date.now(), source: 'ai' }
+      messagesRef.current = [...messagesRef.current, finalMsg]
+
       if (cleanContent !== assistantMessage) {
-        // Update the displayed message to remove the [GỢI Ý] block
-        setMessages((prev) => {
-          const updated = [...prev]
-          updated[updated.length - 1] = { role: 'assistant', content: cleanContent, source: 'ai' }
-          return updated
-        })
+        // Update displayed message to remove the [GỢI Ý] block
+        setMessages([...messagesRef.current])
       }
 
       // Mix: 2 AI suggestions + 1 preset suggestion (with audio)
@@ -197,8 +219,6 @@ export function useChat(entityId, perspective = 'self') {
         ? [...aiItems, { text: presetSugg.question, isPreset: true }]
         : aiItems
       setFollowUpSuggestions(mixedSuggestions)
-
-      messagesRef.current = [...messagesRef.current, { role: 'assistant', content: cleanContent, timestamp: Date.now(), source: 'ai' }]
     } catch (err) {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current)
@@ -209,13 +229,12 @@ export function useChat(entityId, perspective = 'self') {
       console.error('Chat error:', err)
       setError(err.message || 'Có lỗi xảy ra. Vui lòng thử lại.')
       const shouldPopAssistant = messagesRef.current[messagesRef.current.length - 1]?.role === 'assistant'
-      setMessages((prev) => prev.slice(0, shouldPopAssistant ? -2 : -1))
-      messagesRef.current = messagesRef.current.slice(0, shouldPopAssistant ? -2 : -1)
+      rollbackMessages(shouldPopAssistant ? 2 : 1)
     } finally {
       abortControllerRef.current = null
       setLoading(false)
     }
-  }, [entity, entityId, perspective])
+  }, [entity, entityId, perspective, pushMessage, rollbackMessages])
 
   const changePerspective = useCallback(() => {
     if (abortControllerRef.current) abortControllerRef.current.abort()
@@ -223,22 +242,10 @@ export function useChat(entityId, perspective = 'self') {
       cancelAnimationFrame(frameRef.current)
       frameRef.current = null
     }
-    setMessages([])
-    messagesRef.current = []
+    resetMessages()
     setError(null)
     setFollowUpSuggestions([])
-  }, [])
-
-  // Cleanup on unmount: abort in-flight requests and cancel pending animation frames
-  useEffect(() => {
-    return () => {
-      abortControllerRef.current?.abort()
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current)
-        frameRef.current = null
-      }
-    }
-  }, [])
+  }, [resetMessages])
 
   return { messages, loading, error, sendMessage, changePerspective, entity, setMessages, followUpSuggestions }
 }

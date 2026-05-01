@@ -65,6 +65,32 @@ function clampTokens(value, fallback, max) {
   return Math.min(parsed, max)
 }
 
+// --- Prompt injection protection ---
+const MAX_USER_MESSAGE_LENGTH = 2000
+const INJECTION_PATTERNS = [
+  /ignore\s+(all\s+)?previous\s+instructions/i,
+  /forget\s+(all\s+)?previous/i,
+  /disregard\s+(all\s+)?(above|previous)/i,
+  /you\s+are\s+now\s+a/i,
+  /new\s+instructions?:/i,
+  /system\s*:/i,
+  /\bact\s+as\b/i,
+  /\bjailbreak\b/i,
+  /\bDAN\b/,
+  /pretend\s+you\s+are/i,
+]
+
+function sanitizeUserInput(text) {
+  if (typeof text !== 'string') return ''
+  // Trim and limit length
+  let sanitized = text.trim().slice(0, MAX_USER_MESSAGE_LENGTH)
+  // Strip common injection patterns
+  for (const pattern of INJECTION_PATTERNS) {
+    sanitized = sanitized.replace(pattern, '[đã lọc]')
+  }
+  return sanitized
+}
+
 function normalizeMessages(messages) {
   if (!Array.isArray(messages)) return []
 
@@ -76,7 +102,7 @@ function normalizeMessages(messages) {
     ))
     .map((message) => ({
       role: message.role === 'user' ? 'user' : 'model',
-      parts: [{ text: message.content }],
+      parts: [{ text: message.role === 'user' ? sanitizeUserInput(message.content) : message.content }],
     }))
 }
 
@@ -176,7 +202,13 @@ export default async (req) => {
     generationConfig: {
       maxOutputTokens: resolvedMaxTokens,
       temperature: 0.9
-    }
+    },
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
+    ]
   })
 
   try {
