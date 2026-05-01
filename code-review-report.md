@@ -1,36 +1,23 @@
 # Code Review Report
 
-**Date**: 2026-04-28
-**Reviewer**: Code Reviewer Agent
-**Files Reviewed**:
-- src/pages/Home.jsx
-- src/pages/Entity.jsx
-- src/pages/Chat.jsx
-- src/pages/Quiz.jsx
-- src/services/geminiApi.js
-- src/services/retrieval.js
-- src/services/quizService.js
-- src/hooks/useChat.js
-- netlify/functions/chat.js
-- src/data/entities/*.json
-- src/data/events/*.json
-- src/App.jsx
-- src/main.jsx
+**Date**: 2026-04-28 (updated 2026-05-01)
+**Reviewer**: Code Reviewer Agent + Exploratory Analysis
+**Files Reviewed**: Full codebase (pages, components, services, hooks, Netlify functions, data files)
 
 ## Summary
 
-Codebase có chất lượng tổng thể khá tốt, tuân thủ React patterns và CLAUDE.md guidelines. Tuy nhiên có một số runtime crash points và logic issues cần chú ý:
+Codebase có chất lượng tổng thể khá tốt, tuân thủ React patterns và CLAUDE.md guidelines. Architecture rõ ràng theo Facade + Service Layer pattern. Tuy nhiên có một số runtime crash points, logic issues, performance concerns, và security issues cần chú ý.
 
-- **6 issues found**
-- 3 HIGH priority (có thể gây crash)
-- 2 MEDIUM priority (logic issues)
-- 1 LOW priority (code quality)
+- **18 issues found**
+- 4 HIGH priority (có thể gây crash)
+- 4 MEDIUM priority (logic/security issues)
+- 10 LOW priority (code quality / performance)
 
 ---
 
 ## Issues Found
 
-### 🔴 HIGH Priority
+### HIGH Priority
 
 #### 1. Entity.jsx line 40 - Crash khi entity không có `period`
 
@@ -94,9 +81,25 @@ const defaultPerspective = validPerspective || perspectiveEntries[0]?.[0] || 'hi
 
 ---
 
-### 🟡 MEDIUM Priority
+#### 4. ErrorBoundary.jsx lines 17-20 - Dùng `window.location.href` thay vì React Router
 
-#### 4. retrieval.js line 32 - Potential crash khi entity.name là undefined
+- **File**: `src/components/ErrorBoundary.jsx`
+- **Lines**: 17-20
+- **Description**: Khi reset error, component dùng `window.location.href = '/'` để redirect về trang chủ. Điều này gây full page reload và mất tất cả client-side state.
+- **Current Code**:
+```javascript
+handleReset = () => {
+  this.setState({ hasError: false, error: null })
+  window.location.href = '/'  // Full page reload!
+}
+```
+- **Suggested Fix**: Sử dụng React Router navigation hook (`useNavigate`) hoặc `withRouter` HOC để navigate mà không reload.
+
+---
+
+### MEDIUM Priority
+
+#### 5. retrieval.js line 32 - Potential crash khi entity.name là undefined
 
 - **File**: `src/services/retrieval.js`
 - **Line**: 32
@@ -112,7 +115,7 @@ const nameMatch = entity.name?.toLowerCase().includes(q) || false
 
 ---
 
-#### 5. Quiz.jsx lines 102-105 - Regex JSON extraction có thể match sai
+#### 6. Quiz.jsx lines 102-105 - Regex JSON extraction có thể match sai
 
 - **File**: `src/pages/Quiz.jsx`
 - **Lines**: 102-105
@@ -138,52 +141,214 @@ if (jsonStart !== -1 && jsonEnd !== -1) {
 
 ---
 
-### 🟢 LOW Priority
+#### 7. Chat.jsx line 25 - messagesRef mutation during render
 
-#### 6. Chat.jsx lines 13-36 - Functions được định nghĩa trong component body
+- **File**: `src/pages/Chat.jsx`
+- **Line**: 25
+- **Description**: `messagesRef.current` được mutate trong khi đang gọi `setMessages` - có thể gây inconsistency giữa ref và state khi React strict mode enabled.
+- **Current Code**:
+```javascript
+const userMsg = { role: 'user', content: userMessage, timestamp: Date.now() }
+messagesRef.current = [...messagesRef.current, userMsg]  // Mutation!
+setMessages((prev) => [...prev, userMsg])  // setState
+```
+- **Suggested Fix**: Tách biệt logic. Không mutate ref cùng lúc với setState. Cân nhắc chỉ dùng state hoặc chỉ dùng ref, không đồng thời.
+
+---
+
+#### 8. useChat.js lines 64-75 - DEV mode bypass logic không rõ ràng
+
+- **File**: `src/hooks/useChat.js`
+- **Lines**: 64-75
+- **Description**: DEV mode mock bypass xảy ra khi không có `VITE_NETLIFY` flag set, nhưng không có visual indicator cho user biết họ đang ở dev mode. Logic này có thể confuse khi deploy mà quên set flag.
+- **Current Code**:
+```javascript
+if (import.meta.env.DEV && !import.meta.env.VITE_NETLIFY) {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  const mockResponse = { ... }
+}
+```
+- **Suggested Fix**: Thêm warning toast hoặc badge khi dev mock đang active. Hoặc log warning khi dev mode detect.
+
+---
+
+### LOW Priority
+
+#### 9. Chat.jsx lines 13-36 - Functions được định nghĩa trong component body
 
 - **File**: `src/pages/Chat.jsx`
 - **Lines**: 13-36
 - **Description**: `getPerspectiveEntries`, `getPerspectiveLabel`, `getQuickSuggestions` được định nghĩa trong component body thay vì bên ngoài hoặc wrap với `useMemo`. Mỗi lần render, các functions mới được tạo (dù không impact performance đáng kể).
-- **Current Code**: Functions defined inline
 - **Suggested Fix**: Đặt ngoài component (file-level) nếu không cần closure, hoặc dùng `useMemo`/`useCallback` nếu cần referential stability.
+
+---
+
+#### 10. chatPresetService.js - File quá lớn (27K+ tokens)
+
+- **File**: `src/services/chatPresetService.js`
+- **Description**: Single file chứa tất cả preset responses. Khó maintain, review, và debug.
+- **Suggested Fix**: Split thành nhiều files theo entity hoặc theo category (ví dụ: `presets/nguyen-trai.js`, `presets/le-loi.js`, etc.)
+
+---
+
+#### 11. Magic numbers không centralized
+
+- **Files**: Nhiều files
+- **Description**: Các hằng số như `MAX_TTS_CHARS = 450`, `SILENCE_PADDING_MS = 80`, `MAX_QUIZ_QUESTIONS = 5` được hardcode trực tiếp trong code.
+- **Suggested Fix**: Tạo file `src/constants.js` để centralize tất cả magic numbers.
+
+---
+
+#### 12. Quiz.jsx line 174 - sessionStorage cache không có try-catch
+
+- **File**: `src/pages/Quiz.jsx`
+- **Line**: 174
+- **Description**: `JSON.parse(cachedValue)` được gọi mà không có try-catch. Nếu cache bị corrupted, app sẽ crash.
+- **Current Code**:
+```javascript
+const parsed = sanitizeQuizQuestions(JSON.parse(cachedValue))  // No try-catch!
+```
+- **Suggested Fix**: Wrap trong try-catch, fall back về fresh generation nếu parse fails.
+
+---
+
+#### 13. AbortController cleanup missing
+
+- **File**: `src/hooks/useChat.js`
+- **Description**: `abortControllerRef` được tạo nhưng không cleanup khi component unmount. Có thể gây memory leak nếu request đang in-flight khi unmount.
+- **Suggested Fix**: Cleanup trong useEffect return:
+```javascript
+useEffect(() => {
+  return () => {
+    abortControllerRef.current?.abort()
+  }
+}, [])
+```
+
+---
+
+#### 14. SearchModal - getIndex() được gọi trong map
+
+- **File**: `src/components/SearchModal.jsx`
+- **Lines**: 22-28
+- **Description**: `getIndex()` được gọi lặp đi lặp lại bên trong `recentSearches.map()`. Function này regenerate index mỗi lần.
+- **Suggested Fix**: Cache `getIndex()` result hoặc build lookup map trước.
+
+---
+
+#### 15. Image optimization - Không có lazy loading ngoài Entity page
+
+- **Files**: Nhiều components
+- **Description**: Character images và background images không có lazy loading. Trang Home và Chat load tất cả images ngay lập tức.
+- **Suggested Fix**: Thêm `loading="lazy"` attribute hoặc dùng React lazy/suspense cho image-heavy components.
+
+---
+
+#### 16. AnimatedBackground - Particle recalculation không memoized
+
+- **File**: `src/components/AnimatedBackground.jsx`
+- **Description**: Particles được recalculated mỗi khi mode thay đổi, nhưng không có memoization.
+- **Suggested Fix**: Memoize particle calculations với `useMemo`.
+
+---
+
+#### 17. MessageBubble không có React.memo
+
+- **File**: `src/components/MessageBubble.jsx` (nếu có) hoặc `src/pages/Chat.jsx`
+- **Description**: MessageBubble component không được wrap với React.memo, gây re-render không cần thiết khi parent re-renders.
+- **Suggested Fix**: Wrap với `React.memo(MessageBubble)`.
+
+---
+
+#### 18. Toast notification - Module-level store có thể gây memory leak
+
+- **File**: `src/components/Toast.jsx`
+- **Description**: Toast sử dụng module-level store (biến global bên ngoài component). Không có cleanup mechanism khi module unload.
+- **Suggested Fix**: Đảm bảo cleanup được gọi khi app unmount hoặc chuyển sang React context.
+
+---
+
+## Security Issues
+
+### Chat messages không có sanitization - Prompt Injection có thể xảy ra
+
+- **File**: `src/pages/Chat.jsx` và `netlify/functions/chat.js`
+- **Description**: User input được gửi trực tiếp đến Gemini API mà không có sanitization. Attacker có thể inject malicious prompts qua user messages.
+- **Suggested Fix**: Thêm input sanitization ở frontend hoặc system prompt engineering để detect và block injection attempts. Cân nhắc dùng Gemini's safety settings.
+
+---
+
+### tts.js - CORS wildcard trên error response
+
+- **File**: `netlify/functions/tts.js`
+- **Description**: Error response có `Access-Control-Allow-Origin: *` wildcard. Dù là error response, nên restrict origins.
+- **Suggested Fix**: Restrict CORS origin bằng environment variable hoặc specific domain.
 
 ---
 
 ## Recommendations
 
-### 1. Type Safety cho JSON data
-Cân nhắc thêm TypeScript hoặc ít nhất là JSON schema validation khi import các entity files. Hiện tại, nếu JSON thiếu field required (như `name`), app sẽ crash.
+### Cao ưu tiên
+1. **Fix HIGH issues ngay** - 4 crash points có thể gây app unavailable
+2. **Add AbortController cleanup** - Memory leak prevention
+3. **Fix sessionStorage JSON.parse** - Crash prevention
+4. **Fix messagesRef mutation** - Potential race condition
 
-### 2. Error Boundary
-Thêm Error Boundary component để catch lỗi React rendering và hiển thị fallback UI thay vì crash toàn bộ app.
+### Trung bình
+5. **Type Safety** - Cân nhắc thêm TypeScript hoặc JSON schema validation
+6. **Split chatPresetService.js** - Maintainability
+7. **Centralize constants** - Code maintainability
+8. **Fix DEV mode bypass** - Deployment safety
 
-### 3. Environment Variable Validation
-Trong `netlify/functions/chat.js`, kiểm tra `Netlify.env.get()` trả về undefined thay vì string rỗng. Nếu `GEMINI_API_KEY` không set, API sẽ fail với message không clear.
-
-### 4. Streaming Error Handling
-Trong `useChat.js`, nếu SSE stream bị interrupt giữa chừng (network error, server restart), buffer có thể chứa incomplete JSON. Logic hiện tại có handle nhưng có thể improve bằng cách reset buffer khi detect malformed data.
+### Thấp
+9. **Image lazy loading** - Performance optimization
+10. **Memoize particles** - Performance optimization
+11. **React.memo for MessageBubble** - Render optimization
+12. **Security hardening** - Input sanitization, CORS restrictions
 
 ---
 
 ## Files Analyzed
 
 ### Pages
-- `src/pages/Home.jsx` - Clean, no major issues
-- `src/pages/Entity.jsx` - 1 HIGH issue (line 40 period access)
-- `src/pages/Chat.jsx` - 2 issues (function signature, perspective validation)
-- `src/pages/Quiz.jsx` - 1 MEDIUM issue (JSON extraction)
+| File | Issues |
+|------|--------|
+| Home.jsx | Clean, no major issues |
+| Entity.jsx | 1 HIGH (period access) |
+| Chat.jsx | 3 issues (perspective validation, ref mutation, inline functions) |
+| Quiz.jsx | 2 issues (JSON extraction, sessionStorage cache) |
+
+### Components
+| File | Issues |
+|------|--------|
+| ErrorBoundary.jsx | 1 HIGH (window.location.href) |
+| SearchModal.jsx | 1 LOW (getIndex in map) |
+| AnimatedBackground.jsx | 1 LOW (particle recalculation) |
+| Toast.jsx | 1 LOW (module-level store) |
 
 ### Services
-- `src/services/geminiApi.js` - Clean, well-structured
-- `src/services/retrieval.js` - 1 LOW issue (null check on name)
-- `src/services/quizService.js` - Clean
+| File | Issues |
+|------|--------|
+| geminiApi.js | Clean |
+| retrieval.js | 1 MEDIUM (null check on name) |
+| quizService.js | Clean |
+| chatPresetService.js | 1 LOW (file too large) |
+| assetService.js | Clean |
+| ttsService.js | Clean |
 
 ### Hooks
-- `src/hooks/useChat.js` - 1 HIGH issue (changePerspective signature)
+| File | Issues |
+|------|--------|
+| useChat.js | 2 issues (changePerspective signature, DEV mode bypass, missing AbortController cleanup) |
+| useTTS.js | Clean |
+| useLocalStorage.js | Clean |
+| useKeyboardShortcut.js | Clean |
 
 ### Functions
-- `netlify/functions/chat.js` - Clean, proper error handling
+| File | Issues |
+|------|--------|
+| netlify/functions/chat.js | Clean, proper error handling |
+| netlify/functions/tts.js | 1 SECURITY (CORS wildcard) |
 
 ### Data
 - All JSON files comply with schema defined in CLAUDE.md

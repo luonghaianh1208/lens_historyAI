@@ -1,6 +1,7 @@
 import { Component } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-class ErrorBoundary extends Component {
+class ErrorBoundaryInner extends Component {
   constructor(props) {
     super(props)
     this.state = { hasError: false, error: null }
@@ -16,7 +17,7 @@ class ErrorBoundary extends Component {
 
   handleReset = () => {
     this.setState({ hasError: false, error: null })
-    window.location.href = '/'
+    this.props.onResetHome()
   }
 
   render() {
@@ -24,7 +25,7 @@ class ErrorBoundary extends Component {
       return (
         <div className="min-h-screen flex items-center justify-center px-6" style={{ background: 'var(--clr-paper)' }}>
           <div className="card-ancient p-8 text-center max-w-md w-full">
-            <div className="text-4xl mb-4">\u274c</div>
+            <div className="text-4xl mb-4">❌</div>
             <h2 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
               Có lỗi xảy ra
             </h2>
@@ -51,4 +52,8 @@ class ErrorBoundary extends Component {
   }
 }
 
-export default ErrorBoundary
+export default function ErrorBoundary(props) {
+  const navigate = useNavigate()
+
+  return <ErrorBoundaryInner {...props} onResetHome={() => navigate('/')} />
+}

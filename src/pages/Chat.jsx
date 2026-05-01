@@ -177,7 +177,7 @@ export default function Chat() {
   }, [messages, isPinnedToBottom])
 
   useEffect(() => {
-    changePerspective(perspective)
+    changePerspective()
     lastSpokenIndexRef.current = -1
   }, [perspective, changePerspective])
 
@@ -205,7 +205,7 @@ export default function Chat() {
     await sendMessage(text)
   }
 
-  const handleClearChat = () => { changePerspective(perspective); lastSpokenIndexRef.current = -1; toastSuccess('Đã xóa cuộc trò chuyện') }
+  const handleClearChat = () => { changePerspective(); lastSpokenIndexRef.current = -1; toastSuccess('Đã xóa cuộc trò chuyện') }
 
   const handlePlayAudio = (message) => {
     if (ttsPlaying || ttsLoading) {

@@ -1,3 +1,104 @@
+import { createRequire } from 'node:module'
+import { buildSystemPrompt } from '../../src/services/geminiApi.js'
+
+const require = createRequire(import.meta.url)
+const rawEntities = {
+  'nguyen-trai': require('../../src/data/entities/nguyen-trai.json'),
+  'le-loi': require('../../src/data/entities/le-loi.json'),
+  'tran-hung-dao': require('../../src/data/entities/tran-hung-dao.json'),
+  'ly-thuong-kiet': require('../../src/data/entities/ly-thuong-kiet.json'),
+  'khoi-nghia-lam-son': require('../../src/data/events/khoi-nghia-lam-son.json'),
+  'chien-thang-bach-dang': require('../../src/data/events/chien-thang-bach-dang.json'),
+  'chien-tranh-ly-tong': require('../../src/data/events/chien-tranh-ly-tong.json'),
+  'nguyen-hue': require('../../src/data/entities/nguyen-hue.json'),
+  'ho-chi-minh': require('../../src/data/entities/ho-chi-minh.json'),
+  'tran-dong-da': require('../../src/data/events/tran-dong-da.json'),
+  'dien-bien-phu': require('../../src/data/events/dien-bien-phu.json'),
+}
+
+const CHAT_MAX_TOKENS = 20000
+const QUIZ_MAX_TOKENS = 2000
+
+function normalizePerspectives(perspectives = {}) {
+  return Object.fromEntries(
+    Object.entries(perspectives).map(([key, value]) => [
+      key,
+      {
+        ...value,
+        system_prompt: value.system_prompt || value.instruction || '',
+      },
+    ]),
+  )
+}
+
+function normalizeChunks(chunks = []) {
+  return chunks.map((chunk, index) => ({
+    id: chunk.id || `${chunk.source || chunk.metadata || 'chunk'}-${index}`,
+    content: chunk.content || '',
+    source: chunk.source || chunk.metadata || 'Tư liệu tổng hợp',
+    reliability: chunk.reliability ?? 88,
+    tags: chunk.tags || [],
+  }))
+}
+
+function normalizeEntity(entity) {
+  return {
+    ...entity,
+    period: entity.period || entity.dynasty || entity.dates || '',
+    short_desc: entity.short_desc || entity.shortDescription || entity.description || '',
+    perspectives: normalizePerspectives(entity.perspectives || {}),
+    chunks: normalizeChunks(entity.chunks || []),
+  }
+}
+
+const entities = Object.fromEntries(
+  Object.entries(rawEntities).map(([id, entity]) => [id, normalizeEntity(entity)]),
+)
+
+function getEntity(id) {
+  return entities[id] || null
+}
+
+function clampTokens(value, fallback, max) {
+  const parsed = Number.parseInt(value, 10)
+  if (!Number.isFinite(parsed) || parsed <= 0) return fallback
+  return Math.min(parsed, max)
+}
+
+function normalizeMessages(messages) {
+  if (!Array.isArray(messages)) return []
+
+  return messages
+    .filter((message) => (
+      message
+      && typeof message.content === 'string'
+      && (message.role === 'user' || message.role === 'assistant')
+    ))
+    .map((message) => ({
+      role: message.role === 'user' ? 'user' : 'model',
+      parts: [{ text: message.content }],
+    }))
+}
+
+function buildQuizPrompt(entity) {
+  const info = entity.chunks?.map((chunk) => chunk.content).join('\n') || entity.short_desc || ''
+
+  return `Dựa trên thông tin lịch sử về ${entity.name}, hãy tạo 5 câu hỏi trắc nghiệm bằng tiếng Việt.
+
+THÔNG TIN:
+Tên: ${entity.name}
+Thời kỳ: ${entity.period || ''}
+Mô tả: ${entity.short_desc || ''}
+${info}
+
+YÊU CẦU:
+- Mỗi câu hỏi có 4 đáp án
+- Chỉ có 1 đáp án đúng (index 0-3)
+- Câu hỏi kiểm tra sự hiểu biết về sự kiện hoặc chi tiết lịch sử
+- Trả lời CHỈ JSON array, không có text khác:
+[{"question":"...","options":["A","B","C","D"],"correct":0,"explanation":"..."}]`
+}
+
 // Netlify Functions v2 format
 export default async (req) => {
   if (req.method !== 'POST') {
@@ -7,7 +108,7 @@ export default async (req) => {
     })
   }
 
-  const { systemPrompt, messages, maxTokens = 1000, stream = false } = await req.json()
+  const { mode = 'chat', entityId, perspective, messages, maxTokens = 1000, stream = false } = await req.json()
 
   const apiKey = Netlify.env.get('GEMINI_API_KEY')
   if (!apiKey) {
@@ -17,11 +118,54 @@ export default async (req) => {
     })
   }
 
-  // Convert messages to Gemini format
-  const contents = messages.map(msg => ({
-    role: msg.role === 'user' ? 'user' : 'model',
-    parts: [{ text: msg.content }]
-  }))
+  let contents = []
+  let systemPrompt = ''
+  let resolvedMaxTokens = 1000
+
+  if (mode === 'chat') {
+    const entity = getEntity(entityId)
+    if (!entity) {
+      return new Response(JSON.stringify({ error: 'Entity not found' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    if (!entity.perspectives?.[perspective]) {
+      return new Response(JSON.stringify({ error: 'Perspective not found' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    contents = normalizeMessages(messages)
+    if (contents.length === 0) {
+      return new Response(JSON.stringify({ error: 'Messages are required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    systemPrompt = buildSystemPrompt(entity, perspective)
+    resolvedMaxTokens = clampTokens(maxTokens, 1000, CHAT_MAX_TOKENS)
+  } else if (mode === 'quiz') {
+    const entity = getEntity(entityId)
+    if (!entity) {
+      return new Response(JSON.stringify({ error: 'Entity not found' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    systemPrompt = 'Bạn là chuyên gia lịch sử Việt Nam. Tạo câu hỏi trắc nghiệm chính xác. Trả lời CHỈ JSON array, không markdown, không text thừa.'
+    contents = [{ role: 'user', parts: [{ text: buildQuizPrompt(entity) }] }]
+    resolvedMaxTokens = clampTokens(maxTokens, 1200, QUIZ_MAX_TOKENS)
+  } else {
+    return new Response(JSON.stringify({ error: 'Unsupported mode' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
 
   const model = 'gemini-2.5-flash'
   const baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`
@@ -30,13 +174,13 @@ export default async (req) => {
     contents,
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
-      maxOutputTokens: maxTokens,
+      maxOutputTokens: resolvedMaxTokens,
       temperature: 0.9
     }
   })
 
   try {
-    if (stream) {
+    if (stream && mode === 'chat') {
       const response = await fetch(`${baseUrl}:streamGenerateContent?key=${apiKey}&alt=sse`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -19,13 +19,14 @@ export default function SearchModal({ isOpen, onClose }) {
     return allResults.filter((e) => e.type === filter)
   }, [query, filter])
 
+  const entityIndex = useMemo(() => getIndex(), [])
+
   const allItems = useMemo(() => {
     if (query.trim()) return results
     return recentSearches.map((id) => {
-      const all = getIndex()
-      return all.find((e) => e.id === id)
+      return entityIndex.find((e) => e.id === id)
     }).filter(Boolean)
-  }, [query, results, recentSearches])
+  }, [entityIndex, query, results, recentSearches])
 
   useEffect(() => {
     if (isOpen && inputRef.current) {

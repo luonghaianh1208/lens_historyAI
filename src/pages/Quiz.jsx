@@ -60,27 +60,18 @@ function buildFallbackQuestions(entity) {
   return baseQuestions.slice(0, 5)
 }
 
-function buildQuizPrompt(entity) {
-  const info = entity.chunks?.map((chunk) => chunk.content).join('\n') || entity.short_desc || ''
-
-  return `Dựa trên thông tin lịch sử về ${entity.name}, hãy tạo 5 câu hỏi trắc nghiệm bằng tiếng Việt.
-
-THÔNG TIN:
-Tên: ${entity.name}
-Thời kỳ: ${entity.period || ''}
-Mô tả: ${entity.short_desc || ''}
-${info}
-
-YÊU CẦU:
-- Mỗi câu hỏi có 4 đáp án
-- Chỉ có 1 đáp án đúng (index 0-3)
-- Câu hỏi kiểm tra sự hiểu biết về sự kiện hoặc chi tiết lịch sử
-- Trả lời CHỈ JSON array, không có text khác:
-[{"question":"...","options":["A","B","C","D"],"correct":0,"explanation":"..."}]`
-}
-
 function getQuizCacheKey(entityId) {
   return `historylens-quiz-${entityId}`
+}
+
+function extractJsonArray(text) {
+  if (typeof text !== 'string') return null
+
+  const jsonStart = text.indexOf('[')
+  const jsonEnd = text.lastIndexOf(']')
+  if (jsonStart === -1 || jsonEnd === -1 || jsonEnd < jsonStart) return null
+
+  return text.slice(jsonStart, jsonEnd + 1)
 }
 
 function sanitizeQuizQuestions(rawQuestions) {
@@ -187,13 +178,12 @@ export default function Quiz() {
     }
 
     try {
-      const prompt = buildQuizPrompt(entity)
       const response = await fetch('/.netlify/functions/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemPrompt: 'Bạn là chuyên gia lịch sử Việt Nam. Tạo câu hỏi trắc nghiệm chính xác. Trả lời CHỈ JSON array, không markdown, không text thừa.',
-          messages: [{ role: 'user', content: prompt }],
+          mode: 'quiz',
+          entityId,
           maxTokens: 2000,
         }),
       })
@@ -202,10 +192,10 @@ export default function Quiz() {
 
       const data = await response.json()
       const text = data.text || ''
-      const jsonMatch = text.match(/\[[\s\S]*\]/)
+      const jsonText = extractJsonArray(text)
 
-      if (jsonMatch) {
-        const parsed = sanitizeQuizQuestions(JSON.parse(jsonMatch[0]))
+      if (jsonText) {
+        const parsed = sanitizeQuizQuestions(JSON.parse(jsonText))
         if (parsed.length > 0) {
           setQuestions(parsed)
           sessionStorage.setItem(cacheKey, JSON.stringify(parsed))

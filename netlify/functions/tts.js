@@ -18,7 +18,7 @@ export default async (req) => {
       })
     }
 
-    if (!text) {
+    if (typeof text !== 'string' || !text.trim()) {
       return new Response(JSON.stringify({ error: 'Text is required' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
@@ -27,7 +27,7 @@ export default async (req) => {
 
     // Truncate text to prevent timeout (Netlify free tier = 10s, ~450 chars per chunk is safe)
     const MAX_TTS_CHARS = 450
-    let ttsText = text
+    let ttsText = text.trim()
     if (ttsText.length > MAX_TTS_CHARS) {
       // Tìm điểm cắt tự nhiên: ưu tiên cuối đoạn văn, rồi cuối câu
       const truncated = ttsText.substring(0, MAX_TTS_CHARS)
@@ -64,7 +64,7 @@ export default async (req) => {
         speechConfig: {
           voiceConfig: {
             prebuiltVoiceConfig: {
-              voiceName: voiceName || "Puck"
+               voiceName: typeof voiceName === 'string' && voiceName.trim() ? voiceName : "Puck"
             }
           }
         }
@@ -175,7 +175,7 @@ export default async (req) => {
     console.error('Function error:', error);
     return new Response(JSON.stringify({ error: `Serverless Function Error: ${error.message || error}` }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      headers: { 'Content-Type': 'application/json' }
     });
   }
 }

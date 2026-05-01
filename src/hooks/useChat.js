@@ -1,5 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
-import { buildSystemPrompt } from '../services/geminiApi'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { getEntity } from '../services/retrieval'
 import { findPresetResponse, getNextPresetSuggestion, getUnusedPresetSuggestions } from '../services/chatPresetService'
 import { parseSuggestions } from '../utils/parseSuggestions'
@@ -14,6 +13,16 @@ export function useChat(entityId, perspective = 'self') {
   const frameRef = useRef(null)
 
   const entity = getEntity(entityId)
+
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current)
+        frameRef.current = null
+      }
+    }
+  }, [])
 
   const sendMessage = useCallback(async (userMessage) => {
     if (!entity) {
@@ -59,8 +68,6 @@ export function useChat(entityId, perspective = 'self') {
         return
       }
 
-      const systemPrompt = buildSystemPrompt(entity, perspective)
-
       if (import.meta.env.DEV && !import.meta.env.VITE_NETLIFY) {
         await new Promise((resolve) => setTimeout(resolve, 1000))
         const mockResponse = {
@@ -78,7 +85,9 @@ export function useChat(entityId, perspective = 'self') {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          systemPrompt,
+          mode: 'chat',
+          entityId,
+          perspective,
           messages: messagesRef.current,
           maxTokens: 20000,
           stream: true,
@@ -218,6 +227,17 @@ export function useChat(entityId, perspective = 'self') {
     messagesRef.current = []
     setError(null)
     setFollowUpSuggestions([])
+  }, [])
+
+  // Cleanup on unmount: abort in-flight requests and cancel pending animation frames
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current)
+        frameRef.current = null
+      }
+    }
   }, [])
 
   return { messages, loading, error, sendMessage, changePerspective, entity, setMessages, followUpSuggestions }
