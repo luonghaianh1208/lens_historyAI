@@ -304,7 +304,7 @@ export default function Chat() {
             </button>
 
             {messages.length > 0 && (
-              <button type="button" onClick={handleClearChat} className="px-3 py-1.5 text-sm rounded-sm" style={{ background: 'transparent', border: '1px solid rgba(192,57,43,0.3)', color: 'var(--clr-vermillion)' }}>X\u00f3a chat</button>
+              <button type="button" onClick={handleClearChat} className="px-3 py-1.5 text-sm rounded-sm" style={{ background: 'transparent', border: '1px solid rgba(192,57,43,0.3)', color: 'var(--clr-vermillion)' }}>Xóa chat</button>
             )}
             <button type="button" onClick={() => navigate(`/quiz/${entityId}`)} className="btn-ghost text-sm">
               Tạo Quiz
