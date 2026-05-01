@@ -3,7 +3,7 @@ import { buildSystemPrompt } from '../services/geminiApi'
 import { getEntity } from '../services/retrieval'
 import { findPresetResponse } from '../services/chatPresetService'
 
-export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') {
+export function useChat(entityId, perspective = 'self') {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -48,7 +48,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
         return
       }
 
-      const systemPrompt = buildSystemPrompt(entity, perspective, lengthLevel)
+      const systemPrompt = buildSystemPrompt(entity, perspective)
 
       if (import.meta.env.DEV && !import.meta.env.VITE_NETLIFY) {
         await new Promise((resolve) => setTimeout(resolve, 1000))
@@ -69,7 +69,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
         body: JSON.stringify({
           systemPrompt,
           messages: messagesRef.current,
-          maxTokens: { short: 800, medium: 2000, long: 3500 }[lengthLevel] || 2000,
+          maxTokens: 20000,
           stream: true,
         }),
         signal: abortControllerRef.current.signal,
@@ -172,7 +172,7 @@ export function useChat(entityId, perspective = 'self', lengthLevel = 'medium') 
       abortControllerRef.current = null
       setLoading(false)
     }
-  }, [entity, entityId, perspective, lengthLevel])
+  }, [entity, entityId, perspective])
 
   const changePerspective = useCallback(() => {
     if (abortControllerRef.current) abortControllerRef.current.abort()

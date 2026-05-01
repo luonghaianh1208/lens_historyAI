@@ -12,11 +12,7 @@ import { getQuickSuggestions, hasPresetAudio } from '../services/chatPresetServi
 
 const TTS_SPEEDS = [{ value: 0.75, label: "0.75x" }, { value: 1, label: "1x" }, { value: 1.25, label: "1.25x" }, { value: 1.5, label: "1.5x" }]
 
-const lengthLabels = {
-  short: 'Ngắn',
-  medium: 'Vừa',
-  long: 'Dài',
-}
+
 
 function formatTime(ts){if(!ts)return"";const d=new Date(ts);return d.getHours().toString().padStart(2,"0")+":"+d.getMinutes().toString().padStart(2,"0")}
 
@@ -122,7 +118,6 @@ export default function Chat() {
   const initialPerspective = searchParams.get('perspective') || perspectiveEntries[0]?.[0] || 'self'
 
   const [perspective, setPerspective] = useState(initialPerspective)
-  const [lengthLevel, setLengthLevel] = useState('medium')
   const [input, setInput] = useState('')
   const [showScrollBtn, setShowScrollBtn] = useState(false)
   const [autoPlayTTS, setAutoPlayTTS] = useLocalStorage("historylens-tts-autoplay-" + entityId, true)
@@ -144,7 +139,7 @@ export default function Chat() {
   const mainRef = useRef(null)
   const lastSpokenIndexRef = useRef(-1)
 
-  const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective, lengthLevel)
+  const { messages, loading, error, sendMessage, changePerspective } = useChat(entityId, perspective)
   const { playUrl, speakLocal, stop, playing: ttsPlaying, loading: ttsLoading, chunkInfo, setSpeed } = useTTS()
   useEffect(() => { setSpeed(ttsSpeed) }, [ttsSpeed, setSpeed])
   const suggestions = useMemo(() => getQuickSuggestions(entity, perspective), [entity, perspective])
@@ -337,25 +332,7 @@ export default function Chat() {
             ))}
           </div>
 
-          <div className="flex gap-2 items-center">
-            <span className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Độ dài:</span>
-            {Object.entries(lengthLabels).map(([key, label]) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setLengthLevel(key)}
-                className="filter-chip px-3 py-1 text-xs font-medium rounded-sm"
-                style={{
-                  fontFamily: 'var(--font-serif)',
-                  ...(lengthLevel === key
-                    ? { background: 'var(--clr-ink)', color: 'var(--clr-paper)', border: '1px solid transparent' }
-                    : { background: 'transparent', color: 'var(--clr-ink-soft)', border: '1px solid rgba(184,134,11,0.2)' }),
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+
         </div>
 
         <div className="chat-layout flex-1 overflow-hidden px-2 md:px-0">

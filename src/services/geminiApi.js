@@ -18,19 +18,12 @@ export async function streamGemini({ systemPrompt, messages, maxTokens = 1000 })
     return response
 }
 
-export function buildSystemPrompt(entity, perspective, lengthLevel) {
+export function buildSystemPrompt(entity, perspective) {
     const perspectiveConfig = entity.perspectives?.[perspective]
     if (!perspectiveConfig) return ''
 
     // Lấy prompt gốc từ JSON — ưu tiên system_prompt, fallback sang instruction
     const basePrompt = perspectiveConfig.system_prompt || perspectiveConfig.instruction || ''
-
-    // === HƯỚNG DẪN ĐỘ DÀI ===
-    const lengthGuide = {
-        short: 'ĐỘ DÀI: Ngắn gọn, 3–5 câu. Đi thẳng vào trọng tâm.',
-        medium: `ĐỘ DÀI: 3–4 đoạn văn. Cấu trúc: trả lời trực tiếp → bối cảnh → nhận xét.`,
-        long: `ĐỘ DÀI: Tối thiểu 5–7 đoạn văn, toàn diện.\nCấu trúc: Mở đầu → Bối cảnh lịch sử → Diễn biến chi tiết → Các góc nhìn → Hệ quả → Nhận xét → Kết luận.\nDùng tiêu đề **In đậm:** để phân chia phần khi cần.`
-    }[lengthLevel] || 'ĐỘ DÀI: 3–4 đoạn văn.'
 
     // === TÀI LIỆU THAM KHẢO ===
     const chunks = entity.chunks || []
@@ -46,7 +39,7 @@ QUY TẮC BẮT BUỘC (tuân thủ nghiêm ngặt):
 3. KHÔNG liệt kê kiểu Wikipedia. Kể chuyện, phân tích, bày tỏ cảm xúc.
 4. Trả lời hoàn toàn bằng tiếng Việt. Dùng markdown (in đậm tên người, sự kiện).
 5. LUÔN kết thúc trọn vẹn — không bao giờ cắt ngang giữa câu. Nếu sắp hết dung lượng, tóm tắt và kết bằng dấu chấm.
-6. ${lengthGuide}`
+6. ĐỘ DÀI: Trả lời đầy đủ và toàn diện, không giới hạn. Cấu trúc rõ ràng với tiêu đề **In đậm:** khi cần.`
 
     return `${basePrompt}\n${behaviorRules}${chunkContext}`.trim()
 }
