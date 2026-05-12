@@ -1,5 +1,25 @@
 # Changelog
 
+## [2026-05-12] Session 8 — Võ Nguyên Giáp Audio & Preset Completion
+### Đã thêm
+- **Preset Q&A**: 9 preset responses cho `vo-nguyen-giap` (3 perspectives × 3 câu: self, contemporary, historian)
+- **TTS Audio**: 9 file `.wav` cho `vo-nguyen-giap` via `gemini-3.1-flash-tts-preview` (Charon voice)
+- **Voice Config**: `vo-nguyen-giap` entry trong `VOICE_CONFIGS` (Charon, authoritative male)
+- **TTS Style**: `vo-nguyen-giap` entry trong `PRESET_TTS_STYLES` (Bắc Trung Bộ accent for self, bộ đội for contemporary, sử gia quân sự for historian)
+- **Entity Data**: `vo-nguyen-giap.json` (pre-existing file committed)
+- **Manifest & Learning Paths**: Updated with new entity
+### QA
+- Audio QA: **108/108 PASS** (99 cũ + 9 mới), 0 failures
+- Build: ✅ `npm run build` thành công
+### File bị ảnh hưởng
+- `src/services/chatPresetService.js` (thêm 44 dòng preset)
+- `src/services/ttsService.js` (thêm voice config + TTS style)
+- `public/assets/audio/presets/vo-nguyen-giap/**` (9 file WAV mới)
+- `src/data/entities/vo-nguyen-giap.json` (NEW)
+- `src/data/manifest.json`, `src/data/learning-paths.js`, `src/__tests__/core.test.js`, `vite.config.js`
+
+---
+
 ## [2026-04-30] Session 5g — Chat Interface UI/UX Polish
 ### Đã sửa & Tối ưu
 - **Chat.jsx**: Refactor toàn diện giao diện Chat. Tách `MessageBubble` thành component riêng biệt với `React.memo` để tối ưu performance.

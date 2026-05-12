@@ -1,15 +1,14 @@
 # Ngữ cảnh Session Hiện Tại
 
 ## Đang làm tính năng
-Session 5 — Refactor CSS + Lazy Loading + Doc update
+Session 8 — Bổ sung Võ Nguyên Giáp hoàn chỉnh
 
 ## Đã làm đến bước
-- Refactor `index.css`: xóa comment thừa, consolidated transitions, focus-visible, grid layouts
-- Refactor `App.jsx`: React.lazy + Suspense cho code-splitting tự động
-- Tách nền 7 ảnh nhân vật → transparent (rembg AI)
-- Redesign Entity page: hero + scroll paper + wax seal
-- Câu hỏi gợi ý Chat linh hoạt theo entity + perspective
-- Cập nhật _docs đầy đủ
+- Thêm 9 preset Q&A cho `vo-nguyen-giap` (self, contemporary, historian × 3 câu)
+- Generate 9 file TTS audio via `gemini-3.1-flash-tts-preview` (108/108 QA pass)
+- Thêm voice config (Charon) + TTS style (Bắc Trung Bộ) cho Giáp
+- Commit & push lên `main`
+- Cập nhật CHANGELOG, TASKS
 
 ## Quyết định kỹ thuật đã chốt
 - maxTokens theo lengthLevel: short=800, medium=2000, long=3500
@@ -22,6 +21,8 @@ Session 5 — Refactor CSS + Lazy Loading + Doc update
 - Lazy loading cho tất cả page components → code-split tự động
 - Texture overlay z-index: 0 (không chặn pointer events), opacity: 0.22
 - Focus-visible outline: `rgba(184, 134, 11, 0.75)` cho accessibility
+- Voice config cho Giáp: Charon (authoritative male, Bắc Trung Bộ accent)
+- Tổng preset audio: 108 files (12 entities × 3 perspectives × 3 câu)
 
 ## File KHÔNG được thay đổi
 - `netlify.toml`

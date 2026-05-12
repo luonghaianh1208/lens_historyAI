@@ -3,6 +3,7 @@
 ## 🔴 Đang làm
 (để trống)
 
+
 ## 🟡 Cần làm tiếp
 - [ ] Tính năng: Share conversation — độ ưu tiên: thấp
 - [ ] Tính năng: Export quiz results — độ ưu tiên: thấp
@@ -11,6 +12,7 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-19: Thêm Võ Nguyên Giáp preset Q&A (9 entries) + TTS audio (9 files) + voice config — 2026-05-12
 - [x] TASK-18: CSS refactor — cleanup, consolidated transitions, focus-visible, grid layouts — 2026-04-30
 - [x] TASK-17: React.lazy + Suspense code-splitting cho tất cả pages — 2026-04-30
 - [x] TASK-16: Câu hỏi gợi ý Chat linh hoạt theo entity + perspective — 2026-04-30

@@ -1,6 +1,6 @@
 # Preset TTS Report
 
-Ngày cập nhật: 2026-05-01
+Ngày cập nhật: 2026-05-12
 
 ## Mục tiêu
 
@@ -145,7 +145,7 @@ npm run build
 
 Đã kiểm tra số file audio:
 
-- Tổng file `.wav`: `99`
+- Tổng file `.wav`: `108`
 
 ## Những lỗi đã gặp trong quá trình làm
 
@@ -194,9 +194,9 @@ Xử lý:
 Nội dung đã làm:
 
 - Script tự động kiểm tra toàn bộ WAV: header, sample rate, channels, duration
-- Kết quả: **99/99 PASS**, 0 warning, 0 failure
-- Duration: Min 17s | Max 34.2s | Avg 24.1s | Median 24s
-- Phân bố: 10-20s: 5 | 20-30s: 92 | 30-45s: 2
+- Kết quả: **108/108 PASS**, 0 warning, 0 failure
+- Duration: Min 17s | Max 34.2s | Avg 24.5s | Median 24.2s
+- Phân bố: 10-20s: 5 | 20-30s: 97 | 30-45s: 6
 - 0 file rỗng, tất cả đều là PCM 24kHz mono hợp lệ
 
 > Lưu ý: Script kiểm tra kỹ thuật. Việc đánh giá chất lượng giọng đọc vẫn cần nghe thủ công theo từng nhóm nhân vật nếu muốn tinh chỉnh sâu hơn.
@@ -249,6 +249,12 @@ Giới hạn đã biết:
 - Runtime TTS cũ đã được dọn sạch
 - Build pass, 27/27 tests pass
 - Audio QA automated script sẵn sàng
+
+### Bổ sung 2026-05-12
+
+- Thêm `vo-nguyen-giap`: 9 preset Q&A + 9 file audio → tổng 108/108
+- Voice config: Charon, TTS style Bắc Trung Bộ
+- QA: 108/108 PASS, build thành công
 
 ### Còn có thể làm thêm nếu cần
 
