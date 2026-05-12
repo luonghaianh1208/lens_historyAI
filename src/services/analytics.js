@@ -90,14 +90,19 @@ function updateDailyStats(event, data) {
     stats[today] = {
       date: today,
       events: {},
-      uniquePages: new Set(),
+      uniquePages: [],
       totalPoints: 0,
     }
   }
 
+  // Ensure uniquePages is always an array (may be object from old data)
+  if (!Array.isArray(stats[today].uniquePages)) {
+    stats[today].uniquePages = []
+  }
+
   stats[today].events[event] = (stats[today].events[event] || 0) + 1
-  if (data.path) {
-    stats[today].uniquePages.add(data.path)
+  if (data.path && !stats[today].uniquePages.includes(data.path)) {
+    stats[today].uniquePages.push(data.path)
   }
   if (data.points) {
     stats[today].totalPoints += data.points

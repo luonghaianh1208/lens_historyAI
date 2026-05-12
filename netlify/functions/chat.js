@@ -14,7 +14,11 @@ const rawEntities = {
   'ho-chi-minh': require('../../src/data/entities/ho-chi-minh.json'),
   'tran-dong-da': require('../../src/data/events/tran-dong-da.json'),
   'dien-bien-phu': require('../../src/data/events/dien-bien-phu.json'),
+  'vo-nguyen-giap': require('../../src/data/entities/vo-nguyen-giap.json'),
 }
+
+// Load manifest for fallback entities (those without full JSON files)
+const manifest = require('../../src/data/manifest.json')
 
 const CHAT_MAX_TOKENS = 20000
 const QUIZ_MAX_TOKENS = 2000
@@ -55,8 +59,50 @@ const entities = Object.fromEntries(
   Object.entries(rawEntities).map(([id, entity]) => [id, normalizeEntity(entity)]),
 )
 
+// Build fallback entities from manifest (for entities without full JSON files)
+function buildFallbackEntity(meta) {
+  const isEvent = meta.type === 'event'
+  const name = meta.name
+  const period = meta.period || ''
+  const desc = meta.short_desc || ''
+
+  return {
+    id: meta.id,
+    name,
+    type: meta.type,
+    period,
+    short_desc: desc,
+    tags: meta.tags || [],
+    chunks: desc ? [{ id: 'desc-0', content: desc, source: 'Manifest', reliability: 70, tags: [] }] : [],
+    perspectives: {
+      self: {
+        name: isEvent ? `Người kể sự kiện ${name}` : name,
+        system_prompt: isEvent
+          ? `Bạn là nhân chứng sống của ${name} (${period}). ${desc}. Hãy kể lại như người trong cuộc.`
+          : `Bạn là ${name} (${period}). ${desc}. Hãy trả lời như chính bạn — nhân vật lịch sử Việt Nam.`,
+      },
+      historian: {
+        name: 'Sử gia',
+        system_prompt: `Bạn là sử gia chuyên nghiên cứu về ${name} (${period}). ${desc}. Phân tích khách quan, trích dẫn nguồn khi có thể.`,
+      },
+      contemporary: {
+        name: isEvent ? 'Người cùng thời' : `Người cùng thời với ${name}`,
+        system_prompt: isEvent
+          ? `Bạn là người dân sống trong giai đoạn ${name} (${period}). ${desc}. Kể lại từ góc nhìn người cùng thời.`
+          : `Bạn là người sống cùng thời với ${name} (${period}). ${desc}. Kể lại từ góc nhìn đương thời.`,
+      },
+    },
+  }
+}
+
 function getEntity(id) {
-  return entities[id] || null
+  // Try full entities first, then fallback to manifest
+  if (entities[id]) return entities[id]
+
+  const meta = manifest.entities?.find(e => e.id === id)
+  if (meta) return buildFallbackEntity(meta)
+
+  return null
 }
 
 function clampTokens(value, fallback, max) {
