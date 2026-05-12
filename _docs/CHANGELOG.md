@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026-05-12] Session 10 — Fix Audio Truncation
+### Đã sửa
+- Khắc phục lỗi âm thanh bị mất chữ cái đầu (truncation) khi dùng TTS của Gemini bằng cách thêm một đoạn silence (khoảng lặng) 420ms vào đầu các file WAV.
+- Tạo script `scripts/add-padding.mjs` để xử lý hàng loạt các file âm thanh hiện có.
+- Cập nhật `scripts/generate-preset-audio.mjs` để tự động thêm 500ms padding khi tạo file mới.
+### File bị ảnh hưởng
+- `scripts/add-padding.mjs` (NEW)
+- `scripts/generate-preset-audio.mjs`
+- `public/assets/audio/presets/**/*.wav`
+
 ## [2026-05-12] Session 9 — Critical Bugfixes (Analytics + Chat 502)
 ### Đã sửa
 - **LearningPaths.jsx**: Thêm `import { useMemo } from 'react'` — thiếu import khiến trang crash khi truy cập `/learning-paths`
