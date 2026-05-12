@@ -1,14 +1,18 @@
 # Changelog
 
-## [2026-05-12] Session 9 — Admin & Learning Pages Bugfix
+## [2026-05-12] Session 9 — Critical Bugfixes (Analytics + Chat 502)
 ### Đã sửa
 - **LearningPaths.jsx**: Thêm `import { useMemo } from 'react'` — thiếu import khiến trang crash khi truy cập `/learning-paths`
 - **retrieval.js**: Đăng ký `vo-nguyen-giap` vào `rawEntities` — trước đó entity chỉ có metadata từ manifest, không có chunks/perspectives → Chat & Quiz cho Giáp không hoạt động
+- **analytics.js**: 🔴 Fix `uniquePages.add is not a function` — `new Set()` không survive `JSON.stringify`/`JSON.parse`. Đổi sang plain array + thêm migration guard cho data cũ
+- **netlify/functions/chat.js**: 🔴 Fix API Error 502 cho entity chưa có file JSON (hung-vuong-i, etc.) — thêm manifest fallback tự động generate perspectives từ metadata. Thêm `vo-nguyen-giap` import
 ### QA
 - Build: ✅ `npm run build` thành công (220 modules)
 ### File bị ảnh hưởng
 - `src/pages/LearningPaths.jsx` (fix missing import)
 - `src/services/retrieval.js` (thêm import + register vo-nguyen-giap)
+- `src/services/analytics.js` (fix Set→Array serialization)
+- `netlify/functions/chat.js` (manifest fallback + vo-nguyen-giap import)
 
 ---
 
