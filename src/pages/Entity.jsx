@@ -6,6 +6,73 @@ import AnimatedBackground from '../components/AnimatedBackground'
 import ScrollToTop from '../components/ScrollToTop'
 import { SkeletonHero } from '../components/SkeletonLoader'
 import Flashcard from '../components/Flashcard'
+import { trackEntityView } from '../services/analytics'
+
+function useSEOMeta(entity) {
+  useEffect(() => {
+    if (!entity) return
+
+    // Set page title
+    const title = `${entity.name} - Lịch sử Việt Nam | HistoryLens AI`
+    document.title = title
+
+    // Update or create meta description
+    let metaDesc = document.querySelector('meta[name="description"]')
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta')
+      metaDesc.name = 'description'
+      document.head.appendChild(metaDesc)
+    }
+    metaDesc.content = entity.short_desc || `Tìm hiểu về ${entity.name} trong lịch sử Việt Nam. Xem timeline, trò chuyện với AI, và ôn tập qua quiz.`
+
+    // Open Graph tags
+    const setOGTag = (property, content) => {
+      let tag = document.querySelector(`meta[property="${property}"]`)
+      if (!tag) {
+        tag = document.createElement('meta')
+        tag.setAttribute('property', property)
+        document.head.appendChild(tag)
+      }
+      tag.content = content
+    }
+
+    setOGTag('og:title', `${entity.name} - HistoryLens AI`)
+    setOGTag('og:description', entity.short_desc || `Tìm hiểu lịch sử Việt Nam qua ${entity.name}`)
+    setOGTag('og:type', 'article')
+    setOGTag('og:url', `https://historylens.example.com/entity/${entity.id}`)
+    setOGTag('og:image', `https://historylens.example.com${getBackgroundUrl(entity.id)}`)
+    setOGTag('og:site_name', 'HistoryLens AI')
+
+    // Twitter Card tags
+    const setTwitterTag = (name, content) => {
+      let tag = document.querySelector(`meta[name="${name}"]`)
+      if (!tag) {
+        tag = document.createElement('meta')
+        tag.name = name
+        document.head.appendChild(tag)
+      }
+      tag.content = content
+    }
+
+    setTwitterTag('twitter:card', 'summary_large_image')
+    setTwitterTag('twitter:title', `${entity.name} - HistoryLens AI`)
+    setTwitterTag('twitter:description', entity.short_desc || '')
+
+    // Canonical URL
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    canonical.href = `https://historylens.example.com/entity/${entity.id}`
+
+    // Cleanup on unmount
+    return () => {
+      // Note: we don't remove these as other pages may set them
+    }
+  }, [entity])
+}
 
 function buildLearningHighlights(entity) {
   const timeline = entity.timeline || []
@@ -65,6 +132,20 @@ export default function Entity({ onOpenSearch }) {
   const allEntities = useMemo(() => getAllEntities(), [])
   const relatedEntities = useMemo(() => entity ? getRelatedEntities(entity, allEntities) : [], [entity, allEntities])
   const highlights = useMemo(() => (entity ? buildLearningHighlights(entity) : []), [entity])
+
+  useSEOMeta(entity)
+
+  useEffect(() => {
+    if (entity) {
+      trackEntityView(entity.id, entity.name)
+    }
+  }, [entity])
+
+  useEffect(() => {
+    setLoading(true)
+    const timer = setTimeout(() => setLoading(false), 400)
+    return () => clearTimeout(timer)
+  }, [id])
 
   useEffect(() => {
     setLoading(true)

@@ -11,6 +11,7 @@ const Chat = lazy(() => import('./pages/Chat'))
 const Quiz = lazy(() => import('./pages/Quiz'))
 const LearningPaths = lazy(() => import('./pages/LearningPaths'))
 const LearningPathDetail = lazy(() => import('./pages/LearningPathDetail'))
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
 
 function AppShellFallback() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path="/quiz/:entityId" element={<Quiz />} />
             <Route path="/learning-paths" element={<LearningPaths />} />
             <Route path="/learning-path/:pathId" element={<LearningPathDetail />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Suspense>
         <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

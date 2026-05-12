@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getEntity } from '../services/retrieval'
 import { getCharacterUrl, getBgStyle } from '../services/assetService'
+import { trackQuizComplete } from '../services/analytics'
 
 function buildFallbackQuestions(entity) {
   const timeline = entity.timeline || []
@@ -123,6 +124,22 @@ export default function Quiz() {
   const [timeLeft, setTimeLeft] = useState(30)
   const [streak, setStreak] = useState(0)
   const [bestStreak, setBestStreak] = useState(0)
+  const [quizCompleted, setQuizCompleted] = useState(false)
+  const [quizStarted, setQuizStarted] = useState(false)
+
+  useEffect(() => {
+    if (questions.length > 0 && !quizStarted) {
+      setQuizStarted(true)
+      track('quiz_start', { entityId, questionCount: questions.length })
+    }
+  }, [questions, quizStarted, entityId])
+
+  useEffect(() => {
+    if (showResult && !quizCompleted && questions.length > 0) {
+      setQuizCompleted(true)
+      trackQuizComplete(entityId, score, questions.length)
+    }
+  }, [showResult, quizCompleted, questions.length, score, entityId])
   const [timerActive, setTimerActive] = useState(false)
 
   const completionRate = useMemo(() => (

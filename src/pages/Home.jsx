@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getIndex, searchEntities, getPeriods } from '../services/retrieval'
 import { getCharacterUrl } from '../services/assetService'
 import AnimatedBackground from '../components/AnimatedBackground'
+import { track } from '../services/analytics'
 
 const FEATURED = [
   { id: 'nguyen-trai', label: 'Nguyễn Trãi', era: 'Hậu Lê sơ' },
@@ -31,6 +32,10 @@ export default function Home({ onOpenSearch }) {
   const [hoveredChar, setHoveredChar] = useState(FEATURED[0].id)
   const [expandedPeriods, setExpandedPeriods] = useState([])
   const navigate = useNavigate()
+
+  useEffect(() => {
+    track('page_view', { path: '/' })
+  }, [])
 
   const entities = useMemo(() => getIndex(), [])
   const periods = useMemo(() => getPeriods(), [])
