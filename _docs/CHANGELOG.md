@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026-05-12] Session 9 — Admin & Learning Pages Bugfix
+### Đã sửa
+- **LearningPaths.jsx**: Thêm `import { useMemo } from 'react'` — thiếu import khiến trang crash khi truy cập `/learning-paths`
+- **retrieval.js**: Đăng ký `vo-nguyen-giap` vào `rawEntities` — trước đó entity chỉ có metadata từ manifest, không có chunks/perspectives → Chat & Quiz cho Giáp không hoạt động
+### QA
+- Build: ✅ `npm run build` thành công (220 modules)
+### File bị ảnh hưởng
+- `src/pages/LearningPaths.jsx` (fix missing import)
+- `src/services/retrieval.js` (thêm import + register vo-nguyen-giap)
+
+---
+
 ## [2026-05-12] Session 8 — Võ Nguyên Giáp Audio & Preset Completion
 ### Đã thêm
 - **Preset Q&A**: 9 preset responses cho `vo-nguyen-giap` (3 perspectives × 3 câu: self, contemporary, historian)
