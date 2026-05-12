@@ -5,6 +5,7 @@ import { getBackgroundUrl, getCharacterUrl } from '../services/assetService'
 import AnimatedBackground from '../components/AnimatedBackground'
 import ScrollToTop from '../components/ScrollToTop'
 import { SkeletonHero } from '../components/SkeletonLoader'
+import Flashcard from '../components/Flashcard'
 
 function buildLearningHighlights(entity) {
   const timeline = entity.timeline || []
@@ -60,6 +61,7 @@ export default function Entity({ onOpenSearch }) {
   const entity = getEntity(id)
   const [activeTab, setActiveTab] = useState('overview')
   const [loading, setLoading] = useState(true)
+  const [showFlashcard, setShowFlashcard] = useState(false)
   const allEntities = useMemo(() => getAllEntities(), [])
   const relatedEntities = useMemo(() => entity ? getRelatedEntities(entity, allEntities) : [], [entity, allEntities])
   const highlights = useMemo(() => (entity ? buildLearningHighlights(entity) : []), [entity])
@@ -207,6 +209,9 @@ export default function Entity({ onOpenSearch }) {
                     <button type="button" onClick={() => navigate('/quiz/' + id)} className="btn-seal-ghost">
                       Ôn tập bằng quiz
                     </button>
+                    <button type="button" onClick={() => setShowFlashcard(true)} className="btn-seal-ghost">
+                      📚 Flashcards
+                    </button>
                   </div>
 
                   <div className="divider-ancient mb-8"><span>◈</span></div>
@@ -345,6 +350,7 @@ export default function Entity({ onOpenSearch }) {
             </section>
           </>
         )}
+        {showFlashcard && <Flashcard entityId={id} onClose={() => setShowFlashcard(false)} />}
       </div>
       <ScrollToTop />
     </div>

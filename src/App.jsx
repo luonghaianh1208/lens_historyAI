@@ -9,6 +9,8 @@ const Home = lazy(() => import('./pages/Home'))
 const Entity = lazy(() => import('./pages/Entity'))
 const Chat = lazy(() => import('./pages/Chat'))
 const Quiz = lazy(() => import('./pages/Quiz'))
+const LearningPaths = lazy(() => import('./pages/LearningPaths'))
+const LearningPathDetail = lazy(() => import('./pages/LearningPathDetail'))
 
 function AppShellFallback() {
   return (
@@ -44,6 +46,8 @@ function App() {
             <Route path="/entity/:id" element={<Entity onOpenSearch={() => setSearchOpen(true)} />} />
             <Route path="/chat/:entityId" element={<Chat />} />
             <Route path="/quiz/:entityId" element={<Quiz />} />
+            <Route path="/learning-paths" element={<LearningPaths />} />
+            <Route path="/learning-path/:pathId" element={<LearningPathDetail />} />
           </Routes>
         </Suspense>
         <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

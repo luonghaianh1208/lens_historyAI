@@ -102,6 +102,8 @@ export default function Home({ onOpenSearch }) {
             <nav className="hidden md:flex items-center gap-6 text-sm" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink-soft)' }}>
               <Link to="/" className="transition hover:text-amber-700">Trang chủ</Link>
               <span style={{ color: 'var(--clr-gold)' }}>·</span>
+              <Link to="/learning-paths" className="transition hover:text-amber-700">Lộ trình học</Link>
+              <span style={{ color: 'var(--clr-gold)' }}>·</span>
               <span className="text-xs" style={{ color: 'var(--clr-gold)' }}>Nhập vai · Hỏi đáp · Quiz</span>
             </nav>
           </div>
