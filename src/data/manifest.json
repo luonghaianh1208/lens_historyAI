@@ -1,0 +1,710 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-12",
+  "entities": [
+    {
+      "id": "hung-vuong-i",
+      "name": "Hùng Vương I",
+      "type": "person",
+      "period": "Thời kỳ Văn Lang",
+      "tags": ["Văn Lang", "Hùng Vương", "Thời kỳ thần thoại"],
+      "short_desc": "Vị vua sáng lập của Văn Lang, lập quốc gia đầu tiên trong lịch sử Việt Nam.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "son-tinh-thuy-tinh",
+      "name": "Sơn Tinh - Thuỷ Tinh",
+      "type": "event",
+      "period": "Thời kỳ Văn Lang",
+      "tags": ["Thần thoại", "Văn Lang", "Hùng Vương"],
+      "short_desc": "Hai vị thần đại diện cho núi và nước trong truyền thuyết về cuộc đua thần tiên.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "an-duong-vuong",
+      "name": "An Dương Vương",
+      "type": "person",
+      "period": "Thời kỳ Âu Lạc",
+      "tags": ["Âu Lạc", "Thủy tục", "Văn Lang"],
+      "short_desc": "Vị vua sáng lập nước Âu Lạc, xây dựng thành Cổ Loa và chống lại nhà Tần.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "ba-triệu",
+      "name": "Bà Triệu",
+      "type": "person",
+      "period": "Bắc Thuộc",
+      "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
+      "short_desc": "Nữ anh hùng kháng chiến chống lại nhà Đường, được tôn thờ là vị thần bảo hộ.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "hai-ba-trung",
+      "name": "Hai Bà Trưng",
+      "type": "person",
+      "period": "Bắc Thuộc",
+      "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
+      "short_desc": "Hai chị em Trưng Trắc và Trưng Nhị lãnh đạo cuộc khởi nghĩa chống nhà Hán.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "ba-lieu",
+      "name": "Bà Liễu",
+      "type": "person",
+      "period": "Bắc Thuộc",
+      "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
+      "short_desc": "Anh hùng dân tộc thời Bắc Thuộc, lãnh đạo cuộc khởi nghĩa ở Giao Chỉ.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "phung-hung",
+      "name": "Phùng Hưng",
+      "type": "person",
+      "period": "Bắc Thuộc",
+      "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
+      "short_desc": "Anh hùng dân tộc lãnh đạo cuộc khởi nghĩa chống lại nhà Đường.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "dinh-bo-linh",
+      "name": "Đinh Bộ Lĩnh",
+      "type": "person",
+      "period": "Nhà Đinh",
+      "tags": ["Đinh", "Thống nhất đất nước", "Đinh Tiên Hoàng"],
+      "short_desc": "Vị vua sáng lập nhà Đinh, thống nhất đất nước sau thời 12 sứ quân.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "le-hoan",
+      "name": "Lê Hoàn",
+      "type": "person",
+      "period": "Tiền Lê",
+      "tags": ["Tiền Lê", "Đinh", "Lê Đại Hành"],
+      "short_desc": "Vị vua nhà Tiền Lê, tiếp quản nhà Đinh và đánh bại quân Tống xâm lược.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "le-dai-hanh",
+      "name": "Lê Đại Hành",
+      "type": "person",
+      "period": "Tiền Lê",
+      "tags": ["Tiền Lê", "Lê Hoàn", "Quyền đế vị"],
+      "short_desc": "Vị vua nhà Tiền Lê, trị vì dân lành, mở mang bờ cõi.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "ly-cong-uẩn",
+      "name": "Lý Công Uẩn",
+      "type": "person",
+      "period": "Nhà Lý",
+      "tags": ["Lý", "Thái Tổ", "Thăng Long"],
+      "short_desc": "Vị vua sáng lập nhà Lý, dời đô từ Hoa Lư về Thăng Long năm 1010.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "ly-nhan-tong",
+      "name": "Lý Nhân Tông",
+      "type": "person",
+      "period": "Nhà Lý",
+      "tags": ["Lý", "Lý Nhân Tông", "Phật giáo"],
+      "short_desc": "Vị vua nhà Lý trị vì lâu dài, phát triển Phật giáo và xây dựng chùa One Pillar.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "to-hien-thanh",
+      "name": "Tô Hiến Thành",
+      "type": "person",
+      "period": "Nhà Lý",
+      "tags": ["Lý", "Tô Hiến Thành", "Thái sư"],
+      "short_desc": "Thái sư tài ba dạy hoàng tử, góp phần vào thời hưng thịnh nhà Lý.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "tran-quoc-tuan",
+      "name": "Trần Quốc Tuấn",
+      "type": "person",
+      "period": "Nhà Trần",
+      "tags": ["Trần", "Hưng Đạo Đại Vương", "Quyết định thắng lợi"],
+      "short_desc": "Đại tướng dẫn quân đánh tan quân Mông Nguyên ba lần xâm lược.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "tran-nhan-tong",
+      "name": "Trần Nhân Tông",
+      "type": "person",
+      "period": "Nhà Trần",
+      "tags": ["Trần", "Nhân Tông", "Trúc Lâm Yên Tử"],
+      "short_desc": "Vị vua nhà Trần, sau từ bỏ ngai vàng để tu hành, sáng lập thiền phái Trúc Lâm.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "le-phu-tran",
+      "name": "Lê Phụ Trần",
+      "type": "person",
+      "period": "Nhà Trần",
+      "tags": ["Trần", "Lê Phụ Trần", "An hùng"],
+      "short_desc": "Anh hùng dân tộc, có công trong các trận đánh giữ nước thời Trần.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "tran-thu-do",
+      "name": "Trần Thủ Độ",
+      "type": "person",
+      "period": "Nhà Trần",
+      "tags": ["Trần", "Thủ tướng", "Thời kỳ sáng lập"],
+      "short_desc": "Thái sư nhà Trần, người có công lớn trong việc lập nghiệp nhà Trần.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "ho-quy-ly",
+      "name": "Hồ Quý Ly",
+      "type": "person",
+      "period": "Nhà Hồ",
+      "tags": ["Hồ", "Thiên Sách", "Chính sách cải cách"],
+      "short_desc": "Vị vua sáng lập nhà Hồ, thực hiện nhiều cải cách tiến bộ nhưng bị nhà Minh diệt.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "le-thanh-tong",
+      "name": "Lê Thánh Tông",
+      "type": "person",
+      "period": "Lê sơ",
+      "tags": ["Lê", "Thánh Tông", "Hồng Đức"],
+      "short_desc": "Vị vua tài ba của nhà Lê, trị vì thời kỳ hưng thịnh nhất với Bình Ngô đại cáo.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "nguyen-thi-anh",
+      "name": "Nguyễn Thị Anh",
+      "type": "person",
+      "period": "Lê sơ",
+      "tags": ["Lê", "Hoàng hậu", "Trị nước"],
+      "short_desc": "Hoàng hậu nhà Lê, nhiếp chính cho con nhỏ, có công giữ nước trong thời loạn.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "mac-dang-dung",
+      "name": "Mạc Đăng Dung",
+      "type": "person",
+      "period": "Lê trung hưng",
+      "tags": ["Mạc", "Lê - Mạc", "Thời loạn"],
+      "short_desc": "Người sáng lập nhà Mạc, cướp ngôi nhà Lê và gây ra chia rẽ đất nước.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "trinh-kiem",
+      "name": "Trịnh Kiểm",
+      "type": "person",
+      "period": "Lê trung hưng",
+      "tags": ["Trịnh", "Lê - Trịnh", "Bắc triều"],
+      "short_desc": "Thái sư nhà Lê trung hưng, lãnh đạo Bắc triều trong thời kỳ phân tranh.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "nguyen-hoang",
+      "name": "Nguyễn Hoàng",
+      "type": "person",
+      "period": "Lê trung hưng",
+      "tags": ["Nguyễn", "Nam triều", "Đàng Trong"],
+      "short_desc": "Chúa tiên triều Nguyễn, mở rộng lãnh thổ Đàng Trong và xây dựng cơ sở cho triều Nguyễn sau này.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "quang-trung",
+      "name": "Quang Trung",
+      "type": "person",
+      "period": "Tây Sơn",
+      "tags": ["Tây Sơn", "Quang Trung", "Huệ", "Thắng lợi"],
+      "short_desc": "Vị vua Tây Sơn, lãnh đạo cuộc khởi nghĩa và đánh tan 20 vạn quân Thanh xâm lược.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "nguyen-nhac",
+      "name": "Nguyễn Nhạc",
+      "type": "person",
+      "period": "Tây Sơn",
+      "tags": ["Tây Sơn", "Nguyễn Nhạc", "Thái Đức"],
+      "short_desc": "Vị vua đầu tiên của nhà Tây Sơn, khởi nghĩa ở Tây Sơn.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "gia-long",
+      "name": "Gia Long",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Nguyễn", "Gia Long", "Thống nhất đất nước"],
+      "short_desc": "Vị vua sáng lập nhà Nguyễn, thống nhất đất nước sau thời kỳ chia rẽ.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "tu-duc",
+      "name": "Tự Đức",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Nguyễn", "Tự Đức", "Kháng Pháp"],
+      "short_desc": "Vị vua nhà Nguyễn, trị vì trong thời kỳ Pháp xâm lược, được biết đến với sự kháng cự quyết liệt.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "truong-dinh",
+      "name": "Trương Định",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Nguyễn", "Trương Định", "Kháng Pháp"],
+      "short_desc": "Anh hùng dân tộc, lãnh đạo cuộc kháng chiến chống Pháp ở miền Nam.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "phan-dinh-phung",
+      "name": "Phan Đình Phùng",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Nguyễn", "Phan Đình Phùng", "Kháng Pháp"],
+      "short_desc": "Anh hùng dân tộc, lãnh đạo cuộc kháng chiến chống Pháp ở miền Bắc.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "phan-boi-chau",
+      "name": "Phan Bội Châu",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Phan Bội Châu", "Duy Tân", "Đông Du"],
+      "short_desc": "Nhà yêu nước, sáng lập Hội Duy Tân, vận động cứu nước bằng đường lối duy tân.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "phan-chau-trinh",
+      "name": "Phan Châu Trinh",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Phan Châu Trinh", "Duy Tân", "Giáo dục"],
+      "short_desc": "Nhà yêu nước, theo đường lối duy tân, đi du học và phổ biến kiến thức Tây học.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
+      "id": "minh-mang",
+      "name": "Minh Mạng",
+      "type": "person",
+      "period": "Nhà Nguyễn",
+      "tags": ["Nguyễn", "Minh Mạng", "Cai trị"],
+      "short_desc": "Vị vua nhà Nguyễn, trị vì lâu dài với nhiều chính sách cai trị hiệu quả.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    }
+  ]
+}

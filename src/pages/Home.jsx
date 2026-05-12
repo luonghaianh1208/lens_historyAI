@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { getIndex, searchEntities } from '../services/retrieval'
+import { getIndex, searchEntities, getPeriods } from '../services/retrieval'
 import { getCharacterUrl } from '../services/assetService'
 import AnimatedBackground from '../components/AnimatedBackground'
 
@@ -29,10 +29,20 @@ export default function Home({ onOpenSearch }) {
   const [query, setQuery] = useState('')
   const [showResults, setShowResults] = useState(false)
   const [hoveredChar, setHoveredChar] = useState(FEATURED[0].id)
+  const [expandedPeriods, setExpandedPeriods] = useState([])
   const navigate = useNavigate()
 
   const entities = useMemo(() => getIndex(), [])
+  const periods = useMemo(() => getPeriods(), [])
   const results = useMemo(() => (query.trim() ? searchEntities(query) : []), [query])
+
+  const togglePeriod = (periodId) => {
+    setExpandedPeriods(prev =>
+      prev.includes(periodId)
+        ? prev.filter(id => id !== periodId)
+        : [...prev, periodId]
+    )
+  }
 
   const handleSelect = (id) => {
     setQuery('')
@@ -48,6 +58,20 @@ export default function Home({ onOpenSearch }) {
   const openResultList = () => {
     if (query.trim()) setShowResults(true)
   }
+
+  // Group entities by period
+  const entitiesByPeriod = useMemo(() => {
+    const groups = new Map()
+    periods.forEach(period => {
+      groups.set(period.id, {
+        period,
+        entities: period.entities
+          .map(id => entities.find(e => e.id === id))
+          .filter(Boolean)
+      })
+    })
+    return groups
+  }, [periods, entities])
 
   return (
     <div className="page-container relative min-h-screen">
@@ -265,13 +289,28 @@ export default function Home({ onOpenSearch }) {
             <div className="flex items-end justify-between gap-6 mb-8">
               <div>
                 <p className="section-kicker mb-2">Thư mục nhân vật và sự kiện</p>
-                <h3 className="display text-2xl" style={{ color: 'var(--clr-ink)' }}>Khám phá theo chủ đề</h3>
+                <h3 className="display text-2xl" style={{ color: 'var(--clr-ink)' }}>Khám phá theo thời đại</h3>
               </div>
               <p className="hidden md:block text-sm max-w-lg text-right" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
                 Mỗi thẻ dẫn tới một hồ sơ có tóm tắt, mốc thời gian, nguồn tham khảo và các góc nhìn sẵn sàng để hỏi đáp.
               </p>
             </div>
-            <EntityGrid entities={entities} navigate={navigate} />
+
+            <div className="space-y-6">
+              {Array.from(entitiesByPeriod.values())
+                .filter(group => group.entities.length > 0)
+                .map(({ period, entities: periodEntities }) => (
+                  <TimelinePeriod
+                    key={period.id}
+                    period={period}
+                    entities={periodEntities}
+                    expanded={expandedPeriods.includes(period.id)}
+                    onToggle={() => togglePeriod(period.id)}
+                    navigate={navigate}
+                  />
+                ))
+              }
+            </div>
           </section>
         </main>
 
@@ -281,37 +320,78 @@ export default function Home({ onOpenSearch }) {
   )
 }
 
-function EntityGrid({ entities, navigate }) {
+function TimelinePeriod({ period, entities, expanded, onToggle, navigate }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {entities.map((entity) => (
-        <button
-          key={entity.id}
-          type="button"
-          onClick={() => navigate(`/entity/${entity.id}`)}
-          className="entity-card-button card-ancient p-4 text-left group"
-          style={{ boxShadow: '0 2px 8px rgba(26,15,10,0.08)' }}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <div className="text-xl mb-2">{entity.type === 'person' ? '👤' : '⚔️'}</div>
-              <p className="font-semibold text-sm" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
-                {entity.name}
-              </p>
-              <p className="text-xs mt-1" style={{ color: 'var(--clr-gold)' }}>{entity.period}</p>
-            </div>
-            <span className="text-xs opacity-70" style={{ color: 'var(--clr-gold)' }}>Mở</span>
-          </div>
+    <div className="card-ancient overflow-hidden" style={{ borderLeft: `3px solid ${period.colorTheme.primary}` }}>
+      <button
+        type="button"
+        onClick={onToggle}
+        className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-opacity-80 transition-colors"
+        style={{ background: `linear-gradient(90deg, ${period.colorTheme.primary}15 0%, transparent 100%)` }}
+      >
+        <div>
+          <h4 className="display text-lg font-bold mb-1" style={{ color: period.colorTheme.primary }}>
+            {period.name}
+          </h4>
+          <p className="text-xs" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
+            {formatYearRange(period.startYear, period.endYear)}
+            {period.description && ` · ${period.description}`}
+          </p>
+        </div>
+        <span className="text-sm" style={{ color: period.colorTheme.primary }}>
+          {expanded ? '▼' : '▶'} {entities.length} nhân vật/sự kiện
+        </span>
+      </button>
 
-          <div className="mt-3 flex flex-wrap gap-1">
-            {entity.tags?.slice(0, 2).map((tag) => (
-              <span key={tag} className="text-xs px-2 py-0.5" style={{ background: 'rgba(184,134,11,0.1)', color: 'var(--clr-ink-soft)', borderRadius: '2px' }}>
-                {tag}
-              </span>
+      {expanded && (
+        <div className="p-4 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {entities.map((entity) => (
+              <button
+                key={entity.id}
+                type="button"
+                onClick={() => navigate(`/entity/${entity.id}`)}
+                className="entity-card-button p-3 text-left text-sm group"
+                style={{ background: 'rgba(245,239,224,0.7)' }}
+              >
+                <div className="flex items-start gap-2">
+                  <span className="text-lg">{entity.type === 'person' ? '👤' : '⚔️'}</span>
+                  <div className="min-w-0">
+                    <p className="font-semibold truncate" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink)' }}>
+                      {entity.name}
+                    </p>
+                    <p className="text-xs truncate" style={{ color: 'var(--clr-gold)' }}>{entity.period}</p>
+                    {entity.short_desc && (
+                      <p className="text-xs mt-1 line-clamp-2" style={{ color: 'var(--clr-ink-soft)' }}>
+                        {entity.short_desc}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                {entity.tags?.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {entity.tags.slice(0, 2).map((tag) => (
+                      <span key={tag} className="text-[10px] px-1.5 py-0.5" style={{ background: 'rgba(184,134,11,0.15)', color: 'var(--clr-ink-soft)', borderRadius: '2px' }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </button>
             ))}
           </div>
-        </button>
-      ))}
+        </div>
+      )}
     </div>
   )
+}
+
+function formatYearRange(startYear, endYear) {
+  const formatBC = (year) => {
+    if (year < 0) {
+      return `${Math.abs(year)} TCN`
+    }
+    return `${year}`
+  }
+  return `${formatBC(startYear)} - ${formatBC(endYear)}`
 }

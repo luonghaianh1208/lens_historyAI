@@ -9,7 +9,10 @@ import nguyenHue from '../data/entities/nguyen-hue.json'
 import hoChiMinh from '../data/entities/ho-chi-minh.json'
 import tranDongDa from '../data/events/tran-dong-da.json'
 import dienBienPhu from '../data/events/dien-bien-phu.json'
+import manifest from '../data/manifest.json'
+import { PERIODS, getPeriodForEntity as getPeriodFromTimeline } from '../data/timeline'
 
+// Pre-loaded entities (existing full entities)
 const rawEntities = {
   'nguyen-trai': nguyenTrai,
   'le-loi': leLoi,
@@ -22,6 +25,33 @@ const rawEntities = {
   'ho-chi-minh': hoChiMinh,
   'tran-dong-da': tranDongDa,
   'dien-bien-phu': dienBienPhu,
+}
+
+// Build entity map from manifest + merge with existing full entities
+const entityManifestMap = new Map()
+manifest.entities.forEach(meta => {
+  entityManifestMap.set(meta.id, meta)
+})
+
+// Cache for fully loaded entities
+const fullEntityCache = new Map()
+
+// Helper: Get entity file path based on ID
+function getEntityFilePath(id) {
+  // Check if it's a person or event based on manifest
+  const meta = entityManifestMap.get(id)
+  if (!meta) return null
+
+  // Try common patterns
+  const baseName = id.replace(/-/g, '_')
+  const paths = [
+    `../data/entities/${baseName}.json`,
+    `../data/events/${baseName}.json`,
+  ]
+
+  // We can't use import.meta.glob in ESM, so we'll try to require dynamically
+  // For now, we'll rely on pre-imported entities and manifest-only entities
+  return null // Dynamic import not easily done in this setup
 }
 
 const mojibakePattern = /[����][\u0080-\u00ff]?/
@@ -94,9 +124,63 @@ function normalizeEntity(entity) {
   }
 }
 
-const entities = Object.fromEntries(
-  Object.entries(rawEntities).map(([id, entity]) => [id, normalizeEntity(entity)]),
-)
+// Merge manifest metadata with full entity data
+function mergeEntityWithManifest(entity, meta) {
+  return {
+    ...entity,
+    // Override/merge with manifest metadata
+    status: meta.status || entity.status || 'pending',
+    verification: meta.verification || entity.verification,
+    metadata: {
+      ...entity.metadata,
+      ...meta.metadata,
+      createdAt: meta.metadata?.createdAt || entity.metadata?.createdAt || new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
+    },
+    // Ensure required fields from manifest
+    tags: [...new Set([...(entity.tags || []), ...(meta.tags || [])])],
+    short_desc: entity.short_desc || meta.short_desc || '',
+  }
+}
+
+// Build entities map: merge pre-loaded entities with manifest entries
+const entities = new Map()
+
+// First, add all pre-loaded (full) entities with manifest metadata
+Object.entries(rawEntities).forEach(([id, rawEntity]) => {
+  const meta = entityManifestMap.get(id)
+  const normalized = normalizeEntity(rawEntity)
+  if (meta) {
+    entities.set(id, mergeEntityWithManifest(normalized, meta))
+  } else {
+    entities.set(id, normalized)
+  }
+  fullEntityCache.set(id, entities.get(id))
+})
+
+// Then, add manifest-only entities (minimal data until file is created)
+manifest.entities.forEach(meta => {
+  if (!entities.has(meta.id)) {
+    entities.set(meta.id, {
+      id: meta.id,
+      name: meta.name,
+      type: meta.type,
+      period: meta.period,
+      tags: meta.tags || [],
+      short_desc: meta.short_desc || '',
+      status: meta.status || 'pending',
+      verification: meta.verification || null,
+      metadata: meta.metadata || {},
+      chunks: [],
+      perspectives: {},
+      timeline: [],
+      aliases: [],
+      roles: [],
+      related_people: [],
+      related_events: [],
+    })
+  }
+})
 
 function normalizeText(value = '') {
   return value
@@ -106,19 +190,20 @@ function normalizeText(value = '') {
     .trim()
 }
 
+// Export functions
 export function getEntity(id) {
-  return entities[id] || null
+  return entities.get(id) || null
 }
 
 export function getAllEntities() {
-  return Object.values(entities)
+  return Array.from(entities.values())
 }
 
 export function searchEntities(query) {
   const q = normalizeText(query)
   if (!q) return []
 
-  return Object.values(entities).filter((entity) => {
+  return getAllEntities().filter((entity) => {
     const nameMatch = normalizeText(entity.name).includes(q)
     const aliasMatch = entity.aliases?.some((alias) => normalizeText(alias).includes(q))
     const tagMatch = entity.tags?.some((tag) => normalizeText(tag).includes(q))
@@ -135,4 +220,44 @@ export function getIndex() {
     period: entity.period,
     tags: entity.tags,
   }))
+}
+
+// Timeline-related exports
+export function getPeriods() {
+  return PERIODS
+}
+
+export function getEntitiesByPeriod(periodId) {
+  return PERIODS.find(p => p.id === periodId)?.entities || []
+}
+
+export function getPeriodForEntity(entityId) {
+  return getPeriodFromTimeline(entityId)
+}
+
+export function getEntityStatus(id) {
+  const entity = getEntity(id)
+  return entity?.status || 'pending'
+}
+
+export function isEntityVerified(id) {
+  const entity = getEntity(id)
+  return entity?.verification?.status === 'verified'
+}
+
+export function getVerifiedEntities() {
+  return getAllEntities().filter(e => e.verification?.status === 'verified')
+}
+
+export default {
+  getEntity,
+  getAllEntities,
+  searchEntities,
+  getIndex,
+  getPeriods,
+  getEntitiesByPeriod,
+  getPeriodForEntity,
+  getEntityStatus,
+  isEntityVerified,
+  getVerifiedEntities,
 }
