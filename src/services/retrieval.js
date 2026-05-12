@@ -9,6 +9,7 @@ import nguyenHue from '../data/entities/nguyen-hue.json'
 import hoChiMinh from '../data/entities/ho-chi-minh.json'
 import tranDongDa from '../data/events/tran-dong-da.json'
 import dienBienPhu from '../data/events/dien-bien-phu.json'
+import voNguyenGiap from '../data/entities/vo-nguyen-giap.json'
 import manifest from '../data/manifest.json'
 import { PERIODS, getPeriodForEntity as getPeriodFromTimeline } from '../data/timeline'
 
@@ -25,6 +26,7 @@ const rawEntities = {
   'ho-chi-minh': hoChiMinh,
   'tran-dong-da': tranDongDa,
   'dien-bien-phu': dienBienPhu,
+  'vo-nguyen-giap': voNguyenGiap,
 }
 
 // Build entity map from manifest + merge with existing full entities

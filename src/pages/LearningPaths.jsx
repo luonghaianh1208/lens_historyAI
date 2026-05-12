@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllLearningPaths } from '../data/learning-paths'
 import LearningPathCard from '../components/LearningPathCard'
