@@ -42,7 +42,7 @@ function pcmBase64ToWavBuffer(base64Pcm) {
   const bitsPerSample = 16
   const byteRate = sampleRate * numChannels * (bitsPerSample / 8)
   const blockAlign = numChannels * (bitsPerSample / 8)
-  const silencePaddingMs = 80
+  const silencePaddingMs = 500 // Increased delay
   const silenceByteCount = Math.floor((silencePaddingMs / 1000) * sampleRate * numChannels * (bitsPerSample / 8))
   const silenceBuffer = Buffer.alloc(silenceByteCount)
   const totalPcmLength = silenceByteCount + pcmBuffer.length
@@ -162,6 +162,7 @@ async function main() {
     throw new Error('GEMINI_API_KEY is missing. Set it in environment or .env before generating preset audio.')
   }
 
+  const forceRegen = process.argv.includes('--force')
   const presetItems = getPresetItems()
   let generatedCount = 0
   let skippedCount = 0
@@ -174,7 +175,7 @@ async function main() {
 
     await mkdir(outputDir, { recursive: true })
 
-    if (await fileExists(outputPath)) {
+    if (!forceRegen && await fileExists(outputPath)) {
       skippedCount += 1
       console.log(`Skip existing: ${item.id}`)
       continue
