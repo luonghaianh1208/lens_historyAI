@@ -39,6 +39,12 @@ export const VOICE_CONFIGS = {
     voiceName: 'Charon',
     description: 'Giọng điềm đạm, ấm áp, kiên định'
   },
+  'vo-nguyen-giap': {
+    name: 'Võ Nguyên Giáp',
+    gender: 'MALE',
+    voiceName: 'Charon', // Authoritative, deep — matching entity JSON
+    description: 'Giọng trầm tĩnh, chiến lược, bản lĩnh của vị Đại tướng'
+  },
   // EVENTS - default voices
   'khoi-nghia-lam-son': {
     name: 'Khởi nghĩa Lam Sơn',
@@ -107,6 +113,11 @@ const PRESET_TTS_STYLES = {
     self: 'Giọng nam hào sảng, dứt khoát, mang sắc Nam Trung Bộ rất nhẹ theo chất Bình Định, tốc độ nhanh vừa, giàu khí thế trận mạc.',
     contemporary: 'Giọng Bắc Bộ của bậc sĩ phu như Ngô Thì Nhậm, điềm hơn, tinh tế hơn, nhưng vẫn đầy kính phục trước Quang Trung.',
     historian: 'Giọng phân tích miền Bắc chuẩn, mạnh ở các điểm nhấn về cải cách, quân sự và bối cảnh khu vực.',
+  },
+  'vo-nguyen-giap': {
+    self: 'Giọng nam Bắc Trung Bộ nhẹ theo chất Quảng Bình, trầm tĩnh, bản lĩnh, mang khí chất của vị Đại tướng đang hồi tưởng chiến dịch, không đọc quá nhanh.',
+    contemporary: 'Giọng bộ đội miền Bắc thời kháng chiến, mộc mạc, nhiệt thành, kể về Đại tướng với niềm kính trọng và xúc động thật.',
+    historian: 'Giọng sử gia quân sự miền Bắc chuẩn, khách quan, phân tích chiến lược mạch lạc, nhấn đúng các điểm then chốt.',
   },
   'khoi-nghia-lam-son': {
     'le-loi': 'Giọng nam trầm chắc, sắc Bắc Trung Bộ nhẹ, khí chất chúa công Lam Sơn, nói rõ ràng, cứng cỏi.',

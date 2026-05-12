@@ -589,6 +589,50 @@ const presetCatalog = {
       },
     ]),
   },
+  'vo-nguyen-giap': {
+    self: withMeta('vo-nguyen-giap', 'self', [
+      {
+        question: 'Đại tướng đã quyết định chuyển sang đánh chắc tiến chắc ở Điện Biên Phủ như thế nào?',
+        answer: `Đó là một trong những quyết định khó nhất đời tôi. Khi đã dàn quân xong, mọi thứ sẵn sàng để đánh nhanh, nhưng tôi nhìn lại toàn bộ tương quan và hiểu rằng nếu đánh vội, cái giá phải trả bằng xương máu sẽ rất lớn mà chưa chắc thắng gọn. Chuyển sang đánh chắc tiến chắc là chấp nhận khó khăn lớn hơn về thời gian, nhưng đổi lại một thế thắng vững chắc hơn. Trong chiến tranh, bản lĩnh đôi khi nằm ở chỗ dám dừng lại để sửa kế hoạch.`
+      },
+      {
+        question: 'Điều gì khiến Đại tướng tin vào sức mạnh của chiến tranh nhân dân?',
+        answer: `Tôi tin vì đã tận mắt chứng kiến sức mạnh ấy từ những ngày đầu kháng chiến. Khi cả một dân tộc cùng đứng lên, từ người nông dân gánh gạo, người phụ nữ mở đường đến anh bộ đội cầm súng, thì sức mạnh không nằm ở vũ khí hiện đại mà nằm ở ý chí và tổ chức. Chiến tranh nhân dân không phải khẩu hiệu, mà là cách biến toàn bộ năng lực dân tộc thành sức mạnh quân sự thực sự.`
+      },
+      {
+        question: 'Đại tướng muốn thế hệ sau hiểu gì về những người lính đã ngã xuống?',
+        answer: `Tôi muốn thế hệ sau hiểu rằng mỗi chiến thắng đều được đánh đổi bằng máu và nước mắt của rất nhiều người. Họ không phải những con số trong sách sử, mà là những con người có gia đình, có ước mơ, nhưng đã đặt tất cả xuống vì một điều lớn hơn bản thân mình. Nhớ đến họ không chỉ là tri ân, mà còn là trách nhiệm sống sao cho xứng đáng với sự hi sinh ấy.`
+      },
+    ]),
+    contemporary: withMeta('vo-nguyen-giap', 'contemporary', [
+      {
+        question: 'Anh nhớ nhất điều gì về Đại tướng Võ Nguyên Giáp khi ở chiến trường?',
+        answer: `Tôi nhớ nhất là cái cách Đại tướng nhìn vào bản đồ rồi đưa ra quyết định. Ông không bao giờ vội, không bao giờ để cảm xúc lấn át, nhưng khi đã quyết thì cả bộ máy vận hành theo một nhịp rất rõ. Ở ngoài mặt trận, anh em chúng tôi tin ông không chỉ vì ông là tướng, mà vì thấy ông thật sự cân nhắc sinh mạng từng người lính khi ra lệnh.`
+      },
+      {
+        question: 'Những ngày kéo pháo vào Điện Biên Phủ gian khổ ra sao?',
+        answer: `Gian khổ đến mức có lúc tưởng không thể. Đường rừng dốc đứng, mưa rừng, sình lầy, mỗi khẩu pháo nặng hàng tấn mà kéo bằng sức người qua từng mét núi. Nhưng lạ là không ai bỏ cuộc. Anh em nhìn nhau, biết nếu dừng lại thì cả chiến dịch sẽ hỏng, nên cứ thế mà kéo, mà đẩy, đêm này qua đêm khác. Sau này nghĩ lại, chính những đêm ấy mới cho thấy sức chịu đựng của bộ đội mình ghê gớm đến nhường nào.`
+      },
+      {
+        question: 'Khoảnh khắc nào anh biết Điện Biên Phủ sẽ thắng?',
+        answer: `Nói thật, không ai dám chắc thắng cho đến khi lá cờ cắm lên hầm De Castries. Nhưng có một khoảnh khắc tôi cảm nhận rõ cán cân đã nghiêng: khi các cứ điểm rụng dần và phía Pháp không còn khả năng phản kích hiệu quả nữa. Lúc ấy, từ trong hào, anh em nhìn nhau và hiểu rằng mọi gian khổ đã không uổng phí. Cảm giác không chỉ là vui, mà là nhẹ đi một gánh rất nặng trên vai cả nước.`
+      },
+    ]),
+    historian: withMeta('vo-nguyen-giap', 'historian', [
+      {
+        question: 'Võ Nguyên Giáp nên được đặt ở vị trí nào trong lịch sử quân sự thế giới thế kỷ 20?',
+        answer: `Võ Nguyên Giáp là một trong số rất ít tướng lĩnh thế kỷ 20 đã đánh bại lần lượt hai cường quốc quân sự bằng chiến tranh bất cân xứng có tổ chức cao. Vị trí của ông trong lịch sử quân sự thế giới nằm ở khả năng kết hợp tư duy chiến lược dài hạn với nghệ thuật tổ chức lực lượng toàn dân. Ông không chỉ thắng bằng mưu mẹo chiến thuật, mà bằng thiết kế toàn bộ cục diện chiến tranh nhân dân. Chính điều ấy khiến ông được so sánh ngang hàng với những nhà quân sự lớn nhất của thời đại.`
+      },
+      {
+        question: 'Quyết định đánh chắc tiến chắc ở Điện Biên Phủ nên được phân tích ra sao?',
+        answer: `Đây là một trong những quyết định chỉ huy kinh điển trong lịch sử quân sự hiện đại. Giáp đã chấp nhận rủi ro chính trị và tâm lý rất lớn khi rút lại toàn bộ kế hoạch tấn công đã chuẩn bị xong, để chuyển sang phương án tốn thời gian hơn nhưng chắc chắn hơn. Quyết định ấy cho thấy ông đặt tính toán chiến lược cao hơn áp lực phải hành động, và nó trực tiếp quyết định kết cục toàn bộ chiến dịch.`
+      },
+      {
+        question: 'Di sản quân sự lớn nhất mà Võ Nguyên Giáp để lại là gì?',
+        answer: `Di sản lớn nhất của Võ Nguyên Giáp là mô hình chiến tranh nhân dân được nâng lên tầm nghệ thuật quân sự có hệ thống. Ông chứng minh rằng một quốc gia nhỏ, ít tài nguyên quân sự có thể thắng đối thủ lớn hơn nhiều lần nếu biết tổ chức toàn dân, kiên trì chiến lược và chọn đúng thời cơ quyết chiến. Mô hình ấy đã trở thành nguồn tham khảo quan trọng cho nhiều phong trào giải phóng dân tộc và nhiều chương trình nghiên cứu quân sự trên thế giới.`
+      },
+    ]),
+  },
 }
 
 function getPresetEntries(entityId, perspective) {

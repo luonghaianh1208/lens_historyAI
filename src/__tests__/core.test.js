@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { getEntity, searchEntities, getIndex } from '../services/retrieval'
 import { findPresetResponse, getQuickSuggestions, hasPresetAudio } from '../services/chatPresetService'
+import { getAllLearningPaths, getLearningPath, isPathUnlocked, getNextUnlockableEntity } from '../data/learning-paths'
 
 // ─── Task 1 regression: normalizeEntity keeps all expected fields ───
 
@@ -263,5 +264,46 @@ describe('hasPresetAudio', () => {
   it('returns false for null/undefined', () => {
     expect(hasPresetAudio(null)).toBe(false)
     expect(hasPresetAudio(undefined)).toBe(false)
+  })
+})
+
+// ─── Learning Paths: entity validation ───
+
+describe('Learning Paths - Entity Validation', () => {
+  it('all entity IDs in learning paths exist in manifest', () => {
+    const paths = getAllLearningPaths()
+    const entityIds = new Set(
+      paths.flatMap(path => path.levels.flatMap(level => level.entities))
+    )
+
+    for (const entityId of entityIds) {
+      const entity = getEntity(entityId)
+      expect(entity, `Entity ${entityId} should exist`).not.toBeNull()
+    }
+  })
+
+  it('getLearningPath returns null for unknown path', () => {
+    expect(getLearningPath('non-existent-path')).toBeNull()
+  })
+
+  it('isPathUnlocked returns false for non-existent path', () => {
+    expect(isPathUnlocked('non-existent-path')).toBe(false)
+  })
+
+  it('isPathUnlocked handles paths with no prerequisites', () => {
+    // basic-vietnamese-history has no prerequisites
+    expect(isPathUnlocked('basic-vietnamese-history')).toBe(true)
+  })
+
+  it('getNextUnlockableEntity does not crash with empty prerequisites', () => {
+    // Should return null or a valid blocked path, but not throw
+    const result = getNextUnlockableEntity({})
+    // Either null (all unlocked) or valid blocked path object
+    expect(result === null || typeof result === 'object').toBe(true)
+    if (result) {
+      expect(result).toHaveProperty('pathId')
+      expect(result).toHaveProperty('blockedBy')
+      expect(result).toHaveProperty('message')
+    }
   })
 })

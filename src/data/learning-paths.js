@@ -18,7 +18,7 @@ export const LEARNING_PATHS = {
         title: 'Thời kỳ Văn Lang - Âu Lạc',
         description: 'Khám phá lịch sử Việt Nam từ thời kỳ Hùng Vương',
         requiredScore: 70,
-        entities: ['hung-vuong-1', 'son-tinh-thuy-tinh', 'an-duong-vuong'],
+        entities: ['hung-vuong-i', 'son-tinh-thuy-tinh', 'an-duong-vuong'],
         unlockMessage: 'Hoàn thành để mở khóa giai đoạn tiếp theo',
       },
       {
@@ -26,7 +26,7 @@ export const LEARNING_PATHS = {
         title: 'Thời Bắc Thuộc và Khởi nghĩa',
         description: '1000 năm Bắc thuộc và tinh thần yêu nước',
         requiredScore: 70,
-        entities: ['hai-ba-trung', 'ba-trieu', 'phung-hung'],
+        entities: ['hai-ba-trung', 'ba-triệu', 'phung-hung'],
         unlockMessage: 'Tiếp tục hành trình',
       },
       {
@@ -42,7 +42,7 @@ export const LEARNING_PATHS = {
         title: 'Thời Lý - Tràng phồn vinh',
         description: 'Đại Việt hùng cường thời Lý Trần',
         requiredScore: 70,
-        entities: ['ly-thai-to', 'ly-thuong-kiet', 'ly-nhan-tong', 'to-hien-thanh'],
+        entities: ['ly-cong-uẩn', 'ly-thuong-kiet', 'ly-nhan-tong', 'to-hien-thanh'],
         unlockMessage: 'Một nửa hành trình đã qua!',
       },
       {
@@ -116,7 +116,7 @@ export const LEARNING_PATHS = {
         title: 'Anh hùng thời kỳ xa xưa',
         description: 'Hai Bà Trưng, Bà Triệu - những người phụ nữ anh hùng',
         requiredScore: 70,
-        entities: ['hai-ba-trung', 'ba-trieu', 'ba-lieu'],
+        entities: ['hai-ba-trung', 'ba-triệu', 'ba-lieu'],
         unlockMessage: 'Tinh thần bất khuất!',
       },
       {
@@ -140,7 +140,7 @@ export const LEARNING_PATHS = {
         title: 'Nhà cách mạng hiện đại',
         description: 'Phan Bội Châu, Phan Châu Trinh, Hồ Chí Minh',
         requiredScore: 75,
-        entities: ['phan-boichau', 'phan-chau-trinh', 'ho-chi-minh'],
+        entities: ['phan-boi-chau', 'phan-chau-trinh', 'ho-chi-minh'],
         unlockMessage: 'Hành trình đến độc lập!',
       },
     ],
@@ -240,8 +240,11 @@ export function isPathUnlocked(pathId, userProgress = {}) {
     return true
   }
 
-  // Check all prerequisites are completed
-  return path.prerequisites.every(prereqId =>
+  // Validate prerequisites exist before checking
+  const validPrerequisites = path.prerequisites.filter(prereqId => getLearningPath(prereqId))
+
+  // Check all valid prerequisites are completed
+  return validPrerequisites.every(prereqId =>
     userProgress[prereqId]?.completedLevels?.length > 0
   )
 }
@@ -250,12 +253,19 @@ export function getNextUnlockableEntity(progress) {
   // Find paths user is eligible for but hasn't started
   const allPaths = getAllLearningPaths()
   for (const path of allPaths) {
+    // Skip if path doesn't exist or has no valid prerequisites
+    if (!path || !path.prerequisites || path.prerequisites.length === 0) {
+      continue
+    }
+
+    // Check if path is locked
     if (!isPathUnlocked(path.id, progress)) {
       const prereq = path.prerequisites[0]
+      const prereqPath = getLearningPath(prereq)
       return {
         pathId: path.id,
         blockedBy: prereq,
-        message: `Cần hoàn thành "${getLearningPath(prereq)?.title}" trước`,
+        message: `Cần hoàn thành "${prereqPath?.title || 'lộ trình đầu tiên'}" trước`,
       }
     }
   }

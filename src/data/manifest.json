@@ -685,6 +685,28 @@
       }
     },
     {
+      "id": "vo-nguyen-giap",
+      "name": "Võ Nguyên Giáp",
+      "type": "person",
+      "period": "Thời hiện đại",
+      "tags": ["quân sự", "Điện Biên Phủ", "chiến thắng", "kháng chiến"],
+      "short_desc": "Đại tướng nhân dân, Tổng tư lệnh quân đội nhân dân Việt Nam, kiến tạo chiến thắng Điện Biên Phủ lịch sử.",
+      "status": "pending",
+      "chunksCount": 0,
+      "sourceCount": 0,
+      "verification": {
+        "status": "pending",
+        "confidence": null,
+        "lastChecked": null
+      },
+      "metadata": {
+        "createdBy": "manual",
+        "createdAt": "2026-05-12",
+        "reviewedBy": null,
+        "lastUpdated": "2026-05-12"
+      }
+    },
+    {
       "id": "minh-mang",
       "name": "Minh Mạng",
       "type": "person",

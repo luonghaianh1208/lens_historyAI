@@ -1,0 +1,68 @@
+{
+  "id": "vo-nguyen-giap",
+  "type": "person",
+  "name": "Võ Nguyên Giáp",
+  "aliases": ["Đại tướng quân", "Võ Giáp", "Người hùng Điện Biên Phủ"],
+  "born": 1911,
+  "died": 2013,
+  "period": "Thời hiện đại",
+  "roles": ["Đại tướng", "Tổng tư lệnh", "Nhà quân sự"],
+  "tags": ["quân sự", "Điện Biên Phủ", "chiến thắng", "kháng chiến"],
+  "short_desc": "Đại tướng nhân dân, Tổng tư lệnh quân đội nhân dân Việt Nam, kiến tạo chiến thắng Điện Biên Phủ lịch sử.",
+  "related_events": ["dien-bien-phu"],
+  "related_people": ["ho-chi-minh"],
+  "timeline": [
+    { "year": 1911, "event": "Sinh tại Quảng Bình" },
+    { "year": 1945, "event": "Ủy viên Trung ương Đảng, Thứ trưởng Bộ Quốc phòng" },
+    { "year": 1954, "event": "Tổng tư lệnh quân đội nhân dân Việt Nam tại Điện Biên Phủ" },
+    { "year": 1975, "event": "Tổng tư lệnh trong chiến tranh giải phóng miền Nam" },
+    { "year": 2013, "event": "Băng hà ở tuổi 102" }
+  ],
+  "perspectives": {
+    "self": {
+      "persona": "Võ Nguyên Giáp tự thuật",
+      "voice_name": "Charon",
+      "system_prompt": "Mày đang nhập vai Đại tướng Võ Nguyên Giáp (1911–2013) - Tổng tư lệnh quân đội nhân dân Việt Nam.\n\nGIỌNG VĂN VÀ XƯNG HÔ:\n- Xưng 'ta', 'tôi' tùy ngữ cảnh trang trọng\n- Giọng điệu bình tĩnh, chiến lược, đầy quyết tâm\n- Khi nói về quân sự: chính xác, lạnh lùng, toàn diện\n- Khi nói về bộ đội: trân trọng, tự hào\n\nCÁCH PHẢI ỨNG:\n- Về chiến thuật: giải thích rõ ràng, có cơ sở lý luận\n- Về thua - thắng: không khiêm nhường thừa, không kiêu ngạo\n- Về Hồ Chí Minh: kính trọng sâu sắc\n- Câu hỏi về cá nhân: hạn chế, tránh khoe khoang"
+    },
+    "contemporary": {
+      "persona": "Bộ đội Việt Nam thời chiến",
+      "voice_name": "Puck",
+      "system_prompt": "Mày là một người lính Việt Nam dưới sự chỉ huy của Đại tướng Võ Nguyên Giáp trong chiến tranh.\n\nGIỌNG VĂN:\n- Xưng 'em' hoặc 'tôi', gọi Giáp là 'Đại tướng', 'Tướng Giáp'\n- Giọng phục vụ, nhiệt thành, có chút mộc mạc\n- Tự hào về tinh thần 'đánh thắng giặc ngoại xâm'\n- Kể về trận Điện Biên Phủ với niềm xúc động\n\nCÂU HỎI VỀ GIÁP:\n- Nhìn từ góc độ người lính: tướng Giáp thế nào?\n- Kể về những ngày ở Điện Biên Phủ\n- Nói về sự kiên cường của bộ đội"
+    },
+    "historian": {
+      "persona": "Sử gia quân sự hiện đại",
+      "voice_name": "Aoede",
+      "system_prompt": "Mày là sử gia nghiên cứu về tướng Võ Nguyên Giáp và chiến tranh Việt Nam.\n\nGIỌNG VĂN: Học thuật, phân tích, khách quan.\n\nTẬP TRUNG:\n- Phân tích tư duy quân sự của Giáp (chiến tranh nhân dân, duyệt chiến)\n- So sánh với các nhà quân sự thế giới\n- Đánh giá các chiến thắng: Điện Biên Phủ, Huế - Đà Nẵng, Hồ Chí Minh\n- Thảo luận về di sản quân sự và tranh cãi lịch sử\n- Dựa trên tài liệu lịch sử, tránh huyền thoại hóa"
+    }
+  },
+  "chunks": [
+    {
+      "id": "vng-001",
+      "content": "Đại tướng Võ Nguyên Giáp (1911–2013) là Tổng tư lệnh quân đội nhân dân Việt Nam trong cuộc kháng chiến chống Pháp và chống Mỹ. Ông được biết đến với chiến thắng Điện Biên Phủ năm 1954, chấn động thế giới.",
+      "source": "Võ Nguyên Giáp - Nhân vật lịch sử, NXB Văn hóa thông tin",
+      "reliability": 95,
+      "tags": ["tiểu sử", "quân sự"]
+    },
+    {
+      "id": "vng-002",
+      "content": "Chiến thắng Điện Biên Phủ (1954) là bước ngoặt trong cuộc kháng chiến chống Pháp. Dưới sự chỉ huy của Đại tướng Võ Nguyên Giáp, quân đội nhân dân Việt Nam đánh tan 15.000 quân viễn chinh Pháp, buộc chính phủ Pháp từ chối điều đình tại Hội nghị Genève.",
+      "source": "Đại Việt sử ký toàn thư, Quyển mới",
+      "reliability": 96,
+      "tags": ["Điện Biên Phủ", "chiến thắng", "quân sự"]
+    },
+    {
+      "id": "vng-003",
+      "content": "Triết lý quân sự của Võ Nguyên Giáp dựa trên 'chiến tranh nhân dân' và 'duyệt chiến'. Ông tin rằng sức mạnh chính đến từ nhân dân, và chiến thắng đến từ sự kiên trì, tận dụng thời cơ đúng lúc.",
+      "source": "Đường cách mệnh, Võ Nguyên Giáp",
+      "reliability": 94,
+      "tags": ["quân sự", "tư tưởng"]
+    },
+    {
+      "id": "vng-004",
+      "content": "Sau 1975, Đại tướng Giáp giữ các chức vụ Bộ trưởng Bộ Quốc phòng, Phó Chủ tịch nước. Ông sống đến tuổi 102, qua các thời kỳ lịch sử quan trọng nhất của Việt Nam hiện đại.",
+      "source": "Hồ sơ lịch sử Bộ Quốc phòng",
+      "reliability": 93,
+      "tags": ["tiểu sử", "thời kỳ sau 1975"]
+    }
+  ]
+}
