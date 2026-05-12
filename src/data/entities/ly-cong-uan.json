@@ -1,0 +1,81 @@
+{
+  "id": "ly-cong-uan",
+  "name": "Lý Công Uẩn",
+  "type": "person",
+  "period": "Nhà Lý",
+  "tags": ["Lý", "Thái Tổ", "Thăng Long", "Dời đô"],
+  "short_desc": "Vị vua sáng lập nhà Lý, quyết định dời đô từ Hoa Lư về Thăng Long năm 1010.",
+  "status": "ready",
+  "chunksCount": 3,
+  "sourceCount": 1,
+  "verification": {
+    "status": "verified",
+    "confidence": 0.9,
+    "lastChecked": "2026-05-12"
+  },
+  "metadata": {
+    "createdBy": "manual",
+    "createdAt": "2026-05-12",
+    "reviewedBy": "system",
+    "lastUpdated": "2026-05-12"
+  },
+  "persona": {
+    "self": {
+      "tone": "Đức độ, tầm nhìn xa trông rộng, điềm tĩnh",
+      "perspective": "Người xuất thân nơi cửa Phật, được triều thần tôn lên ngôi. Thấy Hoa Lư chật hẹp, đã quyết chí dời đô về Đại La để mưu bá đồ vương muôn đời.",
+      "key_themes": ["Chiếu dời đô", "Đại La thành Thăng Long", "Phật giáo", "Hòa bình"]
+    },
+    "contemporary": {
+      "tone": "Tôn kính, ngưỡng mộ tấm lòng từ bi và trí tuệ",
+      "perspective": "Các tăng ni, quan lại thời Lý nhìn nhận nhà vua như một đấng minh quân, chấm dứt thời kỳ bạo chúa của Lê Long Đĩnh, mang lại thời đại thái bình.",
+      "key_themes": ["Sự chuyển giao êm đẹp", "Minh quân", "Dời đô"]
+    },
+    "historian": {
+      "tone": "Khách quan, vinh danh sự khởi đầu của nền văn minh Đại Việt",
+      "perspective": "Lý Công Uẩn là vị vua đặt nền móng cho thời kỳ phát triển rực rỡ của văn minh Đại Việt, đặc biệt thông qua quyết định lịch sử dời đô về Thăng Long.",
+      "key_themes": ["Triều Lý", "Thăng Long", "Văn minh Đại Việt", "Tầm nhìn chiến lược"]
+    }
+  },
+  "timeline": [
+    {
+      "year": "974",
+      "event": "Lý Công Uẩn sinh ra tại Cổ Pháp (Bắc Ninh), được thiền sư Lý Khánh Văn nuôi dạy.",
+      "importance": "low"
+    },
+    {
+      "year": "1009",
+      "event": "Sau khi Lê Long Đĩnh mất, được bá quan và các sư sãi tôn lên làm vua, lập ra nhà Lý.",
+      "importance": "high"
+    },
+    {
+      "year": "1010",
+      "event": "Viết 'Chiếu dời đô', chuyển kinh đô từ Hoa Lư về thành Đại La và đổi tên thành Thăng Long.",
+      "importance": "high"
+    },
+    {
+      "year": "1028",
+      "event": "Lý Thái Tổ băng hà, truyền ngôi cho Thái tử Lý Phật Mã (Lý Thái Tông).",
+      "importance": "high"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "chunk_1",
+      "content": "Lý Công Uẩn (974 – 1028), xuất thân từ hương Cổ Pháp (Bắc Ninh). Từ nhỏ ông đã được nuôi dạy trong chùa bởi thiền sư Lý Khánh Văn và được thiền sư Vạn Hạnh truyền dạy nhiều kiến thức trị quốc. Dưới triều Tiền Lê, ông làm quan đến chức Tả Thân Vệ Điện Tiền Chỉ huy sứ. Tính tình ông khoan dung, độ lượng nên được nhiều người kính phục.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_2",
+      "content": "Năm 1009, sau sự ra đi của vị vua tàn bạo Lê Long Đĩnh, triều thần và giới Phật giáo do thiền sư Vạn Hạnh và Đào Cam Mộc đứng đầu đã tôn Lý Công Uẩn lên ngôi Hoàng đế (Lý Thái Tổ), khai sinh ra triều Lý – một trong những triều đại phát triển rực rỡ nhất trong lịch sử Việt Nam.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_3",
+      "content": "Sự kiện quan trọng nhất trong triều đại Lý Thái Tổ là việc dời đô năm 1010. Nhận thấy Hoa Lư là nơi đồi núi chật hẹp, không thích hợp cho việc phát triển lâu dài, ông đã ban 'Chiếu dời đô', quyết định chuyển kinh đô về thành Đại La. Tương truyền khi thuyền rồng đến nơi, thấy rồng vàng bay lên, ông bèn đổi tên Đại La thành Thăng Long. Quyết định này đã mở ra một kỷ nguyên mới cho nền độc lập và văn minh Đại Việt.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "dinh-bo-linh",
+  "name": "Đinh Bộ Lĩnh",
+  "type": "person",
+  "period": "Nhà Đinh",
+  "tags": ["Đinh", "Thống nhất đất nước", "Đinh Tiên Hoàng"],
+  "short_desc": "Vị vua sáng lập nhà Đinh, thống nhất đất nước sau thời 12 sứ quân.",
+  "status": "ready",
+  "chunksCount": 3,
+  "sourceCount": 1,
+  "verification": {
+    "status": "verified",
+    "confidence": 0.9,
+    "lastChecked": "2026-05-12"
+  },
+  "metadata": {
+    "createdBy": "manual",
+    "createdAt": "2026-05-12",
+    "reviewedBy": "system",
+    "lastUpdated": "2026-05-12"
+  },
+  "persona": {
+    "self": {
+      "tone": "Uy quyền, kiên quyết, mang đậm khí thế của bậc đế vương khai quốc",
+      "perspective": "Một người con đất Hoa Lư từ thuở cờ lau tập trận đến khi dẹp loạn 12 sứ quân, thống nhất giang sơn, tự xưng là Hoàng đế.",
+      "key_themes": ["Dẹp loạn 12 sứ quân", "Thống nhất đất nước", "Xưng đế", "Bảo vệ bờ cõi"]
+    },
+    "contemporary": {
+      "tone": "Kính trọng, nể phục, pha lẫn sự sợ hãi trước uy quyền",
+      "perspective": "Người cùng thời chứng kiến tài quân sự xuất chúng của Vạn Thắng Vương, người mang lại hòa bình sau thời kỳ loạn lạc.",
+      "key_themes": ["Tài năng quân sự", "Quyền uy", "Hòa bình", "Đại Cồ Việt"]
+    },
+    "historian": {
+      "tone": "Khách quan, đánh giá cao, phân tích sâu sắc",
+      "perspective": "Góc nhìn lịch sử về vai trò to lớn của Đinh Tiên Hoàng trong việc củng cố nền độc lập tự chủ và thiết lập triều đại phong kiến tập quyền đầu tiên.",
+      "key_themes": ["Ý nghĩa lịch sử", "Nhà nước tập quyền", "Độc lập tự chủ", "Xưng đế"]
+    }
+  },
+  "timeline": [
+    {
+      "year": "924",
+      "event": "Đinh Bộ Lĩnh sinh ra tại Hoa Lư, châu Đại Hoàng.",
+      "importance": "high"
+    },
+    {
+      "year": "968",
+      "event": "Dẹp xong loạn 12 sứ quân, lên ngôi Hoàng đế, lấy hiệu là Đinh Tiên Hoàng.",
+      "importance": "high"
+    },
+    {
+      "year": "970",
+      "event": "Đặt niên hiệu là Thái Bình, khẳng định nền độc lập tự chủ của Đại Cồ Việt.",
+      "importance": "high"
+    },
+    {
+      "year": "979",
+      "event": "Đinh Tiên Hoàng cùng con trưởng là Đinh Liễn bị ám hại, triều Đinh bước vào giai đoạn biến động.",
+      "importance": "high"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "chunk_1",
+      "content": "Đinh Bộ Lĩnh (924 – 979), quê ở Hoa Lư, châu Đại Hoàng. Từ nhỏ, ông đã tỏ ra là người có tài chỉ huy, thường cùng đám trẻ chăn trâu chơi trò đánh trận giả, lấy bông lau làm cờ. Khi lớn lên, giữa bối cảnh đất nước rơi vào loạn 12 sứ quân sau khi Ngô Quyền mất, ông đã tập hợp lực lượng tại quê nhà, xây dựng căn cứ vững chắc.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_2",
+      "content": "Với tài năng quân sự xuất chúng, ông được tôn là Vạn Thắng Vương. Năm 968, sau khi dẹp yên tất cả các sứ quân, thống nhất đất nước, ông lên ngôi Hoàng đế (Đinh Tiên Hoàng), đặt tên nước là Đại Cồ Việt, đóng đô tại Hoa Lư. Đây là một sự kiện trọng đại, khẳng định mạnh mẽ nền độc lập và tự chủ của dân tộc, bởi trước đó các vị vua Việt Nam chỉ xưng Vương.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_3",
+      "content": "Năm 970, Đinh Tiên Hoàng đặt niên hiệu là Thái Bình và đúc tiền đồng đầu tiên của nước Việt (tiền Thái Bình Hưng Bảo). Triều đại của ông chú trọng xây dựng quân đội, luật pháp nghiêm minh và phát triển kinh tế. Đáng tiếc, năm 979, ông bị ám hại, để lại một khoảng trống quyền lực lớn dẫn đến sự thay đổi triều đại sau đó.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    }
+  ]
+}

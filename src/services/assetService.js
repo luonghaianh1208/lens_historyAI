@@ -1,17 +1,16 @@
 const ENTITY_CHARACTER_PATHS = {
-  'nguyen-trai': '/assets/characters/char_nguyen_trai.webp',
-  'le-loi': '/assets/characters/char_le_loi.webp',
-  'tran-hung-dao': '/assets/characters/char_tran_hung_dao.webp',
-  'ly-thuong-kiet': '/assets/characters/char_ly_thuong_kiet.webp',
-  'nguyen-hue': '/assets/characters/char_nguyen_hue.webp',
-  'ho-chi-minh': '/assets/characters/char_ho_chi_minh.webp',
-  'dien-bien-phu': '/assets/characters/char_vo_nguyen_giap.png',
-  'tran-dong-da': '/assets/characters/char_nguyen_hue.webp',
-  'chien-thang-bach-dang': '/assets/characters/char_tran_hung_dao.webp',
-  'chien-tranh-ly-tong': '/assets/characters/char_ly_thuong_kiet.webp',
-  'khoi-nghia-lam-son': '/assets/characters/char_le_loi.webp',
-  default: '/assets/characters/char_default.webp',
-}
+  'hung-vuong-i': '/assets/characters/char_hung_vuong_i.png',
+  'son-tinh-thuy-tinh': '/assets/characters/char_son_tinh_thuy_tinh.png',
+  'an-duong-vuong': '/assets/characters/char_an_duong_vuong.png',
+  
+  // Batch 2
+  'ba-trieu': '/assets/characters/char_ba_trieu.png',
+  'hai-ba-trung': '/assets/characters/char_hai_ba_trung.png',
+  'phung-hung': '/assets/characters/char_phung_hung.png',
+  'dinh-bo-linh': '/assets/characters/dinh-bo-linh.png',
+  'le-hoan': '/assets/characters/le-hoan.png',
+  'ly-cong-uan': '/assets/characters/ly-cong-uan.png'
+};
 
 const PERSPECTIVE_CHARACTER_PATHS = {
   'ho-chi-minh:contemporary': '/assets/characters/char_nguoi_dan_viet_nam.png',

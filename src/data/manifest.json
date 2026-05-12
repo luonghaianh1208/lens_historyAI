@@ -9,18 +9,18 @@
       "period": "Thời kỳ Văn Lang",
       "tags": ["Văn Lang", "Hùng Vương", "Thời kỳ thần thoại"],
       "short_desc": "Vị vua sáng lập của Văn Lang, lập quốc gia đầu tiên trong lịch sử Việt Nam.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -31,18 +31,18 @@
       "period": "Thời kỳ Văn Lang",
       "tags": ["Thần thoại", "Văn Lang", "Hùng Vương"],
       "short_desc": "Hai vị thần đại diện cho núi và nước trong truyền thuyết về cuộc đua thần tiên.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -53,40 +53,40 @@
       "period": "Thời kỳ Âu Lạc",
       "tags": ["Âu Lạc", "Thủy tục", "Văn Lang"],
       "short_desc": "Vị vua sáng lập nước Âu Lạc, xây dựng thành Cổ Loa và chống lại nhà Tần.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
     {
-      "id": "ba-triệu",
+      "id": "ba-trieu",
       "name": "Bà Triệu",
       "type": "person",
       "period": "Bắc Thuộc",
       "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
       "short_desc": "Nữ anh hùng kháng chiến chống lại nhà Đường, được tôn thờ là vị thần bảo hộ.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -97,40 +97,18 @@
       "period": "Bắc Thuộc",
       "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
       "short_desc": "Hai chị em Trưng Trắc và Trưng Nhị lãnh đạo cuộc khởi nghĩa chống nhà Hán.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
-        "lastUpdated": "2026-05-12"
-      }
-    },
-    {
-      "id": "ba-lieu",
-      "name": "Bà Liễu",
-      "type": "person",
-      "period": "Bắc Thuộc",
-      "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
-      "short_desc": "Anh hùng dân tộc thời Bắc Thuộc, lãnh đạo cuộc khởi nghĩa ở Giao Chỉ.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
-      "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
-      },
-      "metadata": {
-        "createdBy": "manual",
-        "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -141,18 +119,18 @@
       "period": "Bắc Thuộc",
       "tags": ["Kháng chiến", "Bà Triệu", "Triệu Việt Vương"],
       "short_desc": "Anh hùng dân tộc lãnh đạo cuộc khởi nghĩa chống lại nhà Đường.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -163,18 +141,18 @@
       "period": "Nhà Đinh",
       "tags": ["Đinh", "Thống nhất đất nước", "Đinh Tiên Hoàng"],
       "short_desc": "Vị vua sáng lập nhà Đinh, thống nhất đất nước sau thời 12 sứ quân.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
@@ -185,62 +163,40 @@
       "period": "Tiền Lê",
       "tags": ["Tiền Lê", "Đinh", "Lê Đại Hành"],
       "short_desc": "Vị vua nhà Tiền Lê, tiếp quản nhà Đinh và đánh bại quân Tống xâm lược.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },
     {
-      "id": "le-dai-hanh",
-      "name": "Lê Đại Hành",
-      "type": "person",
-      "period": "Tiền Lê",
-      "tags": ["Tiền Lê", "Lê Hoàn", "Quyền đế vị"],
-      "short_desc": "Vị vua nhà Tiền Lê, trị vì dân lành, mở mang bờ cõi.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
-      "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
-      },
-      "metadata": {
-        "createdBy": "manual",
-        "createdAt": "2026-05-12",
-        "reviewedBy": null,
-        "lastUpdated": "2026-05-12"
-      }
-    },
-    {
-      "id": "ly-cong-uẩn",
+      "id": "ly-cong-uan",
       "name": "Lý Công Uẩn",
       "type": "person",
       "period": "Nhà Lý",
       "tags": ["Lý", "Thái Tổ", "Thăng Long"],
       "short_desc": "Vị vua sáng lập nhà Lý, dời đô từ Hoa Lư về Thăng Long năm 1010.",
-      "status": "pending",
-      "chunksCount": 0,
-      "sourceCount": 0,
+      "status": "ready",
+      "chunksCount": 3,
+      "sourceCount": 1,
       "verification": {
-        "status": "pending",
-        "confidence": null,
-        "lastChecked": null
+        "status": "verified",
+        "confidence": 0.9,
+        "lastChecked": "2026-05-12"
       },
       "metadata": {
         "createdBy": "manual",
         "createdAt": "2026-05-12",
-        "reviewedBy": null,
+        "reviewedBy": "system",
         "lastUpdated": "2026-05-12"
       }
     },

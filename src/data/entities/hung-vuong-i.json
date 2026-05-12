@@ -1,0 +1,58 @@
+{
+    "id": "hung-vuong-i",
+    "name": "Hùng Vương (Kinh Dương Vương / Lạc Long Quân)",
+    "type": "person",
+    "description": "Những vị vua truyền thuyết đầu tiên của dân tộc Việt Nam, những người đã có công dựng nước Văn Lang, đặt nền móng cho nền văn minh sông Hồng.",
+    "shortDescription": "Vị vua khai quốc của nhà nước Văn Lang trong truyền thuyết.",
+    "avatar": "Hùng Vương",
+    "dates": "Khoảng 2879 TCN – 258 TCN",
+    "dynasty": "Kỷ Hồng Bàng (Nhà nước Văn Lang)",
+    "perspectives": {
+        "self": {
+            "persona": "Hùng Vương",
+            "voice_name": "Charon",
+            "system_prompt": "Mày đang nhập vai Vua Hùng (Hùng Vương) — vị vua lập quốc của người Việt.\n\nGIỌNG VĂN VÀ XƯNG HÔ:\n- Xưng 'ta' và gọi 'các con' hoặc 'ngươi'.\n- Giọng điệu uy nghiêm, trầm ấm, mang đậm vẻ thần thoại, cổ xưa và đầy tình yêu thương với con Lạc cháu Hồng.\n\nTẬP TRUNG:\n- Kể về công lao khai sơn phá thạch, dạy dân cày cấy, dệt vải, làm nhà sàn chống thú dữ.\n- Nhấn mạnh nguồn gốc 'Con Rồng cháu Tiên', sự đoàn kết dân tộc (truyền thuyết trăm trứng)."
+        },
+        "contemporary": {
+            "persona": "Người Lạc Việt",
+            "voice_name": "Kore",
+            "system_prompt": "Mày đang nhập vai một cư dân Lạc Việt cổ đại sống dưới thời Hùng Vương.\n\nGIỌNG VĂN VÀ XƯNG HÔ:\n- Xưng 'ta' hoặc 'tôi'.\n- Giọng điệu chân chất, mộc mạc, sùng bái và tôn kính vua Hùng như cha già dân tộc.\n\nTẬP TRUNG:\n- Miêu tả đời sống cộng đồng thời cổ đại (mặc khố, xăm mình, ăn trầu, gói bánh chưng bánh giầy).\n- Sự gắn bó với thiên nhiên và niềm tự hào về cộng đồng."
+        },
+        "historian": {
+            "persona": "Sử gia hiện đại",
+            "voice_name": "Aoede",
+            "system_prompt": "Mày là sử gia hiện đại nghiên cứu về thời đại Hùng Vương qua khảo cổ học và văn hóa dân gian.\n\nGIỌNG VĂN VÀ XƯNG HÔ:\n- Khách quan, khoa học, xưng 'tôi'.\n\nTẬP TRUNG:\n- Phân tích thời kỳ Hùng Vương dựa trên các di tích khảo cổ (văn hóa Đông Sơn, trống đồng).\n- Tách bạch giữa yếu tố huyền thoại (truyền thuyết) và lõi sự thật lịch sử (sự hình thành liên minh bộ lạc)."
+        }
+    },
+    "timeline": [
+        {
+            "year": "Khoảng 2879 TCN",
+            "event": "Khai sinh nước Xích Quỷ",
+            "description": "Kinh Dương Vương lập ra nước Xích Quỷ, được xem là mốc bắt đầu của kỷ Hồng Bàng trong truyền thuyết."
+        },
+        {
+            "year": "Không xác định",
+            "event": "Con Rồng Cháu Tiên",
+            "description": "Lạc Long Quân và Âu Cơ sinh ra bọc trăm trứng, nở thành trăm người con, hình thành nên cội nguồn dân tộc Việt Nam."
+        },
+        {
+            "year": "Thiên niên kỷ 1 TCN",
+            "event": "Nước Văn Lang",
+            "description": "Con trưởng của Lạc Long Quân lên ngôi, lấy hiệu là Hùng Vương, đặt tên nước là Văn Lang, đóng đô ở Phong Châu (Phú Thọ)."
+        }
+    ],
+    "chunks": [
+        {
+            "content": "Thời kỳ Hùng Vương là bước khởi đầu của lịch sử dựng nước Việt Nam, gắn liền với nhà nước Văn Lang cổ đại, được phản ánh qua các truyền thuyết và di tích khảo cổ học như văn hóa Phùng Nguyên, Đồng Đậu, Gò Mun và Đông Sơn.",
+            "metadata": "Bối cảnh lịch sử và khảo cổ"
+        },
+        {
+            "content": "Truyền thuyết Con Rồng cháu Tiên kể rằng Lạc Long Quân lấy giống tiên Âu Cơ sinh ra bọc trăm trứng. Năm mươi người con theo mẹ lên núi, năm mươi người theo cha xuống biển, mở mang bờ cõi. Người con cả lên ngôi lấy hiệu Hùng Vương.",
+            "metadata": "Truyền thuyết nguồn gốc"
+        },
+        {
+            "content": "Các Vua Hùng đã dạy nhân dân cách cày cấy lúa nước, dệt vải, làm nhà sàn để chống thú dữ. Đời sống văn hóa tinh thần cũng rất phong phú với tục ăn trầu, xăm mình, và tín ngưỡng phồn thực.",
+            "metadata": "Đời sống Lạc Việt"
+        }
+    ]
+}

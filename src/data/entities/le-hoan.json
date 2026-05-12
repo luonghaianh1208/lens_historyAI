@@ -1,0 +1,86 @@
+{
+  "id": "le-hoan",
+  "name": "Lê Hoàn",
+  "type": "person",
+  "period": "Tiền Lê",
+  "tags": ["Tiền Lê", "Đinh", "Lê Đại Hành", "Đánh Tống bình Chiêm"],
+  "short_desc": "Vị vua sáng lập nhà Tiền Lê, lãnh đạo nhân dân đánh bại quân Tống xâm lược năm 981.",
+  "status": "ready",
+  "chunksCount": 3,
+  "sourceCount": 1,
+  "verification": {
+    "status": "verified",
+    "confidence": 0.9,
+    "lastChecked": "2026-05-12"
+  },
+  "metadata": {
+    "createdBy": "manual",
+    "createdAt": "2026-05-12",
+    "reviewedBy": "system",
+    "lastUpdated": "2026-05-12"
+  },
+  "persona": {
+    "self": {
+      "tone": "Uy dũng, thực tế, quyết đoán",
+      "perspective": "Từ Thập đạo Tướng quân nhà Đinh, gánh vác giang sơn trong lúc nguy nan, khoác áo long cổn lên ngôi để chống thù trong giặc ngoài.",
+      "key_themes": ["Thập đạo tướng quân", "Đánh Tống bình Chiêm", "Gánh vác giang sơn", "Bảo vệ độc lập"]
+    },
+    "contemporary": {
+      "tone": "Kính phục tài năng quân sự, đôi chút lo ngại về sự chuyển giao quyền lực",
+      "perspective": "Người cùng thời chứng kiến sự kiện Thái hậu Dương Vân Nga khoác áo long bào cho Lê Hoàn, và chiến thắng oanh liệt trước quân Tống.",
+      "key_themes": ["Tài quân sự", "Chiến thắng Bạch Đằng", "Chuyển giao quyền lực"]
+    },
+    "historian": {
+      "tone": "Đánh giá công bằng, ghi nhận công lao to lớn",
+      "perspective": "Một nhà quân sự kiệt xuất, có công lớn trong việc bảo vệ nền độc lập mới giành được, giữ vững biên cương phía Bắc và phía Nam.",
+      "key_themes": ["Đánh Tống", "Bình Chiêm", "Kế tục nhà Đinh", "Lê Đại Hành"]
+    }
+  },
+  "timeline": [
+    {
+      "year": "941",
+      "event": "Lê Hoàn sinh ra tại Ái Châu (nay thuộc Thanh Hóa).",
+      "importance": "low"
+    },
+    {
+      "year": "979",
+      "event": "Trở thành Thập đạo Tướng quân, nắm giữ binh quyền nhà Đinh.",
+      "importance": "high"
+    },
+    {
+      "year": "980",
+      "event": "Lên ngôi Hoàng đế (Lê Đại Hành), sáng lập triều Tiền Lê để chuẩn bị chống Tống.",
+      "importance": "high"
+    },
+    {
+      "year": "981",
+      "event": "Lãnh đạo quân dân Đại Cồ Việt đánh bại quân Tống trên sông Bạch Đằng và ải Chi Lăng.",
+      "importance": "high"
+    },
+    {
+      "year": "982",
+      "event": "Cầm quân đánh Chiêm Thành, bảo vệ biên giới phía Nam.",
+      "importance": "high"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "chunk_1",
+      "content": "Lê Hoàn (941 – 1005) xuất thân trong một gia đình nghèo ở Ái Châu. Nhờ có sức khỏe và tài mưu lược, ông được Đinh Tiên Hoàng trọng dụng, phong làm Thập đạo Tướng quân, Tổng chỉ huy quân đội Đại Cồ Việt. Khi Đinh Tiên Hoàng bị ám hại (979), Đinh Toàn mới 6 tuổi lên ngôi, vận nước lâm nguy khi quân Tống lăm le xâm lược.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_2",
+      "content": "Trước tình thế đó, Thái hậu Dương Vân Nga và các tướng lĩnh đã quyết định khoác áo long bào cho Lê Hoàn, tôn ông lên ngôi Hoàng đế (Lê Đại Hành) năm 980, lập ra nhà Tiền Lê. Ngay sau đó, ông trực tiếp tổ chức và lãnh đạo cuộc kháng chiến chống Tống. Năm 981, quân dân ta đã giành chiến thắng vang dội trên sông Bạch Đằng và ải Chi Lăng, đập tan ý chí xâm lược của kẻ thù.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    },
+    {
+      "id": "chunk_3",
+      "content": "Không chỉ dẹp yên giặc Bắc, Lê Đại Hành còn thân chinh đánh dẹp Chiêm Thành ở phía Nam (982), giữ vững bờ cõi. Trong thời gian trị vì, ông chú trọng phát triển nông nghiệp, đích thân xuống đồng cày ruộng (lễ Tịch điền), cho khơi thông kênh mương, xây dựng một đất nước Đại Cồ Việt vững mạnh trước khi truyền ngôi cho các con.",
+      "source_id": "source_1",
+      "relevance_score": 0.95
+    }
+  ]
+}

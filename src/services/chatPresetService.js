@@ -105,6 +105,240 @@ function withMeta(entityId, perspective, entries) {
 }
 
 const presetCatalog = {
+  'hung-vuong-i': {
+    self: withMeta('hung-vuong-i', 'self', [
+      {
+        question: 'Thưa Vua Hùng, xin ngài cho biết vì sao người Việt lại tự hào là Con Rồng Cháu Tiên?',
+        answer: `Cha ta là Lạc Long Quân mang dòng máu rồng từ Lạc Việt, mẹ ta là Âu Cơ mang cốt cách tiên từ vùng núi cao. Sự kết hợp ấy sinh ra bọc trăm trứng, nở ra trăm người con, tạo nên cội nguồn của toàn bộ dân tộc Việt. Dù là người trên núi hay kẻ miền biển, chúng ta đều chung một gốc gác, chung một bọc mẹ sinh ra.`
+      },
+      {
+        question: 'Ngài đã dạy nhân dân những gì trong buổi đầu dựng nước?',
+        answer: `Thuở khai thiên lập địa, đời sống muôn dân còn muôn vàn khó khăn. Ta đã dạy các con cách đẽo gỗ làm nhà sàn để tránh thú dữ, cách trồng lúa nước để có cái ăn, và cách dệt vải để che thân. Ta muốn mỗi người con Lạc Việt đều có thể tự mình đứng vững trên mảnh đất Xích Quỷ thiêng liêng này.`
+      },
+      {
+        question: 'Ngài mong muốn điều gì nhất ở các thế hệ con cháu Lạc Việt mai sau?',
+        answer: `Ta mong muốn các con dù đi đâu về đâu, lập nghiệp ở phương nào cũng phải nhớ về cội nguồn, nhớ ngày Giỗ Tổ. Các vua Hùng đã có công dựng nước, các con cháu phải cùng nhau giữ lấy nước. Chỉ cần lòng dân đồng thuận, khối đại đoàn kết không đứt gãy, thì dòng giống Lạc Việt sẽ trường tồn cùng trời đất.`
+      }
+    ]),
+    contemporary: withMeta('hung-vuong-i', 'contemporary', [
+      {
+        question: 'Cuộc sống của người dân Lạc Việt dưới thời Vua Hùng diễn ra như thế nào?',
+        answer: `Đời sống của chúng tôi rất chan hòa với thiên nhiên. Dân làng thường sống quần tụ trong các xóm nhỏ ven sông, đàn ông cởi trần đóng khố, phụ nữ mặc váy. Chúng tôi biết cấy lúa bằng gậy chọc lỗ, biết làm bánh chưng bánh giầy dâng lên thần linh, và đặc biệt là tục xăm hình rồng rắn lên mình để không bị thuồng luồng làm hại khi xuống nước.`
+      },
+      {
+        question: 'Người dân thời ấy nghĩ gì về Vua Hùng?',
+        answer: `Đối với chúng tôi, Vua Hùng không chỉ là một vị vua cai trị, mà giống như một người cha lớn của cả cộng đồng. Ngài dạy chúng tôi cách sinh tồn, bảo vệ chúng tôi khỏi thiên tai và thú dữ. Ai cũng hết lòng kính trọng và tin tưởng vào sự dẫn dắt của Vua Hùng.`
+      },
+      {
+        question: 'Văn hóa trống đồng có ý nghĩa thế nào đối với các vị?',
+        answer: `Trống đồng là vật linh thiêng nhất của bản làng. Tiếng trống vang lên là tiếng gọi của tổ tiên, là lệnh tụ họp để tế lễ, mừng mùa màng hay gọi quân lúc có giặc ngoại xâm. Những hình khắc trên trống chính là bức tranh thu nhỏ về cuộc sống bình yên, no ấm mà chúng tôi luôn cầu mong.`
+      }
+    ]),
+    historian: withMeta('hung-vuong-i', 'historian', [
+      {
+        question: 'Sự thật lịch sử nào ẩn sau truyền thuyết Hùng Vương?',
+        answer: `Dưới góc độ khảo cổ và sử học, thời kỳ Hùng Vương tương ứng với thời kỳ phát triển rực rỡ của văn hóa Đông Sơn (thiên niên kỷ 1 TCN). Việc Hùng Vương lập nước Văn Lang phản ánh một quá trình có thật: đó là sự liên kết của các bộ lạc người Việt cổ ở lưu vực sông Hồng để cùng nhau trị thủy và chống giặc ngoại xâm, hình thành nên hình thái nhà nước sơ khai đầu tiên.`
+      },
+      {
+        question: 'Tại sao lại có con số 18 đời vua Hùng?',
+        answer: `Con số 18 không nên hiểu theo nghĩa đen là đúng 18 cá nhân cai trị, vì thời đại Văn Lang kéo dài hàng ngàn năm. Trong quan niệm văn hóa Á Đông, số 9 và bội số của nó (18) là con số biểu trưng cho sự viên mãn, thiêng hiện và phát triển. Vì vậy, "18 đời Vua Hùng" là cách người xưa khái quát về một thời kỳ lịch sử dài và có tính kế thừa liên tục.`
+      },
+      {
+        question: 'Tín ngưỡng thờ cúng Hùng Vương có vai trò gì trong lịch sử Việt Nam?',
+        answer: `Tín ngưỡng thờ cúng Hùng Vương là một hiện tượng văn hóa độc đáo hiếm có trên thế giới. Nó tạo ra một biểu tượng cội nguồn chung, sợi dây gắn kết tinh thần vô hình nhưng cực kỳ bền chặt. Nhờ niềm tin chung một tổ tiên này, người Việt đã vượt qua được hàng ngàn năm Bắc thuộc và nhiều cuộc chiến tranh vệ quốc mà không bị đồng hóa hay tan rã.`
+      }
+    ])
+  },
+  'son-tinh-thuy-tinh': {
+    self: withMeta('son-tinh-thuy-tinh', 'self', [
+      {
+        question: 'Sơn Tinh, vì sao ngài lại chiến thắng Thủy Tinh trong cuộc chiến giành Mỵ Nương?',
+        answer: `Ta chiến thắng không chỉ vì ta đến trước dâng sính lễ voi chín ngà, gà chín cựa. Ta thắng vì sức mạnh của ta gắn liền với sự sống của muôn dân trên cạn. Khi Thủy Tinh dâng nước làm ngập nhà cửa, ruộng đồng, ta đã hóa phép dời non lấp biển. Nước dâng cao bao nhiêu, ta nâng núi cao lên bấy nhiêu. Ý chí bảo vệ sự sống bao giờ cũng mạnh hơn sức mạnh hủy diệt.`
+      },
+      {
+        question: 'Sính lễ mà Vua Hùng yêu cầu có ý nghĩa gì đối với ngài?',
+        answer: `Voi chín ngà, gà chín cựa, ngựa chín hồng mao đều là những sản vật quý hiếm của núi rừng. Vua Hùng đưa ra thách cưới đó không phải làm khó, mà ngầm ưu ái cho ta — chúa tể non cao. Điều đó cho thấy từ thuở hồng hoang, người Việt đã chọn bám trụ vào đất đai, núi rừng để sinh tồn và phát triển vững chắc.`
+      },
+      {
+        question: 'Trận chiến ấy có bao giờ thực sự kết thúc không?',
+        answer: `Dù ta đã đẩy lùi Thủy Tinh, nhưng bản tính của hắn là hung hãn và thù dai. Mỗi năm hắn lại dâng nước đánh ta một lần. Nhưng ta và muôn dân không bao giờ lùi bước. Hắn có lũ lụt, ta có núi đồi và những con đê vững chãi. Cuộc chiến này là cuộc đấu tranh trường kỳ để bảo vệ mùa màng và cuộc sống bình yên.`
+      }
+    ]),
+    contemporary: withMeta('son-tinh-thuy-tinh', 'contemporary', [
+      {
+        question: 'Mỗi khi Thủy Tinh dâng nước dâng lũ, cảnh tượng lúc đó ra sao?',
+        answer: `Kinh khủng lắm! Mưa to gió lớn liên miên, sấm sét ầm ầm. Nước sông dâng lên cuồn cuộn, nhấn chìm cả đồng lúa, nhà cửa, gia súc. Chúng tôi phải dìu dắt nhau chạy lên vùng đất cao. Lúc đó, Thủy Tinh giận dữ tột cùng, tưởng chừng như muốn nuốt chửng cả thế gian vì thù hận không lấy được Mỵ Nương.`
+      },
+      {
+        question: 'Tại sao dân làng lại luôn đặt niềm tin tuyệt đối vào Sơn Tinh?',
+        answer: `Vì Sơn Tinh chưa bao giờ bỏ rơi chúng tôi. Mỗi khi nước dâng, chúng tôi lại thấy phép lạ của ngài: đất đá được đùn lên thành những gò đống, đê điều vững chắc chặn đứng dòng nước dữ. Ngài dạy chúng tôi cách đắp đê, trị thủy. Nhờ có ngài bảo vệ, chúng tôi mới có đất để an cư lập nghiệp.`
+      },
+      {
+        question: 'Câu chuyện này được dân làng kể lại cho thế hệ sau như thế nào?',
+        answer: `Chúng tôi luôn dặn dò con cháu: Thủy Tinh năm nào cũng sẽ quay lại báo thù. Vì thế, không bao giờ được lơ là việc đắp đê, đào mương, chuẩn bị đối phó với mùa mưa bão. Câu chuyện về hai vị thần chính là lời nhắc nhở về sức mạnh đoàn kết của con người trước sự tàn khốc của thiên tai.`
+      }
+    ]),
+    historian: withMeta('son-tinh-thuy-tinh', 'historian', [
+      {
+        question: 'Cốt lõi lịch sử của truyền thuyết Sơn Tinh - Thủy Tinh là gì?',
+        answer: `Truyền thuyết này là sự thần thoại hóa công cuộc trị thủy vĩ đại của người Việt cổ ở lưu vực sông Hồng. Giai đoạn lập nước Văn Lang cũng là lúc cư dân nông nghiệp lúa nước phải đối mặt với đặc điểm khí hậu gió mùa, mưa bão lũ lụt hàng năm (Thủy Tinh). Việc đắp đê, chống lũ, bảo vệ sản xuất chính là sức mạnh của Sơn Tinh.`
+      },
+      {
+        question: 'Hình tượng Sơn Tinh có ý nghĩa văn hóa như thế nào?',
+        answer: `Sơn Tinh (Tản Viên Sơn Thánh) không chỉ là một nhân vật trong truyện cổ tích, mà được suy tôn là vị thần đứng đầu trong "Tứ bất tử" của tín ngưỡng dân gian Việt Nam. Ngài đại diện cho khát vọng và khả năng chinh phục thiên nhiên, bảo vệ sự sống và xây dựng một nền nông nghiệp ổn định của người Việt.`
+      },
+      {
+        question: 'Cuộc thi tài kén rể phản ánh điều gì về tổ chức xã hội thời bấy giờ?',
+        answer: `Cuộc thi tài kén rể phản ánh tư duy lựa chọn liên minh của nhà nước Văn Lang sơ khai. Vua Hùng chọn Sơn Tinh, nghĩa là ưu tiên phương thức sinh tồn dựa trên đất đai vững chãi và khai thác lâm thổ sản, thay vì phụ thuộc hoàn toàn vào nguồn nước chứa đựng nhiều rủi ro, thiên tai khó lường.`
+      }
+    ])
+  },
+  'an-duong-vuong': {
+    self: withMeta('an-duong-vuong', 'self', [
+      {
+        question: 'Điều gì khiến ngài quyết định dời đô về Cổ Loa và xây dựng tòa thành hình ốc?',
+        answer: `Ta dời đô xuống vùng đồng bằng vì đất ấy rộng rãi, dân cư đông đúc, thuận tiện cho việc canh tác và giao thương. Xây thành Cổ Loa chín vòng xoắn ốc là để có một căn cứ quân sự kiên cố nhất, kết hợp hào sâu và sông ngòi làm rào chắn tự nhiên. Khi quân Tần xâm lược, chính cấu trúc thành vững chãi này đã giúp quân ta phòng thủ và phản công đắc lực.`
+      },
+      {
+        question: 'Ngài cảm thấy thế nào về sức mạnh của nỏ thần?',
+        answer: `Nỏ thần (Liên trâu nỏ) do tướng Cao Lỗ chế tạo là niềm tự hào lớn nhất của quân đội Âu Lạc. Một phát bắn ra hàng loạt mũi tên đồng sắc bén, kẻ thù dù đông đến mấy cũng phải khiếp vía. Đáng tiếc... chính vì quá ỷ lại vào thứ vũ khí vô song ấy mà ta sinh ra chủ quan, lơ là cảnh giác trước những mưu mô hiểm độc.`
+      },
+      {
+        question: 'Nỗi hối hận lớn nhất của ngài trước khi kết thúc cuộc đời là gì?',
+        answer: `Là sự cả tin! Ta đã cho Trọng Thủy ở rể mà không mường tượng được dã tâm của cha con Triệu Đà. Ta đã tự tay chém đầu con gái Mỵ Châu vì tội rắc lông ngỗng chỉ đường cho giặc... Nỗi đau mất con hòa cùng nỗi nhục mất nước khiến ta ân hận tột cùng. Bài học bằng máu ấy, mong đời sau ngàn năm đừng ai lặp lại.`
+      }
+    ]),
+    contemporary: withMeta('an-duong-vuong', 'contemporary', [
+      {
+        question: 'Ký ức của ông về quá trình xây dựng thành Cổ Loa là gì?',
+        answer: `Gian khổ lắm. Ngày ngày chúng tôi phải đắp đất, đào hào. Thậm chí có lúc thành đắp xong lại lở, tưởng chừng không xong nổi. Nhưng Vua An Dương Vương rất quyết tâm, lại có thần Rùa Vàng hiển linh giúp đỡ. Khi tòa thành chín vòng xoắn ốc hoàn thành, nó sừng sững uy nghi, không kẻ thù nào dám coi thường nước Âu Lạc nữa.`
+      },
+      {
+        question: 'Trong mắt binh lính, nỏ thần uy lực đến mức nào?',
+        answer: `Nỏ thần là thứ vũ khí đáng sợ nhất mà chúng tôi từng thấy. Những mũi tên đồng ba cạnh lao đi vun vút, xuyên phá mọi lớp giáp của quân Triệu Đà. Cứ mỗi lần nỏ thần được giương lên, giặc chết như ngả rạ, quân ta tinh thần lên cao ngùn ngụt. Lúc đó, ai cũng đinh ninh rằng có nỏ thần thì đất nước vĩnh viễn thái bình.`
+      },
+      {
+        question: 'Khi thành Cổ Loa thất thủ, tâm trạng của quân dân ra sao?',
+        answer: `Đó là một sự kinh hoàng tột độ! Quân Triệu ập đến quá nhanh, Vua mang nỏ thần ra bắn thì mới biết lẫy nỏ đã bị tráo. Không còn vũ khí mạnh, thành lũy bị phá vỡ, mọi người bỏ chạy tán loạn. Cảm giác từ đỉnh cao vinh quang rơi xuống vực sâu mất nước thật sự quá xót xa và bàng hoàng.`
+      }
+    ]),
+    historian: withMeta('an-duong-vuong', 'historian', [
+      {
+        question: 'Sự ra đời của nước Âu Lạc có ý nghĩa gì so với nhà nước Văn Lang?',
+        answer: `Âu Lạc là một bước tiến lớn gọn về tổ chức xã hội và quân sự. An Dương Vương đã hợp nhất thành công Âu Việt và Lạc Việt, mở rộng lãnh thổ và dời trọng tâm quốc gia từ vùng bán sơn địa (Phong Châu) xuống vùng đồng bằng (Cổ Loa). Sự ra đời của Âu Lạc đánh dấu sự chuyển biến từ liên minh bộ lạc sang một cấu trúc nhà nước có quân đội quy chuẩn và vũ khí tiên tiến hơn.`
+      },
+      {
+        question: 'Dưới góc nhìn quân sự, thành Cổ Loa và mũi tên đồng có giá trị thế nào?',
+        answer: `Thành Cổ Loa là công trình kiến trúc quân sự quy mô và sáng tạo bậc nhất Đông Nam Á thời cổ đại, kết hợp nhuần nhuyễn giữa yếu tố tự nhiên (sông Hoàng) và nhân tạo (vòng thành đất). Khảo cổ học cũng đã tìm thấy hàng vạn mũi tên đồng 3 cạnh tại đây, chứng minh "nỏ thần" không chỉ là truyền thuyết mà dựa trên một cuộc cách mạng kỹ thuật về vũ khí tầm xa của quân đội Âu Lạc.`
+      },
+      {
+        question: 'Bài học lịch sử lớn nhất từ sự sụp đổ của Âu Lạc là gì?',
+        answer: `Sự sụp đổ của Âu Lạc để lại bài học kinh điển về sự kết hợp giữa "cứng" và "mềm" trong bảo vệ tổ quốc. Vũ khí tối tân (nỏ thần) và thành trì kiên cố (Cổ Loa) không thể thay thế cho sự cảnh giác cao độ và sáng suốt trong chính trị. Câu chuyện Mỵ Châu - Trọng Thủy là sự cảnh báo muôn đời về hoạt động gián điệp và việc để lộ bí mật quốc gia.`
+      }
+    ])
+  },
+  'ba-trieu': {
+    self: withMeta('ba-trieu', 'self', [
+      { question: "Bà Triệu, vì sao người lại quyết định khởi nghĩa thay vì an phận?", answer: "Ta muốn cưỡi cơn gió mạnh, đạp luồng sóng dữ, chém cá kình ở biển Đông, đánh đuổi quân Ngô, giành lại giang sơn, cởi ách nô lệ, chứ đâu chịu khom lưng làm tì thiếp cho người!" },
+      { question: "Cảm giác của người thế nào khi chỉ huy trận chiến?", answer: "Khi ta mặc áo giáp vàng, cưỡi voi trắng ra trận, nhìn quân Ngô khiếp vía bỏ chạy, ta thấy ngọn lửa căm hờn trong lòng quân dân ta đã biến thành sức mạnh vô song!" },
+      { question: "Người có ân hận gì về kết cục tại núi Tùng không?", answer: "Làm tướng ra trận, da ngựa bọc thây là chuyện thường tình. Ta chỉ hận chưa quét sạch được quân thù, nhưng ta tin chí khí của ta sẽ còn lưu truyền mãi trong tâm khảm người Nam." }
+    ]),
+    contemporary: withMeta('ba-trieu', 'contemporary', [
+      { question: "Ngươi thấy Nhụy Kiều Tướng Quân lúc ra trận thế nào?", answer: "Uy dũng vô ngần! Chủ tướng chúng ta cưỡi Bạch Tượng, áo giáp vàng chói lọi, khiến giặc Ngô chưa đánh đã run sợ, thốt lên rằng vung giáo đánh hổ còn dễ hơn đối diện Bà Vương." },
+      { question: "Điều gì khiến các ngươi nguyện sống chết theo Bà Triệu?", answer: "Vì ý chí của bà quá lớn lao! Bà không cam chịu làm nô lệ, lời nói của bà như lửa đốt cháy sự hèn nhát, đánh thức khí phách của mọi người dân Cửu Chân." },
+      { question: "Sự hy sinh của bà để lại niềm đau nào?", answer: "Tiếng khóc vang vọng cả núi Tùng... Nhưng đó không phải là tiếng khóc tuyệt vọng, mà là tiếng khóc khắc cốt ghi tâm, thề không đội trời chung với quân xâm lược." }
+    ]),
+    historian: withMeta('ba-trieu', 'historian', [
+      { question: "Đánh giá của ông về câu nói 'cưỡi cơn gió mạnh' của Bà Triệu?", answer: "Đó là một tuyên ngôn độc lập đầy kiêu hãnh của phụ nữ Việt Nam thời Bắc thuộc. Câu nói vượt qua những khuôn phép Nho giáo đương thời, thể hiện tinh thần dân tộc và khát vọng tự do mãnh liệt." },
+      { question: "Vì sao khởi nghĩa Bà Triệu lại thất bại?", answer: "Mặc dù có tinh thần chiến đấu anh dũng, nhưng do lực lượng quá chênh lệch, giặc Ngô cử danh tướng Lục Dận sang đàn áp và dùng nhiều thủ đoạn mua chuộc, chia rẽ nội bộ, khiến nghĩa quân không thể trụ vững." },
+      { question: "Khởi nghĩa Bà Triệu có ý nghĩa như thế nào trong lịch sử?", answer: "Dù diễn ra ngắn ngủi (năm 248), cuộc khởi nghĩa là gạch nối quan trọng, giữ vững ngọn lửa đấu tranh giải phóng dân tộc sau khởi nghĩa Hai Bà Trưng, khẳng định sức sống mãnh liệt của người Việt." }
+    ])
+  },
+  'hai-ba-trung': {
+    self: withMeta('hai-ba-trung', 'self', [
+      { question: "Thưa Trưng Nữ Vương, động lực lớn nhất để phất cờ khởi nghĩa là gì?", answer: "Một xin rửa sạch nước thù, hai xin dựng lại nghiệp xưa họ Hùng! Cái chết của Thi Sách do Tô Định tàn ác gây ra chỉ là giọt nước tràn ly, nợ nước thù nhà buộc ta và em gái Trưng Nhị phải đứng lên!" },
+      { question: "Cảm giác của người khi 65 thành trì đều quy phục?", answer: "Đó là sức mạnh của lòng dân! Lĩnh Nam ta không thiếu anh hùng, đặc biệt là nữ nhi. Bọn giặc Hán như cành khô lá mục trước bão táp của toàn dân ta." },
+      { question: "Người có hối tiếc khi phải tuẫn tiết tại sông Hát?", answer: "Không! Nước đã mất, thân này thà gieo xuống dòng Hát giang để giữ trọn khí tiết, chứ quyết không để rơi vào tay giặc Mã Viện. Anh linh chúng ta sẽ mãi phù hộ độ trì cho đất Việt." }
+    ]),
+    contemporary: withMeta('hai-ba-trung', 'contemporary', [
+      { question: "Uy danh của Hai Bà lúc bấy giờ lớn như thế nào?", answer: "Trời ơi, sấm sét Lĩnh Nam! Lời hiệu triệu ban ra, anh hùng hào kiệt, nữ tướng khắp bốn phương hội tụ về Mê Linh. Tô Định cắt tóc cạo râu trốn chui trốn lủi về nước, thật hả dạ!" },
+      { question: "Quân Hán dưới trướng Mã Viện có đáng sợ không?", answer: "Mã Viện là cáo già, quân chúng đông như kiến, giáo mác sáng ngời. Chúng ta đánh rất anh dũng ở Lãng Bạc, nhưng thế giặc quá mạnh, lại thêm dịch bệnh, đành phải lui về Cấm Khê..." },
+      { question: "Người dân nghĩ gì sau sự hy sinh của Hai Bà?", answer: "Lòng đau như cắt... Nhưng sự hy sinh ấy là bất tử! Hai Bà đã đập tan ách thống trị tàn bạo, chứng minh rằng người Việt ta, dù là nữ nhi, cũng có thể xưng vương xưng đế, không chịu làm nô lệ." }
+    ]),
+    historian: withMeta('hai-ba-trung', 'historian', [
+      { question: "Khởi nghĩa Hai Bà Trưng mang ý nghĩa lịch sử gì thưa ông?", answer: "Đây là cuộc khởi nghĩa quy mô lớn đầu tiên của người Việt trong thời Bắc thuộc. Việc Trưng Trắc xưng vương là lời khẳng định mạnh mẽ về chủ quyền, bản sắc và ý chí độc lập của dân tộc." },
+      { question: "Sự thất bại trước Mã Viện phản ánh điều gì?", answer: "Nó phản ánh sự chênh lệch quá lớn về tiềm lực quân sự, tổ chức và kinh nghiệm chiến trường giữa chính quyền non trẻ của Trưng Vương và đế chế Đông Hán hùng mạnh lúc bấy giờ." },
+      { question: "Vai trò của phụ nữ trong cuộc khởi nghĩa này được đánh giá ra sao?", answer: "Vô cùng độc đáo và tự hào. Rất nhiều tướng lĩnh nòng cốt là nữ giới. Điều này cho thấy tàn dư của chế độ mẫu hệ và vị thế cao của người phụ nữ Việt cổ trước khi Nho giáo du nhập." }
+    ])
+  },
+  'phung-hung': {
+    self: withMeta('phung-hung', 'self', [
+      { question: "Bố Cái Đại Vương, sức mạnh đánh hổ của ngài từ đâu mà có?", answer: "Sinh ra ở đất Đường Lâm, núi non hiểm trở đã rèn cho ta gân cốt vững vàng. Cánh tay này vác nai quật trâu, huống hồ gì loài thú dữ hay loài giặc cướp bóc dân lành!" },
+      { question: "Điều gì khiến ngài dấy binh chống Cao Chính Bình?", answer: "Cao Chính Bình cai trị tàn ác, vơ vét máu mủ của bá tánh. Nhìn cảnh dân lầm than, thân làm hào trưởng, sao ta có thể ngồi yên mà không giương cờ tụ nghĩa?" },
+      { question: "Ngài có cảm nghĩ gì khi tiến vào thành Tống Bình?", answer: "Thấy giặc Cao Chính Bình lo sợ mà chết, ta biết thiên mệnh đã thuận. Đem lại thái bình cho Tống Bình là tâm nguyện lớn nhất của ta và các huynh đệ." }
+    ]),
+    contemporary: withMeta('phung-hung', 'contemporary', [
+      { question: "Ngài Phùng Hưng trong mắt nhân dân Đường Lâm là người thế nào?", answer: "Ngài ấy như thần nhân! Sức mạnh đả hổ trừ hại cho dân, lại có lòng nhân đức bao la. Ai ai cũng nể phục mà tự nguyện theo ngài khởi nghĩa." },
+      { question: "Vì sao dân chúng gọi ngài là Bố Cái Đại Vương?", answer: "Vì ân đức của ngài to lớn như trời biển, ngài chăm lo cho dân như cha mẹ (bố cái) chăm lo cho con cái. Danh xưng ấy là tấm lòng thành kính tột độ của chúng tôi." },
+      { question: "Cảnh vây hãm thành Tống Bình diễn ra thế nào?", answer: "Khí thế ngút trời! Nghĩa quân chia làm nhiều đạo, tiếng chiêng trống vang vọng cả cõi. Bọn giặc Đường co rúm trong thành, cuối cùng tên đô hộ phải sợ hãi mà bỏ mạng." }
+    ]),
+    historian: withMeta('phung-hung', 'historian', [
+      { question: "Đánh giá của ông về sức mạnh của cuộc khởi nghĩa Phùng Hưng?", answer: "Đây là một phong trào giải phóng dân tộc quy mô lớn do các tầng lớp hào trưởng địa phương lãnh đạo, phản ánh sự trưởng thành về mặt thế lực và ý thức tự tôn của người Việt dưới ách nhà Đường." },
+      { question: "Danh xưng 'Bố Cái Đại Vương' nói lên điều gì?", answer: "Danh xưng này cho thấy sự dung hợp sâu sắc giữa tín ngưỡng dân gian và lịch sử. Nhân dân đã thần thánh hóa Phùng Hưng, tôn vinh ông như một vị thần bảo hộ vĩ đại của đất nước." },
+      { question: "Hệ quả của khởi nghĩa Phùng Hưng đối với nhà Đường?", answer: "Mặc dù sau khi Phùng Hưng mất, nhà Đường lại khôi phục ách đô hộ, nhưng cuộc khởi nghĩa đã giáng một đòn chí mạng vào hệ thống cai trị, làm suy yếu uy quyền của chúng tại An Nam đô hộ phủ." }
+    ])
+  },
+  'dinh-bo-linh': {
+    self: withMeta('dinh-bo-linh', 'self', [
+      { question: "Ngài đã làm cách nào để dẹp yên 12 sứ quân đang cát cứ khắp nơi?", answer: "Trong cảnh nước nhà chia cắt, lòng dân ly tán, ta phải dùng cả ân uy và mưu trí. Kẻ nào thuận thì vỗ về che chở, kẻ nào chống đối thì phải dùng binh uy để trừng trị. Chỉ có gom về một mối thì Đại Cồ Việt mới mong được trường tồn." },
+      { question: "Vì sao ngài xưng là Hoàng đế chứ không xưng Vương như trước?", answer: "Xưng Vương vẫn là bề dưới của phương Bắc. Ta xưng Hoàng đế, đặt quốc hiệu Đại Cồ Việt, dựng niên hiệu Thái Bình là để khẳng định Nam Việt ta ngang hàng với Bắc triều, non sông này do người Nam làm chủ!" },
+      { question: "Cảm giác của ngài khi xây dựng kinh đô Hoa Lư?", answer: "Hoa Lư núi non hiểm trở, như một bức thành đồng tự nhiên. Dựng đô ở đây là để lấy thế thủ vững chắc, rèn luyện binh sĩ, củng cố triều chính trước những thế lực ngoại bang dòm ngó." }
+    ]),
+    contemporary: withMeta('dinh-bo-linh', 'contemporary', [
+      { question: "Trong mắt bách tính, Đinh Tiên Hoàng là người như thế nào?", answer: "Vạn Thắng Vương uy phong lẫm liệt! Ngài đi đến đâu, sứ quân đầu hàng đến đó. Nhờ có ngài mà bá tánh thoát khỏi cảnh chém giết lẫn nhau, đất nước lại được thái bình." },
+      { question: "Cảnh triều đình ở Hoa Lư lúc đó uy nghiêm ra sao?", answer: "Rất uy nghiêm và kỷ luật. Vua đặt vạc dầu lớn và nuôi hổ dữ ở thềm điện để trừng trị kẻ phản quốc. Ai nấy đều răm rắp tuân theo pháp luật, không ai dám làm trái." },
+      { question: "Khi hay tin vua bị ám sát, kinh thành phản ứng thế nào?", answer: "Cả Hoa Lư rúng động! Đêm đó trời đất u ám, trăm họ bàng hoàng than khóc. Mọi người đều lo sợ phương Bắc sẽ nhân cơ hội này mà kéo quân sang xâm lược." }
+    ]),
+    historian: withMeta('dinh-bo-linh', 'historian', [
+      { question: "Đinh Tiên Hoàng có vị trí nào trong tiến trình lịch sử Việt Nam?", answer: "Ông là người hoàn thành sự nghiệp thống nhất đất nước sau nhiều năm loạn lạc, đồng thời là vị vua đầu tiên thiết lập một nhà nước phong kiến trung ương tập quyền mang tính độc lập hoàn toàn." },
+      { question: "Việc xưng Đế và đặt niên hiệu có ý nghĩa gì đặc biệt?", answer: "Đó là một cột mốc ngoại giao và chính trị cực kỳ quan trọng. Nó cắt đứt tư tưởng lệ thuộc, khẳng định quyền tự chủ tuyệt đối và ý chí độc lập vĩnh viễn của dân tộc." },
+      { question: "Vì sao nhà Đinh lại tồn tại quá ngắn ngủi?", answer: "Do Đinh Tiên Hoàng không sớm định đoạt người kế vị vững chắc và việc ông bị ám hại đột ngột đã tạo ra một khoảng trống quyền lực quá lớn, dẫn đến sự tranh giành nội bộ và nguy cơ ngoại xâm." }
+    ])
+  },
+  'le-hoan': {
+    self: withMeta('le-hoan', 'self', [
+      { question: "Khoác lên mình chiếc áo long bào trong lúc nguy nan, ngài có chần chừ không?", answer: "Giặc Tống lăm le ngoài bờ cõi, xã tắc ngàn cân treo sợi tóc, vua Đinh thì còn quá nhỏ. Ta nhận áo long cổn từ Thái hậu Dương Vân Nga là nhận lấy mệnh trời, gánh vác việc giữ gìn bờ cõi, sao có thể chần chừ!" },
+      { question: "Trận Bạch Đằng năm 981 diễn ra ác liệt thế nào?", answer: "Sông Bạch Đằng cuộn sóng! Ta dùng lại kế cắm cọc gỗ của Ngô vương, kết hợp với phục binh hai bên bờ. Giặc Tống cậy đông nhưng mắc mưu, thuyền vỡ tan tành. Đại Cồ Việt ta lại một lần nữa oai hùng chiến thắng." },
+      { question: "Vì sao ngài lại thân chinh đi cày ruộng Tịch điền?", answer: "Dân dĩ thực vi thiên - dân lấy cái ăn làm trời. Ta đích thân xuống đồng cày ruộng là để làm gương cho thiên hạ, khuyên bảo bá tánh chăm lo nông tang, có thực mới vực được đạo nước." }
+    ]),
+    contemporary: withMeta('le-hoan', 'contemporary', [
+      { question: "Ông thấy Lê Hoàn là một vị tướng như thế nào?", answer: "Lê Hoàn là Thập đạo tướng quân lừng lẫy, sức khỏe hơn người, túc trí đa mưu. Khi ngài chỉ huy đánh Tống, binh sĩ ai nấy đều một lòng xông pha, quyết tử cho tổ quốc quyết sinh." },
+      { question: "Bá tánh nghĩ gì khi Thái hậu trao áo long bào cho Lê Hoàn?", answer: "Ban đầu cũng có người e ngại sự đổi ngôi, nhưng trước thế giặc hung tàn, ai cũng hiểu chỉ có vị tướng dạn dày sương gió như Lê Hoàn mới đủ sức bảo vệ đất nước. Mọi người đều tung hô vạn tuế." },
+      { question: "Lễ Tịch điền đã tác động đến dân chúng ra sao?", answer: "Nhìn Hoàng đế xắn quần lội bùn cày ruộng, bá tánh vô cùng cảm động. Ai nấy đều hăng hái làm lụa, trồng lúa. Nước Đại Cồ Việt từ đó mùa màng bội thu, kho tàng no ấm." }
+    ]),
+    historian: withMeta('le-hoan', 'historian', [
+      { question: "Đánh giá vai trò của Lê Đại Hành trong việc bảo vệ độc lập?", answer: "Ông là một nhà quân sự kiệt xuất, đã lãnh đạo nhân dân đánh tan quân Tống ở phía Bắc và dẹp yên Chiêm Thành ở phía Nam, giữ vững nền độc lập vừa được định hình dưới thời nhà Đinh." },
+      { question: "Việc chuyển giao quyền lực từ nhà Đinh sang nhà Tiền Lê có hợp lý không?", answer: "Trong bối cảnh đất nước lâm nguy, đó là một cuộc chuyển giao cần thiết và hợp quy luật. Nó cho thấy lợi ích quốc gia dân tộc đã được đặt lên trên lợi ích của một dòng họ." },
+      { question: "Di sản lớn nhất của nhà Tiền Lê để lại là gì?", answer: "Đó là một đất nước được củng cố vững chắc về mặt quân sự, biên cương ổn định, nông nghiệp phát triển (lễ Tịch điền), tạo tiền đề vững chắc cho kỷ nguyên phát triển rực rỡ của nhà Lý sau này." }
+    ])
+  },
+  'ly-cong-uan': {
+    self: withMeta('ly-cong-uan', 'self', [
+      { question: "Vì sao ngài quyết định dời đô từ Hoa Lư về Thăng Long?", answer: "Hoa Lư núi non hiểm trở, chỉ hợp để phòng thủ. Còn thành Đại La ở nơi trung tâm trời đất, thế đất rồng cuộn hổ ngồi, địa thế rộng rãi bằng phẳng. Muốn mưu nghiệp lớn muôn đời, mang lại thái bình cho bá tánh, ta phải dời đô về nơi tụ hội trọng yếu ấy." },
+      { question: "Xuất thân từ cửa Phật đã ảnh hưởng thế nào đến cách ngài trị quốc?", answer: "Đức Phật dạy lòng từ bi vô lượng. Ta lên ngôi không dùng đến binh đao chém giết. Ta chuộng hòa bình, giảm nhẹ hình phạt, tha thuế cho dân, mong sao thiên hạ đều được sống trong cảnh an lạc, không còn oán thán." },
+      { question: "Khi nhìn thấy rồng vàng bay lên ở Đại La, ngài nghĩ gì?", answer: "Đó là điềm lành trời ban! Rồng vàng (Thăng Long) cất cánh tượng trưng cho vận nước đang lên. Lúc đó ta đã biết quyết định dời đô của mình là thuận ý trời, hợp lòng người." }
+    ]),
+    contemporary: withMeta('ly-cong-uan', 'contemporary', [
+      { question: "Vì sao quần thần lại tôn Lý Công Uẩn lên ngôi?", answer: "Sau sự tàn bạo của Lê Long Đĩnh, lòng người oán hận. Tả Thân vệ Lý Công Uẩn lại là người hiền từ, đức độ, được thiền sư Vạn Hạnh ủng hộ. Tôn ngài lên ngôi là sự lựa chọn mang lại ánh sáng cho Đại Cồ Việt." },
+      { question: "Cảnh tượng dời đô diễn ra như thế nào?", answer: "Thật hào hùng! Thuyền rồng rợp bóng cờ lọng xuôi dòng sông, binh sĩ và dân chúng nô nức tiến về vùng đất mới. Khi đến bến, ai cũng nhìn thấy điềm rồng vàng bay lên, tiếng reo hò vang dậy cả khúc sông." },
+      { question: "Cuộc sống dưới triều Lý Thái Tổ có gì khác biệt?", answer: "Thái bình và no ấm. Vua tha thuế 3 năm, đốt bỏ ngục cụ, ai nấy đều được an cư lạc nghiệp. Tiếng chuông chùa vang rền khắp chốn, người người hướng thiện, thật sự là một thời đại vàng son." }
+    ]),
+    historian: withMeta('ly-cong-uan', 'historian', [
+      { question: "Quyết định dời đô của Lý Công Uẩn mang tính chiến lược ra sao?", answer: "Đó là một bước ngoặt vĩ đại, chuyển từ tư thế phòng thủ sang vị thế phát triển mở rộng. Việc chọn Thăng Long làm tâm điểm đã mở ra một kỷ nguyên phát triển rực rỡ về kinh tế, văn hóa và chính trị cho văn minh Đại Việt." },
+      { question: "Yếu tố Phật giáo đóng vai trò gì trong việc thành lập nhà Lý?", answer: "Phật giáo thời kỳ này không chỉ là tôn giáo mà còn là nền tảng hệ tư tưởng chính trị. Sự ủng hộ của giới tinh hoa Phật giáo (như thiền sư Vạn Hạnh) đã tạo tính chính danh mạnh mẽ, giúp nhà Lý thay thế nhà Tiền Lê một cách hòa bình." },
+      { question: "Di sản lớn nhất của Lý Thái Tổ là gì?", answer: "Ông không chỉ là người sáng lập ra vương triều kéo dài hơn 200 năm, mà còn để lại một tầm nhìn vượt thời đại qua 'Chiếu dời đô', xây dựng nên thủ đô ngàn năm văn hiến của dân tộc Việt Nam." }
+    ])
+  },
   'ho-chi-minh': {
     self: withMeta('ho-chi-minh', 'self', [
       {
