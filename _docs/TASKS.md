@@ -12,6 +12,7 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-25: Fix Admin Dashboard routing and rendering errors (isEntityVerified passing object, translate to VN, default approval) — 2026-05-13
 - [x] TASK-24: Refactor UI Header ra component GlobalHeader, sửa lỗi logo, favicon — 2026-05-13
 - [x] TASK-23: Quản lý người dùng nâng cao cho Admin (Role switch, Delete accounts) — 2026-05-13
 - [x] Tích hợp UserMenu vào header Home page — 2026-05-13

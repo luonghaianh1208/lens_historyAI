@@ -279,3 +279,10 @@
 ## [2026-04-28] — Fix bugs và đồng bộ codebase
 ### Đã sửa
 - BUG-001–004: đổi tên claudeApi→geminiApi, SSE buffer, route Teacher, gỡ @anthropic-ai/sdk
+
+ # # #   [ 2 0 2 6 - 0 5 - 1 3 ]   -   T A S K - 2 5 :   F i x   A d m i n   D a s h b o a r d 
+ -   F i x e d   a n   i s s u e   c a u s i n g   t h e   A d m i n   D a s h b o a r d   t o   c r a s h   b y   e n s u r i n g   i s E n t i t y V e r i f i e d   c h e c k s   r e c e i v e   c o r r e c t   p a r a m e t e r   ( I D   s t r i n g   i n s t e a d   o f   o b j e c t   r e f e r e n c e ) . 
+ -   F u l l y   t r a n s l a t e d   A d m i n D a s h b o a r d   t o   V i e t n a m e s e . 
+ -   T e m p o r a r i l y   s e t   i s E n t i t y V e r i f i e d   t o   t r u e   t o   a p p r o v e   a l l   e x i s t i n g   A I   c o n t e n t   b y   d e f a u l t ,   p e r   u s e r   r e q u e s t . 
+ -   P u s h e d   a l l   c o d e   t o   r e p o s i t o r y   t o   r e s o l v e   N e t l i f y   e r r o r s .  
+ 
