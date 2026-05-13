@@ -180,3 +180,18 @@ export async function getPendingPosts() {
   const snap = await getDocs(q)
   return snap.docs.map(d => ({ id: d.id, ...d.data() }))
 }
+
+export async function setUserRole(uid, role) {
+  await updateDoc(doc(db, 'users', uid), { role })
+}
+
+export async function deleteUserAccount(uid, idToken) {
+  const res = await fetch('/api/admin-users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'delete', uid, idToken })
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data.error || 'Xóa tài khoản thất bại')
+  return data
+}

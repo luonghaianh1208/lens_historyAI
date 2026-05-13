@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { getAnalyticsData, exportAnalytics, clearAnalytics } from '../services/analytics'
 import { getAllEntities, getEntityStatus, isEntityVerified } from '../services/retrieval'
 import { useAuthContext } from '../contexts/AuthContext'
-import { getPendingPosts, updatePostStatus, deletePost, getAllUsers, banUser } from '../services/forumService'
+import { getPendingPosts, updatePostStatus, deletePost, getAllUsers, banUser, setUserRole, deleteUserAccount } from '../services/forumService'
+import { auth } from '../services/firebase'
 
 export default function AdminDashboard() {
   const { user, userProfile, isAdmin, loading: authLoading } = useAuthContext()
@@ -67,6 +68,30 @@ export default function AdminDashboard() {
     if (!confirm(`Xác nhận ${action} người dùng này?`)) return
     await banUser(uid, !currentBanned)
     setUsers(prev => prev.map(u => u.uid === uid ? { ...u, isBanned: !currentBanned } : u))
+  }
+
+  const handleChangeRole = async (uid, currentRole) => {
+    const newRole = currentRole === 'admin' ? 'user' : 'admin'
+    const action = newRole === 'admin' ? 'thăng cấp lên Admin' : 'hạ xuống User'
+    if (!confirm(`Xác nhận ${action} người dùng này?`)) return
+    try {
+      await setUserRole(uid, newRole)
+      setUsers(prev => prev.map(u => u.uid === uid ? { ...u, role: newRole } : u))
+    } catch (err) {
+      alert('Lỗi: ' + err.message)
+    }
+  }
+
+  const handleDeleteUser = async (targetUid) => {
+    if (targetUid === user?.uid) return alert('Không thể xóa tài khoản của chính bạn!')
+    if (!confirm('⚠️ XÓA VĨNH VIỄN tài khoản này?\nHành động này không thể hoàn tác!')) return
+    try {
+      const idToken = await auth.currentUser.getIdToken()
+      await deleteUserAccount(targetUid, idToken)
+      setUsers(prev => prev.filter(u => u.uid !== targetUid))
+    } catch (err) {
+      alert('Lỗi xóa tài khoản: ' + err.message)
+    }
   }
 
 
@@ -500,17 +525,35 @@ export default function AdminDashboard() {
                           <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>{u.email}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>
                           📝 {u.postCount || 0} • 💬 {u.commentCount || 0}
                         </span>
-                        {u.role !== 'admin' && (
+                        <button
+                          className="btn-seal-ghost btn-sm"
+                          style={{ color: u.role === 'admin' ? 'var(--clr-ink-soft)' : 'var(--clr-gold)' }}
+                          onClick={() => handleChangeRole(u.uid, u.role)}
+                          disabled={u.uid === user?.uid}
+                          title={u.uid === user?.uid ? 'Không thể tự đổi role' : ''}
+                        >
+                          {u.role === 'admin' ? '⬇ Hạ cấp' : '⬆ Thăng Admin'}
+                        </button>
+                        {u.uid !== user?.uid && (
                           <button
                             className="btn-seal-ghost btn-sm"
                             style={{ color: u.isBanned ? 'var(--clr-jade)' : 'var(--clr-vermillion)' }}
                             onClick={() => handleBanUser(u.uid, u.isBanned)}
                           >
                             {u.isBanned ? '🔓 Gỡ chặn' : '🚫 Chặn'}
+                          </button>
+                        )}
+                        {u.uid !== user?.uid && (
+                          <button
+                            className="btn-seal-ghost btn-sm"
+                            style={{ color: 'var(--clr-vermillion)' }}
+                            onClick={() => handleDeleteUser(u.uid)}
+                          >
+                            🗑 Xóa
                           </button>
                         )}
                       </div>
