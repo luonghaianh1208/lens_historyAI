@@ -2,29 +2,74 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { getAnalyticsData, exportAnalytics, clearAnalytics } from '../services/analytics'
 import { getAllEntities, getEntityStatus, isEntityVerified } from '../services/retrieval'
-
-const ADMIN_PASSWORD = 'historylens2025' // In production, use environment variable
+import { useAuthContext } from '../contexts/AuthContext'
+import { getPendingPosts, updatePostStatus, deletePost, getAllUsers, banUser } from '../services/forumService'
 
 export default function AdminDashboard() {
-  const [authenticated, setAuthenticated] = useState(false)
-  const [password, setPassword] = useState('')
+  const { user, userProfile, isAdmin, loading: authLoading } = useAuthContext()
   const [activeTab, setActiveTab] = useState('overview')
   const [analytics, setAnalytics] = useState(null)
+  const [pendingPosts, setPendingPosts] = useState([])
+  const [users, setUsers] = useState([])
+  const [loadingPosts, setLoadingPosts] = useState(false)
+  const [loadingUsers, setLoadingUsers] = useState(false)
 
   useEffect(() => {
-    if (authenticated) {
+    if (isAdmin) {
       setAnalytics(getAnalyticsData())
+      loadPendingPosts()
+      loadUsers()
     }
-  }, [authenticated])
+  }, [isAdmin])
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-    if (password === ADMIN_PASSWORD) {
-      setAuthenticated(true)
-    } else {
-      alert('Mật khẩu không đúng')
+  const loadPendingPosts = async () => {
+    setLoadingPosts(true)
+    try {
+      const posts = await getPendingPosts()
+      setPendingPosts(posts)
+    } catch (err) {
+      console.error('Failed to load pending posts:', err)
+    } finally {
+      setLoadingPosts(false)
     }
   }
+
+  const loadUsers = async () => {
+    setLoadingUsers(true)
+    try {
+      const data = await getAllUsers()
+      setUsers(data)
+    } catch (err) {
+      console.error('Failed to load users:', err)
+    } finally {
+      setLoadingUsers(false)
+    }
+  }
+
+  const handleApprovePost = async (postId) => {
+    await updatePostStatus(postId, 'approved')
+    setPendingPosts(prev => prev.filter(p => p.id !== postId))
+  }
+
+  const handleRejectPost = async (postId) => {
+    await updatePostStatus(postId, 'rejected')
+    setPendingPosts(prev => prev.filter(p => p.id !== postId))
+  }
+
+  const handleDeletePost = async (postId) => {
+    if (!confirm('Xác nhận xóa bài viết này?')) return
+    await deletePost(postId)
+    setPendingPosts(prev => prev.filter(p => p.id !== postId))
+  }
+
+  const handleBanUser = async (uid, currentBanned) => {
+    const action = currentBanned ? 'gỡ chặn' : 'chặn'
+    if (!confirm(`Xác nhận ${action} người dùng này?`)) return
+    await banUser(uid, !currentBanned)
+    setUsers(prev => prev.map(u => u.uid === uid ? { ...u, isBanned: !currentBanned } : u))
+  }
+
+
 
   const handleExport = () => {
     exportAnalytics()
@@ -37,52 +82,26 @@ export default function AdminDashboard() {
     }
   }
 
-  if (!authenticated) {
+  if (authLoading) {
     return (
       <div className="page-container min-h-screen flex items-center justify-center">
-        <div className="card-ancient p-8 max-w-md w-full">
-          <div className="text-center mb-6">
-            <span className="text-4xl mb-2 block">🔐</span>
-            <h1 className="display text-xl font-bold" style={{ color: 'var(--clr-ink)' }}>
-              Khu vực Quản trị
-            </h1>
-            <p className="text-sm mt-2" style={{ color: 'var(--clr-ink-soft)', fontFamily: 'var(--font-serif)' }}>
-              Yêu cầu xác thực để truy cập
-            </p>
-          </div>
+        <div className="card-ancient p-8"><p>Đang tải...</p></div>
+      </div>
+    )
+  }
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--clr-ink)' }}>
-                Mật khẩu
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2"
-                style={{
-                  background: 'rgba(245,239,224,0.8)',
-                  border: '1px solid rgba(184,134,11,0.4)',
-                  borderRadius: '2px',
-                  color: 'var(--clr-ink)',
-                }}
-                placeholder="Nhập mật khẩu quản trị"
-                autoFocus
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full btn-primary py-2"
-            >
-              Đăng nhập
-            </button>
-          </form>
-
-          <p className="mt-4 text-xs text-center" style={{ color: 'var(--clr-ink-soft)' }}>
-            Chỉ dành cho team phát triển
+  if (!isAdmin) {
+    return (
+      <div className="page-container min-h-screen flex items-center justify-center">
+        <div className="card-ancient p-8 max-w-md w-full text-center">
+          <span className="text-4xl mb-2 block">🔐</span>
+          <h1 className="display text-xl font-bold" style={{ color: 'var(--clr-ink)' }}>
+            Khu vực Quản trị
+          </h1>
+          <p className="text-sm mt-2" style={{ color: 'var(--clr-ink-soft)' }}>
+            {user ? 'Bạn không có quyền truy cập trang này.' : 'Đăng nhập với tài khoản Admin để truy cập.'}
           </p>
+          <Link to="/" className="btn-seal mt-4 inline-block">← Trang chủ</Link>
         </div>
       </div>
     )
@@ -149,13 +168,9 @@ export default function AdminDashboard() {
                 🔧 Quản trị
               </span>
             </div>
-            <button
-              onClick={() => setAuthenticated(false)}
-              className="text-sm"
-              style={{ color: 'var(--clr-vermillion)' }}
-            >
-              Đăng xuất
-            </button>
+            <span className="text-sm" style={{ color: 'var(--clr-ink-soft)' }}>
+              👤 {userProfile?.displayName || user?.email}
+            </span>
           </div>
         </header>
 
@@ -164,7 +179,9 @@ export default function AdminDashboard() {
           <div className="flex gap-2 mb-6 border-b" style={{ borderColor: 'rgba(184,134,11,0.2)' }}>
             {[
               { key: 'overview', label: 'Tổng quan' },
-              { key: 'entities', label: 'Quản lý nội dung' },
+              { key: 'posts', label: `Duyệt bài (${pendingPosts.length})` },
+              { key: 'users', label: 'Người dùng' },
+              { key: 'entities', label: 'Entities' },
               { key: 'analytics', label: 'Analytics' },
             ].map(tab => (
               <button
@@ -405,6 +422,102 @@ export default function AdminDashboard() {
                   ))}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Posts Moderation Tab */}
+          {activeTab === 'posts' && (
+            <div>
+              <h2 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>📝 Bài viết chờ duyệt</h2>
+              {loadingPosts ? (
+                <p style={{ color: 'var(--clr-ink-soft)' }}>Đang tải...</p>
+              ) : pendingPosts.length === 0 ? (
+                <div className="card-ancient p-6 text-center">
+                  <p style={{ color: 'var(--clr-ink-soft)' }}>✅ Không có bài viết nào chờ duyệt</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {pendingPosts.map(post => (
+                    <div key={post.id} className="card-ancient p-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3 className="font-semibold" style={{ color: 'var(--clr-ink)' }}>{post.title}</h3>
+                          <p className="text-sm mt-1" style={{ color: 'var(--clr-ink-soft)' }}>
+                            Bởi <strong>{post.authorName}</strong>
+                            {post.createdAt?.toDate ? ` • ${post.createdAt.toDate().toLocaleDateString('vi-VN')}` : ''}
+                          </p>
+                          <p className="text-sm mt-2" style={{ color: 'var(--clr-ink)' }}>
+                            {(post.content || '').slice(0, 300)}...
+                          </p>
+                          {post.images?.length > 0 && (
+                            <div className="flex gap-2 mt-2">
+                              {post.images.slice(0, 3).map((url, i) => (
+                                <img key={i} src={url} alt="" className="w-16 h-16 object-cover rounded" />
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <button className="btn-seal btn-sm" onClick={() => handleApprovePost(post.id)}>✓ Duyệt</button>
+                          <button className="btn-seal-ghost btn-sm" onClick={() => handleRejectPost(post.id)}>✗ Từ chối</button>
+                          <button className="btn-seal-ghost btn-sm" style={{ color: 'var(--clr-vermillion)' }} onClick={() => handleDeletePost(post.id)}>🗑 Xóa</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Users Tab */}
+          {activeTab === 'users' && (
+            <div>
+              <h2 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>👥 Quản lý người dùng ({users.length})</h2>
+              {loadingUsers ? (
+                <p style={{ color: 'var(--clr-ink-soft)' }}>Đang tải...</p>
+              ) : users.length === 0 ? (
+                <div className="card-ancient p-6 text-center">
+                  <p style={{ color: 'var(--clr-ink-soft)' }}>Chưa có người dùng nào</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {users.map(u => (
+                    <div key={u.uid} className="flex items-center justify-between p-3 rounded-sm" style={{ background: 'rgba(245,239,224,0.5)' }}>
+                      <div className="flex items-center gap-3">
+                        {u.avatar ? (
+                          <img src={u.avatar} alt="" className="w-8 h-8 rounded-full" />
+                        ) : (
+                          <span className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: 'var(--clr-gold)', color: 'white' }}>
+                            {(u.displayName || 'U').charAt(0)}
+                          </span>
+                        )}
+                        <div>
+                          <p className="font-semibold text-sm" style={{ color: 'var(--clr-ink)' }}>
+                            {u.displayName || 'Ẩn danh'}
+                            {u.role === 'admin' && <span className="ml-2 px-1 text-xs" style={{ background: 'var(--clr-gold)', color: 'white' }}>Admin</span>}
+                          </p>
+                          <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>{u.email}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>
+                          📝 {u.postCount || 0} • 💬 {u.commentCount || 0}
+                        </span>
+                        {u.role !== 'admin' && (
+                          <button
+                            className="btn-seal-ghost btn-sm"
+                            style={{ color: u.isBanned ? 'var(--clr-jade)' : 'var(--clr-vermillion)' }}
+                            onClick={() => handleBanUser(u.uid, u.isBanned)}
+                          >
+                            {u.isBanned ? '🔓 Gỡ chặn' : '🚫 Chặn'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </main>

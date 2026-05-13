@@ -1,0 +1,79 @@
+{
+  "categories": [
+    {
+      "id": "lich-su",
+      "label": "Lịch sử",
+      "icon": "📜"
+    },
+    {
+      "id": "van-hoa",
+      "label": "Văn hóa",
+      "icon": "🎭"
+    },
+    {
+      "id": "giao-duc",
+      "label": "Giáo dục",
+      "icon": "📚"
+    },
+    {
+      "id": "xa-hoi",
+      "label": "Xã hội",
+      "icon": "🏛️"
+    },
+    {
+      "id": "phat-trien",
+      "label": "Phát triển",
+      "icon": "🚀"
+    }
+  ],
+  "sources": [
+    {
+      "name": "VnExpress",
+      "category": "xa-hoi",
+      "rssUrl": "https://vnexpress.net/rss/thoi-su.rss",
+      "logo": "https://s1.vnecdn.net/vnexpress/restruct/i/v9505/v2_2019/pc/graphics/logo.svg"
+    },
+    {
+      "name": "VnExpress Giáo dục",
+      "category": "giao-duc",
+      "rssUrl": "https://vnexpress.net/rss/giao-duc.rss",
+      "logo": "https://s1.vnecdn.net/vnexpress/restruct/i/v9505/v2_2019/pc/graphics/logo.svg"
+    },
+    {
+      "name": "Tuổi Trẻ Giáo dục",
+      "category": "giao-duc",
+      "rssUrl": "https://tuoitre.vn/rss/giao-duc.rss",
+      "logo": ""
+    },
+    {
+      "name": "Tuổi Trẻ Văn hóa",
+      "category": "van-hoa",
+      "rssUrl": "https://tuoitre.vn/rss/van-hoa.rss",
+      "logo": ""
+    },
+    {
+      "name": "Nhân Dân Văn hóa",
+      "category": "van-hoa",
+      "rssUrl": "https://nhandan.vn/rss/vanhoa-5.rss",
+      "logo": ""
+    },
+    {
+      "name": "VnExpress Thế giới",
+      "category": "xa-hoi",
+      "rssUrl": "https://vnexpress.net/rss/the-gioi.rss",
+      "logo": ""
+    },
+    {
+      "name": "Dân Trí Giáo dục",
+      "category": "giao-duc",
+      "rssUrl": "https://dantri.com.vn/rss/giao-duc-huong-nghiep.rss",
+      "logo": ""
+    },
+    {
+      "name": "Dân Trí Xã hội",
+      "category": "xa-hoi",
+      "rssUrl": "https://dantri.com.vn/rss/xa-hoi.rss",
+      "logo": ""
+    }
+  ]
+}

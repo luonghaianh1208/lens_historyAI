@@ -1,0 +1,46 @@
+rules_version='2'
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: check if user is admin
+    function isAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // Helper: check if user is banned
+    function isBanned() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isBanned == true;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Posts collection
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null && !isBanned();
+      allow update: if request.auth != null && (
+        resource.data.authorId == request.auth.uid || isAdmin()
+      );
+      allow delete: if request.auth != null && (
+        resource.data.authorId == request.auth.uid || isAdmin()
+      );
+
+      // Comments subcollection
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth != null && !isBanned();
+        allow delete: if request.auth != null && (
+          resource.data.authorId == request.auth.uid || isAdmin()
+        );
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import ToastContainer from './components/Toast'
 import SearchModal from './components/SearchModal'
 import { useKeyboardShortcut } from './hooks/useKeyboardShortcut'
+import { AuthProvider } from './contexts/AuthContext'
 
 const Home = lazy(() => import('./pages/Home'))
 const Entity = lazy(() => import('./pages/Entity'))
@@ -11,6 +12,9 @@ const Chat = lazy(() => import('./pages/Chat'))
 const Quiz = lazy(() => import('./pages/Quiz'))
 const LearningPaths = lazy(() => import('./pages/LearningPaths'))
 const LearningPathDetail = lazy(() => import('./pages/LearningPathDetail'))
+const News = lazy(() => import('./pages/News'))
+const Forum = lazy(() => import('./pages/Forum'))
+const PostDetail = lazy(() => import('./pages/PostDetail'))
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
 
 function AppShellFallback() {
@@ -39,23 +43,28 @@ function App() {
   }, { ctrl: true })
 
   return (
-    <ErrorBoundary>
-      <div className="min-h-screen">
-        <Suspense fallback={<AppShellFallback />}>
-          <Routes>
-            <Route path="/" element={<Home onOpenSearch={() => setSearchOpen(true)} />} />
-            <Route path="/entity/:id" element={<Entity onOpenSearch={() => setSearchOpen(true)} />} />
-            <Route path="/chat/:entityId" element={<Chat />} />
-            <Route path="/quiz/:entityId" element={<Quiz />} />
-            <Route path="/learning-paths" element={<LearningPaths />} />
-            <Route path="/learning-path/:pathId" element={<LearningPathDetail />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-          </Routes>
-        </Suspense>
-        <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-        <ToastContainer />
-      </div>
-    </ErrorBoundary>
+    <AuthProvider>
+      <ErrorBoundary>
+        <div className="min-h-screen">
+          <Suspense fallback={<AppShellFallback />}>
+            <Routes>
+              <Route path="/" element={<Home onOpenSearch={() => setSearchOpen(true)} />} />
+              <Route path="/entity/:id" element={<Entity onOpenSearch={() => setSearchOpen(true)} />} />
+              <Route path="/chat/:entityId" element={<Chat />} />
+              <Route path="/quiz/:entityId" element={<Quiz />} />
+              <Route path="/learning-paths" element={<LearningPaths />} />
+              <Route path="/learning-path/:pathId" element={<LearningPathDetail />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/forum" element={<Forum />} />
+              <Route path="/forum/:postId" element={<PostDetail />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+            </Routes>
+          </Suspense>
+          <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+          <ToastContainer />
+        </div>
+      </ErrorBoundary>
+    </AuthProvider>
   )
 }
 
