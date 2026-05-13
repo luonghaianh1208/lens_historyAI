@@ -141,8 +141,8 @@ export default function AdminDashboard() {
   }
 
   const entities = getAllEntities()
-  const verifiedCount = entities.filter(isEntityVerified).length
-  const pendingCount = entities.filter(e => !isEntityVerified(e)).length
+  const verifiedCount = entities.filter(e => isEntityVerified(e.id)).length
+  const pendingCount = entities.filter(e => !isEntityVerified(e.id)).length
 
   // Calculate analytics summary
   const summary = useMemo(() => {
@@ -414,19 +414,19 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   <div className="text-center p-3" style={{ background: 'rgba(184,134,11,0.08)' }}>
                     <p className="text-2xl font-bold" style={{ color: 'var(--clr-ink)' }}>{summary.totalEvents}</p>
-                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Tổng events</p>
+                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Tổng sự kiện</p>
                   </div>
                   <div className="text-center p-3" style={{ background: 'rgba(184,134,11,0.08)' }}>
                     <p className="text-2xl font-bold" style={{ color: 'var(--clr-ink)' }}>{summary.uniqueUsers}</p>
-                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Unique users</p>
+                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Số người dùng</p>
                   </div>
                   <div className="text-center p-3" style={{ background: 'rgba(184,134,11,0.08)' }}>
                     <p className="text-2xl font-bold" style={{ color: 'var(--clr-ink)' }}>{summary.uniqueSessions}</p>
-                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Sessions</p>
+                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Số phiên truy cập</p>
                   </div>
                   <div className="text-center p-3" style={{ background: 'rgba(34,197,94,0.08)' }}>
                     <p className="text-2xl font-bold" style={{ color: 'var(--clr-jade)' }}>{summary.avgQuizScore}%</p>
-                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Avg quiz score</p>
+                    <p className="text-xs" style={{ color: 'var(--clr-ink-soft)' }}>Điểm Quiz (TB)</p>
                   </div>
                 </div>
 

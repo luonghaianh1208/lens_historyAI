@@ -244,6 +244,10 @@ export function getEntityStatus(id) {
 }
 
 export function isEntityVerified(id) {
+  // Tạm thời duyệt tất cả các nhân vật/sự kiện theo yêu cầu
+  return true;
+
+  /*
   const entity = getEntity(id)
   
   if (typeof window !== 'undefined' && localStorage) {
@@ -252,6 +256,7 @@ export function isEntityVerified(id) {
   }
 
   return entity?.verification?.status === 'verified'
+  */
 }
 
 export function approveEntityLocal(id) {
