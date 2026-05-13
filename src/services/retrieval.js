@@ -239,16 +239,33 @@ export function getPeriodForEntity(entityId) {
 
 export function getEntityStatus(id) {
   const entity = getEntity(id)
+  if (isEntityVerified(id)) return 'verified'
   return entity?.status || 'pending'
 }
 
 export function isEntityVerified(id) {
   const entity = getEntity(id)
+  
+  if (typeof window !== 'undefined' && localStorage) {
+    const localVerified = JSON.parse(localStorage.getItem('historylens-verified-entities') || '[]')
+    if (localVerified.includes(id)) return true
+  }
+
   return entity?.verification?.status === 'verified'
 }
 
+export function approveEntityLocal(id) {
+  if (typeof window !== 'undefined' && localStorage) {
+    const localVerified = JSON.parse(localStorage.getItem('historylens-verified-entities') || '[]')
+    if (!localVerified.includes(id)) {
+      localVerified.push(id)
+      localStorage.setItem('historylens-verified-entities', JSON.stringify(localVerified))
+    }
+  }
+}
+
 export function getVerifiedEntities() {
-  return getAllEntities().filter(e => e.verification?.status === 'verified')
+  return getAllEntities().filter(e => isEntityVerified(e.id))
 }
 
 export default {
@@ -261,5 +278,6 @@ export default {
   getPeriodForEntity,
   getEntityStatus,
   isEntityVerified,
+  approveEntityLocal,
   getVerifiedEntities,
 }

@@ -11,6 +11,8 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "firebase": "^12.13.0",
     "firebase-admin": "^13.9.0",
     "react": "^19.2.5",

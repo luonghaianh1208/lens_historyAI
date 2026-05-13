@@ -143,16 +143,97 @@ export function clearAnalytics() {
   }
 }
 
-export function exportAnalytics() {
+export async function exportAnalytics() {
   const data = getAnalyticsData()
-  if (data) {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `historylens-analytics-${new Date().toISOString().split('T')[0]}.json`
-    a.click()
-    URL.revokeObjectURL(url)
+  if (!data) return
+
+  try {
+    const ExcelJS = (await import('exceljs')).default
+    const { saveAs } = await import('file-saver')
+
+    const workbook = new ExcelJS.Workbook()
+    workbook.creator = 'Admin'
+    workbook.created = new Date()
+
+    // --- Sheet 1: Tổng quan (Overview) ---
+    const sheet1 = workbook.addWorksheet('Tổng quan', { properties: { tabColor: { argb: 'FFB8860B' } } })
+    sheet1.columns = [
+      { header: 'Chỉ số', key: 'metric', width: 30 },
+      { header: 'Giá trị', key: 'value', width: 20 }
+    ]
+
+    // Style Header
+    sheet1.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } }
+    sheet1.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF800000' } } // Red/Brown background
+    sheet1.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' }
+
+    const summaryData = [
+      { metric: 'Tổng sự kiện', value: data.events.length },
+      { metric: 'Unique Users', value: new Set(data.events.map(e => e.userId)).size },
+      { metric: 'Unique Sessions', value: new Set(data.events.map(e => e.sessionId)).size },
+    ]
+    
+    summaryData.forEach((row, index) => {
+      const addedRow = sheet1.addRow(row)
+      if (index % 2 === 0) {
+        addedRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF5EFE0' } }
+      }
+    })
+
+    // --- Sheet 2: Chi tiết Sự kiện (Events) ---
+    const sheet2 = workbook.addWorksheet('Chi tiết Tương tác', { properties: { tabColor: { argb: 'FF22C55E' } } })
+    sheet2.columns = [
+      { header: 'Thời gian', key: 'timestamp', width: 25 },
+      { header: 'Sự kiện', key: 'event', width: 25 },
+      { header: 'User ID', key: 'userId', width: 20 },
+      { header: 'Session ID', key: 'sessionId', width: 20 },
+      { header: 'Đường dẫn (Path)', key: 'path', width: 30 },
+    ]
+
+    // Style Header
+    sheet2.getRow(1).font = { bold: true, color: { argb: 'FFFFFFFF' } }
+    sheet2.getRow(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0066CC' } }
+    sheet2.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' }
+
+    data.events.forEach((evt, index) => {
+      const date = new Date(evt.timestamp)
+      const formattedDate = date.toLocaleString('vi-VN')
+      
+      const addedRow = sheet2.addRow({
+        timestamp: formattedDate,
+        event: evt.event,
+        userId: evt.userId,
+        sessionId: evt.sessionId,
+        path: evt.path
+      })
+      
+      // Highlight row based on event type
+      let bgColor = 'FFFFFFFF'
+      if (evt.event === 'quiz_complete') bgColor = 'FFD1FAE5' // Light green
+      else if (evt.event === 'chat_message') bgColor = 'FFFEE2E2' // Light red
+      else if (evt.event === 'flashcard_review') bgColor = 'FFFFEDD5' // Light orange
+      
+      if (bgColor !== 'FFFFFFFF') {
+        addedRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } }
+      }
+      
+      // Alternate row color if no special highlight
+      if (bgColor === 'FFFFFFFF' && index % 2 === 0) {
+        addedRow.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFB' } }
+      }
+    })
+
+    // Auto filter for events sheet
+    sheet2.autoFilter = 'A1:E1'
+
+    // Export to file
+    const buffer = await workbook.xlsx.writeBuffer()
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    saveAs(blob, `HistoryLens_Analytics_${new Date().toISOString().split('T')[0]}.xlsx`)
+    
+  } catch (err) {
+    console.error('Error exporting excel', err)
+    alert('Có lỗi khi trích xuất file Excel.')
   }
 }
 

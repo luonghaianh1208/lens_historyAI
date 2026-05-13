@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { getAnalyticsData, exportAnalytics, clearAnalytics } from '../services/analytics'
-import { getAllEntities, getEntityStatus, isEntityVerified } from '../services/retrieval'
+import { getAllEntities, getEntityStatus, isEntityVerified, approveEntityLocal } from '../services/retrieval'
 import { useAuthContext } from '../contexts/AuthContext'
 import { getPendingPosts, updatePostStatus, deletePost, getAllUsers, banUser, setUserRole, deleteUserAccount } from '../services/forumService'
 import { auth } from '../services/firebase'
@@ -14,6 +14,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([])
   const [loadingPosts, setLoadingPosts] = useState(false)
   const [loadingUsers, setLoadingUsers] = useState(false)
+  const [localEntityVerifications, setLocalEntityVerifications] = useState(0)
 
   useEffect(() => {
     if (isAdmin) {
@@ -101,9 +102,16 @@ export default function AdminDashboard() {
   }
 
   const handleClearAnalytics = () => {
-    if (confirm('Xóa tất cả dữ liệu analytics? Hành động này không thể hoàn tác.')) {
+    if (confirm('Xóa tất cả dữ liệu phân tích? Hành động này không thể hoàn tác.')) {
       clearAnalytics()
       setAnalytics(getAnalyticsData())
+    }
+  }
+
+  const handleApproveEntity = (id) => {
+    if (confirm('Xác nhận duyệt nội dung AI này để hiển thị công khai trên hệ thống?')) {
+      approveEntityLocal(id)
+      setLocalEntityVerifications(prev => prev + 1)
     }
   }
 
@@ -177,7 +185,7 @@ export default function AdminDashboard() {
       uniqueSessions: new Set(events.map(e => e.sessionId)).size,
       uniqueUsers: new Set(events.map(e => e.userId)).size,
     }
-  }, [analytics, entities])
+  }, [analytics, entities, localEntityVerifications])
 
   return (
     <div className="page-container min-h-screen">
@@ -206,8 +214,8 @@ export default function AdminDashboard() {
               { key: 'overview', label: 'Tổng quan' },
               { key: 'posts', label: `Duyệt bài (${pendingPosts.length})` },
               { key: 'users', label: 'Người dùng' },
-              { key: 'entities', label: 'Entities' },
-              { key: 'analytics', label: 'Analytics' },
+              { key: 'entities', label: 'Nhân vật & Sự kiện' },
+              { key: 'analytics', label: 'Phân tích' },
             ].map(tab => (
               <button
                 key={tab.key}
@@ -229,7 +237,7 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="card-ancient p-4">
-                  <p className="text-xs mb-1" style={{ color: 'var(--clr-ink-soft)' }}>Tổng entities</p>
+                  <p className="text-xs mb-1" style={{ color: 'var(--clr-ink-soft)' }}>Tổng số NV/Sự kiện</p>
                   <p className="text-3xl font-bold" style={{ color: 'var(--clr-ink)' }}>{entities.length}</p>
                 </div>
                 <div className="card-ancient p-4">
@@ -250,27 +258,27 @@ export default function AdminDashboard() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="card-ancient p-5">
-                  <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>📊 Quick Stats</h3>
+                  <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>📊 Thống kê nhanh</h3>
                   {summary && (
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between">
-                        <span style={{ color: 'var(--clr-ink-soft)' }}>Page views:</span>
+                        <span style={{ color: 'var(--clr-ink-soft)' }}>Lượt xem trang:</span>
                         <span className="font-semibold" style={{ color: 'var(--clr-ink)' }}>{summary.entityViews}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: 'var(--clr-ink-soft)' }}>Quiz completed:</span>
+                        <span style={{ color: 'var(--clr-ink-soft)' }}>Số bài Quiz hoàn thành:</span>
                         <span className="font-semibold" style={{ color: 'var(--clr-ink)' }}>{summary.quizCompletes}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: 'var(--clr-ink-soft)' }}>Chat messages:</span>
+                        <span style={{ color: 'var(--clr-ink-soft)' }}>Tin nhắn Chat:</span>
                         <span className="font-semibold" style={{ color: 'var(--clr-ink)' }}>{summary.chatMessages}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: 'var(--clr-ink-soft)' }}>Flashcard reviews:</span>
+                        <span style={{ color: 'var(--clr-ink-soft)' }}>Lượt ôn Flashcard:</span>
                         <span className="font-semibold" style={{ color: 'var(--clr-ink)' }}>{summary.flashcardReviews}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span style={{ color: 'var(--clr-ink-soft)' }}>Avg quiz score:</span>
+                        <span style={{ color: 'var(--clr-ink-soft)' }}>Điểm Quiz trung bình:</span>
                         <span className="font-semibold" style={{ color: 'var(--clr-jade)' }}>{summary.avgQuizScore}%</span>
                       </div>
                     </div>
@@ -278,35 +286,35 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="card-ancient p-5">
-                  <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>⚡ Quick Actions</h3>
+                  <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>⚡ Thao tác nhanh</h3>
                   <div className="space-y-2">
                     <button
                       onClick={handleExport}
                       className="w-full px-4 py-2 text-left text-sm"
                       style={{ background: 'rgba(184,134,11,0.1)', borderRadius: '2px' }}
                     >
-                      📥 Export analytics data
+                      📥 Trích xuất dữ liệu phân tích
                     </button>
                     <button
                       onClick={handleClearAnalytics}
                       className="w-full px-4 py-2 text-left text-sm"
                       style={{ background: 'rgba(239,68,68,0.1)', borderRadius: '2px', color: 'var(--clr-vermillion)' }}
                     >
-                      🗑️ Clear analytics data
+                      🗑️ Xóa dữ liệu phân tích
                     </button>
                     <button
                       onClick={() => window.open('/sitemap.xml', '_blank')}
                       className="w-full px-4 py-2 text-left text-sm"
                       style={{ background: 'rgba(59,130,246,0.1)', borderRadius: '2px' }}
                     >
-                      📄 View sitemap.xml
+                      📄 Xem sitemap.xml
                     </button>
                     <button
-                      onClick={() => alert('Feature coming soon: Batch entity generation')}
+                      onClick={() => alert('Tính năng sắp ra mắt: Tạo nội dung AI hàng loạt')}
                       className="w-full px-4 py-2 text-left text-sm"
                       style={{ background: 'rgba(34,197,94,0.1)', borderRadius: '2px' }}
                     >
-                      🤖 Generate entity content (batch)
+                      🤖 Tạo nội dung AI hàng loạt (batch)
                     </button>
                   </div>
                 </div>
@@ -319,14 +327,14 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <p className="text-sm" style={{ color: 'var(--clr-ink-soft)' }}>
-                  Quản lý nội dung entities và trạng thái verification
+                  Quản lý nội dung AI và trạng thái kiểm duyệt hiển thị
                 </p>
                 <div className="flex gap-2">
                   <span className="px-2 py-1 text-xs" style={{ background: 'rgba(34,197,94,0.1)', color: 'var(--clr-jade)' }}>
-                    ✓ Verified: {verifiedCount}
+                    ✓ Đã duyệt: {verifiedCount}
                   </span>
                   <span className="px-2 py-1 text-xs" style={{ background: 'rgba(239,68,68,0.1)', color: 'var(--clr-vermillion)' }}>
-                    ⏳ Pending: {pendingCount}
+                    ⏳ Chờ duyệt: {pendingCount}
                   </span>
                 </div>
               </div>
@@ -362,8 +370,23 @@ export default function AdminDashboard() {
                             color: verified ? '#22c55e' : '#ef4444',
                           }}
                         >
-                          {verified ? '✓ Verified' : '⏳ Pending'}
+                          {verified ? '✓ Đã duyệt' : '⏳ Chờ duyệt'}
                         </span>
+
+                        {!verified && (
+                          <button
+                            onClick={() => handleApproveEntity(entity.id)}
+                            className="px-3 py-1 text-xs font-semibold cursor-pointer"
+                            style={{
+                              background: 'var(--clr-gold)',
+                              color: 'white',
+                              borderRadius: '2px',
+                            }}
+                          >
+                            Duyệt nội dung
+                          </button>
+                        )}
+
                         <Link
                           to={`/entity/${entity.id}`}
                           className="px-3 py-1 text-xs"
@@ -407,29 +430,29 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <h4 className="font-semibold mb-3" style={{ color: 'var(--clr-ink)' }}>Top 5 Entities được xem nhiều</h4>
+                <h4 className="font-semibold mb-3" style={{ color: 'var(--clr-ink)' }}>Top 5 Nhân vật/Sự kiện được xem nhiều nhất</h4>
                 <div className="space-y-2">
                   {summary.topEntities.map((entity, idx) => (
                     <div key={entity.id} className="flex items-center gap-3">
                       <span className="text-sm font-bold" style={{ color: 'var(--clr-gold)' }}>#{idx + 1}</span>
                       <span className="text-sm flex-1" style={{ color: 'var(--clr-ink)' }}>{entity.name}</span>
-                      <span className="text-sm font-semibold" style={{ color: 'var(--clr-jade)' }}>{entity.count} views</span>
+                      <span className="text-sm font-semibold" style={{ color: 'var(--clr-jade)' }}>{entity.count} lượt xem</span>
                     </div>
                   ))}
                   {summary.topEntities.length === 0 && (
-                    <p className="text-sm" style={{ color: 'var(--clr-ink-soft)' }}>Chưa có data</p>
+                    <p className="text-sm" style={{ color: 'var(--clr-ink-soft)' }}>Chưa có dữ liệu</p>
                   )}
                 </div>
               </div>
 
               <div className="card-ancient p-5">
-                <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>📋 Event Distribution</h3>
+                <h3 className="font-semibold mb-4" style={{ color: 'var(--clr-ink)' }}>📋 Phân bổ tương tác</h3>
                 <div className="space-y-3">
                   {[
-                    { label: 'Entity Views', value: summary.entityViews, color: 'var(--clr-jade)' },
-                    { label: 'Quiz Completes', value: summary.quizCompletes, color: 'var(--clr-gold)' },
-                    { label: 'Chat Messages', value: summary.chatMessages, color: 'var(--clr-vermillion)' },
-                    { label: 'Flashcard Reviews', value: summary.flashcardReviews, color: 'var(--clr-ink)' },
+                    { label: 'Lượt xem (Views)', value: summary.entityViews, color: 'var(--clr-jade)' },
+                    { label: 'Lượt làm Quiz', value: summary.quizCompletes, color: 'var(--clr-gold)' },
+                    { label: 'Nhắn tin Chat', value: summary.chatMessages, color: 'var(--clr-vermillion)' },
+                    { label: 'Ôn Flashcard', value: summary.flashcardReviews, color: 'var(--clr-ink)' },
                   ].map(item => (
                     <div key={item.label} className="flex items-center gap-3">
                       <span className="text-sm w-32" style={{ color: 'var(--clr-ink-soft)' }}>{item.label}</span>
