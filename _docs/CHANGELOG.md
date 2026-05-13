@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026-05-13] Session 11 — Fix Character Image Backgrounds
+### Đã sửa
+- **9 ảnh nhân vật bị nền caro/trắng baked vào pixel** (RGB, không có alpha channel) → dùng `rembg` tách nền thành RGBA transparent thực sự
+- **CSS filter conflict**: `.character-blend` filter override `.character-hero` drop-shadow → gộp filter vào `.character-hero`, đổi `.character-blend` sang mask-image fade viền
+- **CSS vignette cải thiện**: `.character-vignette::before` gradient mạnh hơn, blend mượt hơn vào background
+### Files đã fix (RGB → RGBA)
+- `char_an_duong_vuong.png`, `char_ba_trieu.png`, `char_hai_ba_trung.png`, `char_hung_vuong_i.png`, `char_phung_hung.png`, `char_son_tinh_thuy_tinh.png`, `dinh-bo-linh.png`, `le-hoan.png`, `ly-cong-uan.png`
+### File bị ảnh hưởng
+- `src/index.css` (CSS fix: character-hero, character-blend, character-vignette)
+- `public/assets/characters/` (9 ảnh PNG đã tách nền)
+- `public/assets/characters/_backup_originals/` (backup ảnh gốc)
+- `scripts/fix_backgrounds.py` (NEW — batch background removal script)
+
+---
+
 ## [2026-05-12] Session 10 — Fix Audio Truncation
 ### Đã sửa
 - Khắc phục lỗi âm thanh bị mất chữ cái đầu (truncation) khi dùng TTS của Gemini bằng cách thêm một đoạn silence (khoảng lặng) 420ms vào đầu các file WAV.

@@ -12,6 +12,7 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-21: Fix 9 ảnh nhân vật bị nền caro/trắng (RGB→RGBA) + CSS filter conflict — 2026-05-13
 - [x] TASK-20: Fix lỗi mất chữ cái đầu của file âm thanh bằng cách thêm 420ms silence padding — 2026-05-12
 - [x] TASK-19: Thêm Võ Nguyên Giáp preset Q&A (9 entries) + TTS audio (9 files) + voice config — 2026-05-12
 - [x] TASK-18: CSS refactor — cleanup, consolidated transitions, focus-visible, grid layouts — 2026-04-30
