@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-05-13] Session 12b — Admin User Management
+### Thêm mới
+- **Đổi role**: Admin có thể thăng cấp user → admin hoặc hạ cấp admin → user
+- **Xóa tài khoản**: Xóa hoàn toàn cả Firebase Auth + Firestore profile (qua Netlify function)
+- **Bảo vệ**: Không thể tự xóa/tự đổi role chính mình, xác nhận 2 lần trước khi xóa
+### Files mới/sửa
+- `netlify/functions/admin-users.js` (NEW)
+- `src/services/forumService.js` (thêm `setUserRole`, `deleteUserAccount`)
+- `src/pages/AdminDashboard.jsx` (thêm 3 nút: Thăng Admin / Hạ cấp / Xóa)
+### Yêu cầu
+- Set env `FIREBASE_SERVICE_ACCOUNT` trên Netlify với JSON service account key
+
+---
+
 ## [2026-05-13] Session 12 — News Reader, Forum, Auth & Admin
 ### Thêm mới
 - **Firebase Auth**: AuthContext + AuthProvider, useAuth hook (email/password + Google), AuthModal, UserMenu
