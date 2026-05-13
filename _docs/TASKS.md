@@ -5,6 +5,7 @@
 
 
 ## 🟡 Cần làm tiếp
+- [ ] Tích hợp UserMenu vào header Home page — độ ưu tiên: cao
 - [ ] Tính năng: Share conversation — độ ưu tiên: thấp
 - [ ] Tính năng: Export quiz results — độ ưu tiên: thấp
 - [ ] Tính năng: Flashcard mode từ chunks của entity — độ ưu tiên: tb
@@ -12,6 +13,7 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-22: News Reader + Forum + Auth + Admin moderation (4 phases) — 2026-05-13
 - [x] TASK-21: Fix 9 ảnh nhân vật bị nền caro/trắng (RGB→RGBA) + CSS filter conflict — 2026-05-13
 - [x] TASK-20: Fix lỗi mất chữ cái đầu của file âm thanh bằng cách thêm 420ms silence padding — 2026-05-12
 - [x] TASK-19: Thêm Võ Nguyên Giáp preset Q&A (9 entries) + TTS audio (9 files) + voice config — 2026-05-12

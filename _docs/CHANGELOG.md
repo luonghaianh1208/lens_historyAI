@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-05-13] Session 12 — News Reader, Forum, Auth & Admin
+### Thêm mới
+- **Firebase Auth**: AuthContext + AuthProvider, useAuth hook (email/password + Google), AuthModal, UserMenu
+- **News Reader**: RSS proxy (Netlify function), 8 nguồn tin VN, 5 danh mục, page với category tabs & article cards
+- **Forum**: Firestore CRUD (posts, comments), image upload (Storage, max 10MB), PostCard, PostEditor, CommentSection
+- **Post Detail**: lightbox gallery, like/unlike, comment threading
+- **Admin Dashboard**: thay password auth bằng Firebase role check, tab duyệt bài (approve/reject), tab quản lý users (ban/unban)
+- **Firestore Rules**: role-based access, ban enforcement, comment authorization
+### Files mới
+- `src/contexts/AuthContext.jsx`, `src/hooks/useAuth.js`
+- `src/components/AuthModal.jsx`, `src/components/UserMenu.jsx`
+- `src/components/PostCard.jsx`, `src/components/PostEditor.jsx`, `src/components/CommentSection.jsx`
+- `src/pages/News.jsx`, `src/pages/Forum.jsx`, `src/pages/PostDetail.jsx`
+- `src/services/firebase.js`, `src/services/forumService.js`, `src/services/newsService.js`
+- `src/data/news-sources.json`, `src/styles/community.css`
+- `netlify/functions/news-feed.js`, `firestore.rules`, `firebase.json`, `.firebaserc`
+### Files sửa
+- `src/App.jsx` (thêm AuthProvider wrapper, 3 route mới)
+- `src/pages/AdminDashboard.jsx` (thay auth, thêm 2 tabs)
+- `src/index.css` (import community.css)
+
+---
+
 ## [2026-05-13] Session 11 — Fix Character Image Backgrounds
 ### Đã sửa
 - **9 ảnh nhân vật bị nền caro/trắng baked vào pixel** (RGB, không có alpha channel) → dùng `rembg` tách nền thành RGBA transparent thực sự
