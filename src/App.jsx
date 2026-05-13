@@ -57,7 +57,7 @@ function App() {
               <Route path="/news" element={<News />} />
               <Route path="/forum" element={<Forum />} />
               <Route path="/forum/:postId" element={<PostDetail />} />
-              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/quan-tri" element={<AdminDashboard />} />
             </Routes>
           </Suspense>
           <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

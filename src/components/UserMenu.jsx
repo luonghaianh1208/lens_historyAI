@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import { useAuthContext } from '../contexts/AuthContext'
 import { useAuth } from '../hooks/useAuth'
@@ -46,9 +47,9 @@ export default function UserMenu({ onOpenAuth }) {
           </div>
           <hr />
           {isAdmin && (
-            <a href="/admin" className="user-menu-item" onClick={() => setOpen(false)}>
+            <Link to="/quan-tri" className="user-menu-item" onClick={() => setOpen(false)}>
               ⚙ Quản trị
-            </a>
+            </Link>
           )}
           <button
             className="user-menu-item user-menu-logout"
