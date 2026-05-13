@@ -1,4 +1,14 @@
 const ENTITY_CHARACTER_PATHS = {
+  // Batch 0 — original webp characters
+  'nguyen-trai': '/assets/characters/char_nguyen_trai.webp',
+  'tran-hung-dao': '/assets/characters/char_tran_hung_dao.webp',
+  'ly-thuong-kiet': '/assets/characters/char_ly_thuong_kiet.webp',
+  'le-loi': '/assets/characters/char_le_loi.webp',
+  'nguyen-hue': '/assets/characters/char_nguyen_hue.webp',
+  'ho-chi-minh': '/assets/characters/char_ho_chi_minh.webp',
+  'vo-nguyen-giap': '/assets/characters/char_vo_nguyen_giap.png',
+
+  // Batch 1 — AI-generated characters
   'hung-vuong-i': '/assets/characters/char_hung_vuong_i.png',
   'son-tinh-thuy-tinh': '/assets/characters/char_son_tinh_thuy_tinh.png',
   'an-duong-vuong': '/assets/characters/char_an_duong_vuong.png',
@@ -9,7 +19,17 @@ const ENTITY_CHARACTER_PATHS = {
   'phung-hung': '/assets/characters/char_phung_hung.png',
   'dinh-bo-linh': '/assets/characters/dinh-bo-linh.png',
   'le-hoan': '/assets/characters/le-hoan.png',
-  'ly-cong-uan': '/assets/characters/ly-cong-uan.png'
+  'ly-cong-uan': '/assets/characters/ly-cong-uan.png',
+
+  // Events — map to primary character
+  'dien-bien-phu': '/assets/characters/char_vo_nguyen_giap.png',
+  'tran-dong-da': '/assets/characters/char_nguyen_hue.webp',
+  'chien-thang-bach-dang': '/assets/characters/char_tran_hung_dao.webp',
+  'chien-tranh-ly-tong': '/assets/characters/char_ly_thuong_kiet.webp',
+  'khoi-nghia-lam-son': '/assets/characters/char_le_loi.webp',
+
+  // Default fallback
+  'default': '/assets/characters/char_default.webp',
 };
 
 const PERSPECTIVE_CHARACTER_PATHS = {
