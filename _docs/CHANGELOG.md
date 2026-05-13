@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-05-13] Session 12c — UI Refactoring & Assets
+### Thêm mới / Cải thiện
+- **GlobalHeader**: Tách Component header ra file riêng `src/components/GlobalHeader.jsx` để tái sử dụng
+- **UI Consistency**: Áp dụng `GlobalHeader` cho các trang Home, News, Forum, LearningPaths để đồng bộ giao diện và fix lỗi hiển thị logo góc trên bên trái
+- **Assets**: Cập nhật logo mới (`/logo.png`) và favicon mới (`/favicon.png`)
+
+---
+
 ## [2026-05-13] Session 12b — Admin User Management
 ### Thêm mới
 - **Đổi role**: Admin có thể thăng cấp user → admin hoặc hạ cấp admin → user

@@ -297,7 +297,7 @@ export default function Home({ onOpenSearch }) {
 
         <div className="h-1 w-full mt-8" style={{ background: 'linear-gradient(90deg, var(--clr-jade), var(--clr-gold), var(--clr-vermillion))' }} />
       </div>
-      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+
     </div>
   )
 }
