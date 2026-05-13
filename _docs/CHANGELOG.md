@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-05-14] Session 13 — Admin Dashboard Enhancements
+### Thêm mới / Cải thiện
+- **Việt hóa (Localization)**: Dịch toàn bộ trang Admin Dashboard sang tiếng Việt.
+- **Báo cáo Excel**: Nâng cấp chức năng xuất báo cáo từ JSON sang Excel (.xlsx) với định dạng bảng biểu, in đậm, và tô màu bằng thư viện `exceljs`.
+- **Duyệt nội dung (Moderation)**: Bổ sung chức năng cho phép Admin phê duyệt (Approve) các nhân vật/sự kiện lịch sử do AI tạo ra (hiện đang lưu trạng thái tạm thời qua `localStorage`).
+
+---
+
 ## [2026-05-13] Session 12c — UI Refactoring & Assets
 ### Thêm mới / Cải thiện
 - **GlobalHeader**: Tách Component header ra file riêng `src/components/GlobalHeader.jsx` để tái sử dụng
