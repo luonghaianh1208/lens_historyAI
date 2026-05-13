@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchNewsByCategory, getCategories, formatTimeAgo } from '../services/newsService'
 import AnimatedBackground from '../components/AnimatedBackground'
+import GlobalHeader from '../components/GlobalHeader'
 
 export default function News() {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -27,18 +28,7 @@ export default function News() {
     <div className="page-shell">
       <AnimatedBackground />
 
-      <header className="site-header">
-        <Link to="/" className="site-logo">
-          <img src="/assets/logo.webp" alt="" width="32" height="32" />
-          <span className="display">HistoryLens</span>
-        </Link>
-        <nav className="site-nav">
-          <Link to="/">Trang chủ</Link>
-          <Link to="/learning-paths">Lộ trình học</Link>
-          <Link to="/news" className="active">Đọc báo</Link>
-          <Link to="/forum">Diễn đàn</Link>
-        </nav>
-      </header>
+      <GlobalHeader />
 
       <main className="news-page">
         <div className="news-hero">

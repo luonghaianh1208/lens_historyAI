@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getIndex, searchEntities, getPeriods } from '../services/retrieval'
 import { getCharacterUrl } from '../services/assetService'
 import AnimatedBackground from '../components/AnimatedBackground'
-import UserMenu from '../components/UserMenu'
-import AuthModal from '../components/AuthModal'
 import { track } from '../services/analytics'
+import GlobalHeader from '../components/GlobalHeader'
 
 const FEATURED = [
   { id: 'nguyen-trai', label: 'Nguyễn Trãi', era: 'Hậu Lê sơ' },
@@ -33,7 +32,6 @@ export default function Home({ onOpenSearch }) {
   const [showResults, setShowResults] = useState(false)
   const [hoveredChar, setHoveredChar] = useState(FEATURED[0].id)
   const [expandedPeriods, setExpandedPeriods] = useState([])
-  const [authModalOpen, setAuthModalOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -88,39 +86,7 @@ export default function Home({ onOpenSearch }) {
       <div className="interactive-surface">
         <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, var(--clr-vermillion), var(--clr-gold), var(--clr-jade), var(--clr-gold), var(--clr-vermillion))' }} />
 
-        <header className="border-b glass-panel">
-          <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-full border border-amber-900/30 overflow-hidden flex items-center justify-center bg-white shadow-sm"
-              >
-                <img src="/logo.png" alt="HistoryLens Logo" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h1 className="display text-lg font-bold leading-none" style={{ color: 'var(--clr-ink)' }}>
-                  HistoryLens
-                </h1>
-                <p className="text-xs" style={{ color: 'var(--clr-gold)', fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-                  Lịch sử Việt Nam · AI
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <nav className="hidden md:flex items-center gap-4 text-sm" style={{ fontFamily: 'var(--font-serif)', color: 'var(--clr-ink-soft)' }}>
-                <Link to="/" className="transition hover:text-amber-700">Trang chủ</Link>
-                <span style={{ color: 'var(--clr-gold)' }}>·</span>
-                <Link to="/learning-paths" className="transition hover:text-amber-700">Lộ trình học</Link>
-                <span style={{ color: 'var(--clr-gold)' }}>·</span>
-                <Link to="/news" className="transition hover:text-amber-700">Tin tức</Link>
-                <span style={{ color: 'var(--clr-gold)' }}>·</span>
-                <Link to="/forum" className="transition hover:text-amber-700">Diễn đàn</Link>
-              </nav>
-              <div className="h-4 w-px hidden md:block" style={{ background: 'var(--clr-gold)', opacity: 0.3 }} />
-              <UserMenu onOpenAuth={() => setAuthModalOpen(true)} />
-            </div>
-          </div>
-        </header>
+        <GlobalHeader />
 
         <main className="relative">
           <div

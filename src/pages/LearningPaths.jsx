@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllLearningPaths } from '../data/learning-paths'
 import LearningPathCard from '../components/LearningPathCard'
+import GlobalHeader from '../components/GlobalHeader'
 
 export default function LearningPaths() {
   const paths = useMemo(() => getAllLearningPaths(), [])
@@ -9,20 +10,7 @@ export default function LearningPaths() {
   return (
     <div className="page-container min-h-screen">
       <div className="interactive-surface">
-        <header className="border-b glass-panel">
-          <div className="max-w-6xl mx-auto px-6 py-4">
-            <div className="flex items-center gap-3">
-              <Link
-                to="/"
-                className="flex items-center gap-2 transition hover:opacity-80"
-                style={{ color: 'var(--clr-gold)' }}
-              >
-                <span>←</span>
-                <span className="text-sm font-semibold">Quay trang chủ</span>
-              </Link>
-            </div>
-          </div>
-        </header>
+        <GlobalHeader />
 
         <main className="max-w-6xl mx-auto px-6 py-10">
           <div className="mb-10">

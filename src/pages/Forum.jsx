@@ -6,6 +6,7 @@ import PostCard from '../components/PostCard'
 import PostEditor from '../components/PostEditor'
 import AuthModal from '../components/AuthModal'
 import AnimatedBackground from '../components/AnimatedBackground'
+import GlobalHeader from '../components/GlobalHeader'
 
 export default function Forum() {
   const { user, userProfile } = useAuthContext()
@@ -71,18 +72,7 @@ export default function Forum() {
     <div className="page-shell">
       <AnimatedBackground />
 
-      <header className="site-header">
-        <Link to="/" className="site-logo">
-          <img src="/assets/logo.webp" alt="" width="32" height="32" />
-          <span className="display">HistoryLens</span>
-        </Link>
-        <nav className="site-nav">
-          <Link to="/">Trang chủ</Link>
-          <Link to="/learning-paths">Lộ trình học</Link>
-          <Link to="/news">Đọc báo</Link>
-          <Link to="/forum" className="active">Diễn đàn</Link>
-        </nav>
-      </header>
+      <GlobalHeader />
 
       <main className="forum-page">
         <div className="forum-hero">
