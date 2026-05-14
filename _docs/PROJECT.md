@@ -13,7 +13,7 @@
 - **Routing**: React Router DOM `^7.14.2`
 - **Markdown**: react-markdown
 - **Serverless/Deployment**: Netlify Functions (Node.js)
-- **AI Chat**: Gemini 1.5 Flash API (qua Google GenerativeLanguage REST endpoint)
+- **AI Chat**: Gemini 2.5 Flash API (qua Google GenerativeLanguage REST endpoint)
 - **AI TTS**: gemini-3.1-flash-tts-preview (audio modality, prebuilt voices)
 
 ## Cấu trúc thư mục

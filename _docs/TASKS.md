@@ -12,6 +12,7 @@
 - [ ] Tính năng: Thêm nhân vật mới (Trần Quốc Tuấn chi tiết, Ngô Quyền, Hai Bà Trưng...) — độ ưu tiên: cao
 
 ## ✅ Đã hoàn thành
+- [x] TASK-27: User Profile page + Progress tracking (Learning Paths, Flashcards) — 2026-05-14
 - [x] TASK-26: Fix Quiz crash (missing track import) + Flashcard multi-card deck + UX improvement — 2026-05-14
 - [x] TASK-25: Fix Admin Dashboard routing and rendering errors (isEntityVerified passing object, translate to VN, default approval) — 2026-05-13
 - [x] TASK-24: Refactor UI Header ra component GlobalHeader, sửa lỗi logo, favicon — 2026-05-13

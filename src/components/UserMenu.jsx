@@ -51,6 +51,9 @@ export default function UserMenu({ onOpenAuth }) {
               ⚙ Quản trị
             </Link>
           )}
+          <Link to="/ho-so" className="user-menu-item" onClick={() => setOpen(false)}>
+            👤 Hồ sơ cá nhân
+          </Link>
           <button
             className="user-menu-item user-menu-logout"
             onClick={() => { logout(); setOpen(false) }}

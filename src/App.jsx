@@ -16,6 +16,7 @@ const News = lazy(() => import('./pages/News'))
 const Forum = lazy(() => import('./pages/Forum'))
 const PostDetail = lazy(() => import('./pages/PostDetail'))
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
+const Profile = lazy(() => import('./pages/Profile'))
 
 function AppShellFallback() {
   return (
@@ -57,6 +58,7 @@ function App() {
               <Route path="/news" element={<News />} />
               <Route path="/forum" element={<Forum />} />
               <Route path="/forum/:postId" element={<PostDetail />} />
+              <Route path="/ho-so" element={<Profile />} />
               <Route path="/quan-tri" element={<AdminDashboard />} />
             </Routes>
           </Suspense>

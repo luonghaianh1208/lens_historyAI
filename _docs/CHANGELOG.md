@@ -16,6 +16,20 @@
 
 ---
 
+## [2026-05-14] Session 15 — User Profile & Progress Tracking
+### Đã thêm
+- **Hồ sơ cá nhân (Profile)**: Trang `/ho-so` hiển thị thông tin cá nhân, lộ trình học và thẻ ghi nhớ.
+- **Tiến trình học tập**: Xem trực quan tiến độ hoàn thành các khóa học từ `learning-paths.js` qua `localStorage`.
+- **Thống kê thẻ ghi nhớ**: Xem chuỗi ngày (streak), điểm thưởng và trạng thái (Đang học / Thuộc) của các bộ thẻ.
+- **Cập nhật Profile**: Cho phép sửa tên hiển thị và avatar URL, đồng bộ lưu lên Firebase Auth và Firestore `users/{uid}`.
+### Files mới/sửa
+- `src/pages/Profile.jsx` (NEW)
+- `src/App.jsx` (Thêm route `/ho-so`)
+- `src/components/UserMenu.jsx` (Thêm link Hồ sơ cá nhân)
+- `src/index.css` (Thêm animation `animate-fade-in`)
+
+---
+
 ## [2026-05-14] Session 13 — Admin Dashboard Enhancements
 ### Thêm mới / Cải thiện
 - **Việt hóa (Localization)**: Dịch toàn bộ trang Admin Dashboard sang tiếng Việt.

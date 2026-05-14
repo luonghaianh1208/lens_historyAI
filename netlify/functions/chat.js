@@ -239,7 +239,7 @@ export default async (req) => {
     })
   }
 
-  const model = 'gemini-1.5-flash'
+  const model = 'gemini-2.5-flash'
   const baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`
 
   const body = JSON.stringify({
