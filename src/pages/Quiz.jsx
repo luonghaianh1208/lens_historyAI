@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getEntity } from '../services/retrieval'
 import { getCharacterUrl, getBgStyle } from '../services/assetService'
-import { trackQuizComplete } from '../services/analytics'
+import { track, trackQuizComplete } from '../services/analytics'
 
 function buildFallbackQuestions(entity) {
   const timeline = entity.timeline || []
