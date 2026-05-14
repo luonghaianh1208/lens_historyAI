@@ -1,13 +1,12 @@
 # Ngữ cảnh Session Hiện Tại
 
 ## Đang làm tính năng
-Session 8 — Bổ sung Võ Nguyên Giáp hoàn chỉnh
+Session 14 — Fix Quiz crash + Flashcard overhaul
 
 ## Đã làm đến bước
-- Thêm 9 preset Q&A cho `vo-nguyen-giap` (self, contemporary, historian × 3 câu)
-- Generate 9 file TTS audio via `gemini-3.1-flash-tts-preview` (108/108 QA pass)
-- Thêm voice config (Charon) + TTS style (Bắc Trung Bộ) cho Giáp
-- Commit & push lên `main`
+- Fix Quiz.jsx: thêm import `track` từ analytics.js (dòng 133 gọi track mà không import)
+- Viết lại Flashcard.jsx: multi-card deck từ entity data, 4 nút quality tiếng Việt
+- Build ✅, Push ✅
 - Cập nhật CHANGELOG, TASKS
 
 ## Quyết định kỹ thuật đã chốt

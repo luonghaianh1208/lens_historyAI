@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-05-14] Session 14 — Quiz Fix + Flashcard Overhaul
+### Đã sửa
+- **Quiz crash**: Fix `ReferenceError: track is not defined` — thiếu import `track` từ `analytics.js` trong `Quiz.jsx` dòng 133
+- **API**: Khắc phục lỗi 502 Bad Gateway do cấu hình sai model `gemini-2.5-flash` thành `gemini-1.5-flash` trong Netlify Function `chat.js`.
+### Đã cải thiện
+- **Flashcard multi-card**: Tạo bộ nhiều thẻ flashcard từ entity data (short_desc, timeline, chunks, perspectives, tags, related_people) thay vì chỉ 1 card sơ xài
+- **Flashcard UX**: Đổi 6 nút emoji + số (0-5) khó hiểu → 4 nút tiếng Việt rõ ràng: "Quên" / "Khó" / "Ổn" / "Dễ"
+- **Flashcard navigation**: Thêm nút prev/next, dot indicators, progress bar, card category badge
+- **Flashcard SM-2**: Mỗi card trong bộ có trạng thái SM-2 riêng (interval, repetitions, easeFactor)
+- **Flashcard data fix**: Bỏ field không tồn tại (`entity.dates`, `entity.description`) → dùng `short_desc` + `chunks[].content`
+### Files đã sửa
+- `src/pages/Quiz.jsx` (thêm import `track`)
+- `src/components/Flashcard.jsx` (viết lại hoàn toàn — 300+ dòng mới)
+
+---
+
 ## [2026-05-14] Session 13 — Admin Dashboard Enhancements
 ### Thêm mới / Cải thiện
 - **Việt hóa (Localization)**: Dịch toàn bộ trang Admin Dashboard sang tiếng Việt.
