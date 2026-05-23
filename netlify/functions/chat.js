@@ -239,7 +239,7 @@ export default async (req) => {
     })
   }
 
-  const model = 'gemini-3-flash-preview'
+  const model = 'gemini-1.5-flash'
   const baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`
 
   const body = JSON.stringify({
@@ -247,8 +247,7 @@ export default async (req) => {
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
       maxOutputTokens: resolvedMaxTokens,
-      temperature: 0.9,
-      thinkingConfig: { thinkingBudget: 0 }
+      temperature: 0.9
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
@@ -258,43 +257,23 @@ export default async (req) => {
     ]
   })
 
+  const abort = new AbortController()
+  const timer = setTimeout(() => abort.abort(), 8000)
+
   try {
-    if (stream && mode === 'chat') {
-      const response = await fetch(`${baseUrl}:streamGenerateContent?key=${apiKey}&alt=sse`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body
-      })
-
-      if (!response.ok) {
-        const error = await response.text()
-        return new Response(JSON.stringify({ error: 'Gemini API error: ' + error }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' }
-        })
-      }
-
-      // Pass through the SSE stream from Gemini
-      return new Response(response.body, {
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive'
-        }
-      })
-    }
-
-    // Non-streaming
     const response = await fetch(`${baseUrl}:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body
+      body,
+      signal: abort.signal
     })
+
+    clearTimeout(timer)
 
     if (!response.ok) {
       const error = await response.text()
       return new Response(JSON.stringify({ error: 'Gemini API error: ' + error }), {
-        status: 500,
+        status: 502,
         headers: { 'Content-Type': 'application/json' }
       })
     }
@@ -305,8 +284,10 @@ export default async (req) => {
       headers: { 'Content-Type': 'application/json' }
     })
   } catch (error) {
-    console.error('Gemini API error:', error)
-    return new Response(JSON.stringify({ error: 'Failed to call Gemini API' }), {
+    clearTimeout(timer)
+    const isTimeout = error.name === 'AbortError'
+    console.error('Gemini error:', error.message)
+    return new Response(JSON.stringify({ error: isTimeout ? 'Request timed out' : error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     })

@@ -110,7 +110,7 @@ export function useChat(entityId, perspective = 'self') {
           perspective,
           messages: messagesRef.current,
           maxTokens: 2000,
-          stream: true,
+          stream: false,
         }),
         signal: abortControllerRef.current.signal,
       })
@@ -120,94 +120,14 @@ export function useChat(entityId, perspective = 'self') {
         throw new Error(errData.error || `API Error: ${response.status}`)
       }
 
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let assistantMessage = ''
-      let sseBuffer = ''
-      let pendingText = ''
+      const data = await response.json()
+      const rawText = data.text || ''
 
-      // Add placeholder for streaming — only state (ref updated at end)
-      setMessages((prev) => [...prev, { role: 'assistant', content: '' }])
+      const { content: cleanContent, suggestions: aiSuggestions } = parseSuggestions(rawText)
 
-      const flushAssistantMessage = (force = false) => {
-        if (!pendingText && !force) return
-        const nextValue = assistantMessage + pendingText
-        pendingText = ''
-        assistantMessage = nextValue
-
-        setMessages((prev) => {
-          const updated = [...prev]
-          updated[updated.length - 1] = { role: 'assistant', content: nextValue, source: 'ai' }
-          return updated
-        })
-      }
-
-      const scheduleFlush = () => {
-        if (frameRef.current) return
-        frameRef.current = requestAnimationFrame(() => {
-          frameRef.current = null
-          flushAssistantMessage()
-        })
-      }
-
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-
-        sseBuffer += decoder.decode(value, { stream: true })
-        const lines = sseBuffer.split('\n')
-        sseBuffer = lines.pop() || ''
-
-        for (const line of lines) {
-          const trimmedLine = line.trim()
-          if (!trimmedLine.startsWith('data: ')) continue
-
-          const dataStr = trimmedLine.slice(6)
-          if (dataStr === '[DONE]') continue
-
-          try {
-            const data = JSON.parse(dataStr)
-            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || ''
-            if (text) {
-              pendingText += text
-              scheduleFlush()
-            }
-          } catch {
-            // Ignore incomplete chunks.
-          }
-        }
-      }
-
-      if (sseBuffer.trim().startsWith('data: ')) {
-        const dataStr = sseBuffer.trim().slice(6)
-        if (dataStr !== '[DONE]') {
-          try {
-            const data = JSON.parse(dataStr)
-            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || ''
-            if (text) pendingText += text
-          } catch {
-            // Ignore final incomplete chunk.
-          }
-        }
-      }
-
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current)
-        frameRef.current = null
-      }
-      flushAssistantMessage(true)
-
-      // Parse follow-up suggestions from AI response
-      const { content: cleanContent, suggestions: aiSuggestions } = parseSuggestions(assistantMessage)
-
-      // Finalize: sync ref with the clean content (ref was not updated during streaming)
       const finalMsg = { role: 'assistant', content: cleanContent, timestamp: Date.now(), source: 'ai' }
       messagesRef.current = [...messagesRef.current, finalMsg]
-
-      if (cleanContent !== assistantMessage) {
-        // Update displayed message to remove the [GỢI Ý] block
-        setMessages([...messagesRef.current])
-      }
+      setMessages([...messagesRef.current])
 
       // Mix: 2 AI suggestions + 1 preset suggestion (with audio)
       const aiItems = aiSuggestions.slice(0, 2).map(text => ({ text, isPreset: false }))
