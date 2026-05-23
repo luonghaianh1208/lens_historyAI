@@ -239,7 +239,7 @@ export default async (req) => {
     })
   }
 
-  const model = 'gemini-2.5-flash'
+  const model = 'gemini-1.5-flash'
   const baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}`
 
   const body = JSON.stringify({
@@ -247,8 +247,7 @@ export default async (req) => {
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
       maxOutputTokens: resolvedMaxTokens,
-      temperature: 0.9,
-      thinkingConfig: { thinkingBudget: 0 }
+      temperature: 0.9
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
