@@ -109,7 +109,7 @@ export function useChat(entityId, perspective = 'self') {
           entityId,
           perspective,
           messages: messagesRef.current,
-          maxTokens: 20000,
+          maxTokens: 2000,
           stream: true,
         }),
         signal: abortControllerRef.current.signal,

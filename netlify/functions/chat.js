@@ -20,7 +20,7 @@ const rawEntities = {
 // Load manifest for fallback entities (those without full JSON files)
 const manifest = require('../../src/data/manifest.json')
 
-const CHAT_MAX_TOKENS = 20000
+const CHAT_MAX_TOKENS = 4000
 const QUIZ_MAX_TOKENS = 2000
 
 function normalizePerspectives(perspectives = {}) {
@@ -247,7 +247,8 @@ export default async (req) => {
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
       maxOutputTokens: resolvedMaxTokens,
-      temperature: 0.9
+      temperature: 0.9,
+      thinkingConfig: { thinkingBudget: 0 }
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_MEDIUM_AND_ABOVE' },
