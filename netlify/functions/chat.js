@@ -182,7 +182,7 @@ export default async (req) => {
 
   const { mode = 'chat', entityId, perspective, messages, maxTokens = 1000, stream = false } = await req.json()
 
-  const apiKey = Netlify.env.get('GEMINI_API_KEY')
+  const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
     return new Response(JSON.stringify({ error: 'API key not configured' }), {
       status: 500,
